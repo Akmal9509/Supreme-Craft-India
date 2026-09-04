@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Product | Supreme Craft India</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        .product-detail {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 20px;
+
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+
+            gap: 50px;
+        }
+
+
+        .main-product-image {
+            width: 100%;
+            height: 500px;
+
+            object-fit: contain;
+
+            background: #f7f7f7;
+
+            border-radius: 12px;
+        }
+
+
+        .product-thumbnails {
+            display: flex;
+            gap: 10px;
+
+            margin-top: 15px;
+
+            overflow-x: auto;
+        }
+
+
+        .product-thumbnails img {
+            width: 85px;
+            height: 70px;
+
+            object-fit: cover;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            border: 2px solid transparent;
+        }
+
+
+        .product-thumbnails img:hover {
+            border-color: #222;
+        }
+
+
+        .detail-info h1 {
+            font-size: 38px;
+            margin: 10px 0;
+        }
+
+
+        .detail-info h2 {
+            font-size: 28px;
+            margin: 15px 0;
+        }
+
+
+        .product-category {
+            text-transform: uppercase;
+
+            letter-spacing: 2px;
+
+            font-size: 13px;
+
+            color: #777;
+        }
+
+
+        .product-description {
+            line-height: 1.7;
+
+            color: #555;
+        }
+
+
+        .stock {
+            margin: 20px 0;
+        }
+
+
+        .quantity-box {
+            display: flex;
+
+            align-items: center;
+
+            gap: 20px;
+
+            margin: 20px 0;
+        }
+
+
+        .quantity-box button {
+            width: 40px;
+            height: 40px;
+
+            border: 1px solid #ddd;
+
+            background: white;
+
+            font-size: 22px;
+
+            cursor: pointer;
+        }
+
+
+        .quantity-box span {
+            font-size: 18px;
+        }
+
+
+        .add-button,
+        .whatsapp-button {
+            width: 100%;
+
+            padding: 15px;
+
+            margin-top: 10px;
+
+            border: none;
+
+            cursor: pointer;
+
+            font-size: 16px;
+        }
+
+
+        .add-button {
+            background: #222;
+            color: white;
+        }
+
+
+        .whatsapp-button {
+            background: #168000;
+            color: white;
+        }
+
+
+        @media (max-width: 768px) {
+
+            .product-detail {
+                grid-template-columns: 1fr;
+
+                gap: 25px;
+
+                margin: 30px auto;
+            }
+
+
+            .main-product-image {
+                height: 350px;
+            }
+
+
+            .detail-info h1 {
+                font-size: 30px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header class="site-header">
+
+    <div class="logo">
+        SUPREME CRAFT <span>INDIA</span>
+    </div>
+
+
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="index.html#products">
+            Products
+        </a>
+
+        <a href="index.html#about">
+            About
+        </a>
+
+        <a href="index.html#contact">
+            Contact
+        </a>
+
+        <a href="cart.html" class="cart-link">
+            🛒 Cart
+            <span id="cartCount">0</span>
+        </a>
+
+    </nav>
+
+</header>
+
+
+<!-- ================= PRODUCT ================= -->
+
+<section class="product-detail">
+
+
+    <!-- IMAGE -->
+
+    <div>
+
+        <img
+            id="productImage"
+            class="main-product-image"
+            src=""
+            alt="Product"
+        >
+
+
+        <div
+            id="productThumbnails"
+            class="product-thumbnails"
+        ></div>
+
+    </div>
+
+
+    <!-- INFO -->
+
+    <div class="detail-info">
+
+        <span
+            id="productCategory"
+            class="product-category"
+        >
+            FURNITURE
+        </span>
+
+
+        <h1 id="productName">
+            Loading...
+        </h1>
+
+
+        <h2>
+            ₹<span id="productPrice">0</span>
+        </h2>
+
+
+        <p
+            id="productDescription"
+            class="product-description"
+        >
+            Loading product details...
+        </p>
+
+
+        <p class="stock">
+
+            Stock:
+
+            <strong id="productStock">
+                0
+            </strong>
+
+        </p>
+
+
+        <!-- QUANTITY -->
+
+        <div class="quantity-box">
+
+            <button onclick="changeQty(-1)">
+                −
+            </button>
+
+            <span id="quantity">
+                1
+            </span>
+
+            <button onclick="changeQty(1)">
+                +
+            </button>
+
+        </div>
+
+
+        <!-- CART -->
+
+        <button
+            class="add-button"
+            onclick="addProductToCart()"
+        >
+            🛒 Add to Cart
+        </button>
+
+
+        <!-- WHATSAPP -->
+
+        <button
+            class="whatsapp-button"
+            onclick="buyOnWhatsApp()"
+        >
+            📱 Buy on WhatsApp
+        </button>
+
+    </div>
+
+</section>
+
+
+<script>
+
+
+// ========================================
+// PRODUCT ID
+// ========================================
+
+const urlParams =
+    new URLSearchParams(
+        window.location.search
+    );
+
+
+const productIndex =
+    Number(
+        urlParams.get("id")
+    );
+
+
+// ========================================
+// GET PRODUCTS
+// ========================================
+
+const products =
+    JSON.parse(
+        localStorage.getItem("products")
+    ) || [];
+
+
+let product =
+    products[productIndex];
+
+
+// ========================================
+// QUANTITY
+// ========================================
+
+let quantity = 1;
+
+
+// ========================================
+// CHECK PRODUCT
+// ========================================
+
+if (!product) {
+
+    document.body.innerHTML = `
+
+        <div style="
+            text-align:center;
+            padding:100px 20px;
+        ">
+
+            <h1>
+                Product Not Found
+            </h1>
+
+            <p>
+                This product does not exist.
+            </p>
+
+            <br>
+
+            <a href="index.html">
+                ← Back to Products
+            </a>
+
+        </div>
+
+    `;
+
+} else {
+
+    if (
+        !Array.isArray(product.images) ||
+        product.images.length === 0
+    ) {
+
+        product.images = [
+            product.image
+        ];
+
+    }
+
+
+    document.getElementById(
+        "productImage"
+    ).src =
+        product.images[0];
+
+
+    document.getElementById(
+        "productImage"
+    ).alt =
+        product.name;
+
+
+    document.getElementById(
+        "productName"
+    ).innerText =
+        product.name;
+
+
+    document.getElementById(
+        "productPrice"
+    ).innerText =
+        Number(product.price)
+        .toLocaleString("en-IN");
+
+
+    document.getElementById(
+        "productCategory"
+    ).innerText =
+        (
+            product.category ||
+            "furniture"
+        ).toUpperCase();
+
+
+    document.getElementById(
+        "productDescription"
+    ).innerText =
+        product.description ||
+        "Premium quality furniture.";
+
+
+    document.getElementById(
+        "productStock"
+    ).innerText =
+        Number(product.stock || 0);
+
+
+    createThumbnails(
+        product.images
+    );
+
+}
+
+
+// ========================================
+// THUMBNAILS
+// ========================================
+
+function createThumbnails(images) {
+
+    const container =
+        document.getElementById(
+            "productThumbnails"
+        );
+
+    if (!container) {
+        return;
+    }
+
+
+    container.innerHTML = "";
+
+
+    images.forEach(
+        function(image, index) {
+
+            const thumbnail =
+                document.createElement(
+                    "img"
+                );
+
+
+            thumbnail.src =
+                image;
+
+
+            thumbnail.alt =
+                "Product Photo " +
+                (index + 1);
+
+
+            thumbnail.onclick =
+                function() {
+
+                    document.getElementById(
+                        "productImage"
+                    ).src =
+                        image;
+
+                };
+
+
+            container.appendChild(
+                thumbnail
+            );
+
+        }
+    );
+
+}
+
+
+// ========================================
+// QUANTITY
+// ========================================
+
+function changeQty(amount) {
+
+    if (!product) {
+        return;
+    }
+
+
+    quantity += amount;
+
+
+    if (quantity < 1) {
+
+        quantity = 1;
+
+    }
+
+
+    const stock =
+        Number(product.stock || 0);
+
+
+    if (
+        stock > 0 &&
+        quantity > stock
+    ) {
+
+        quantity = stock;
+
+    }
+
+
+    document.getElementById(
+        "quantity"
+    ).innerText =
+        quantity;
+
+}
+
+
+// ========================================
+// ADD TO CART
+// ========================================
+
+function addProductToCart() {
+
+    if (!product) {
+        return;
+    }
+
+
+    const stock =
+        Number(product.stock || 0);
+
+
+    if (
+        stock <= 0
+    ) {
+
+        alert(
+            "❌ This product is out of stock."
+        );
+
+        return;
+
+    }
+
+
+    let cart =
+        JSON.parse(
+            localStorage.getItem("cart")
+        ) || [];
+
+
+    const existing =
+        cart.find(
+            item =>
+                item.name === product.name
+        );
+
+
+    if (existing) {
+
+        existing.quantity +=
+            quantity;
+
+    } else {
+
+        cart.push({
+
+            name:
+                product.name,
+
+            price:
+                Number(product.price),
+
+            quantity:
+                quantity
+
+        });
+
+    }
+
+
+    localStorage.setItem(
+        "cart",
+        JSON.stringify(cart)
+    );
+
+
+    updateCartCount();
+
+
+    alert(
+        product.name +
+        " added to cart!"
+    );
+
+}
+
+
+// ========================================
+// CART COUNT
+// ========================================
+
+function updateCartCount() {
+
+    const cart =
+        JSON.parse(
+            localStorage.getItem("cart")
+        ) || [];
+
+
+    const total =
+        cart.reduce(
+            function(total, item) {
+
+                return total +
+                    Number(
+                        item.quantity || 0
+                    );
+
+            },
+            0
+        );
+
+
+    const cartCount =
+        document.getElementById(
+            "cartCount"
+        );
+
+
+    if (cartCount) {
+
+        cartCount.innerText =
+            total;
+
+    }
+
+}
+
+
+// ========================================
+// WHATSAPP ORDER
+// ========================================
+
+function buyOnWhatsApp() {
+
+    if (!product) {
+        return;
+    }
+
+
+    const phoneNumber =
+        "919509393894";
+
+
+    const total =
+        Number(product.price) *
+        quantity;
+
+
+    const message =
+        "Hello Supreme Craft India,\n\n" +
+
+        "I want to order:\n\n" +
+
+        "Product: " +
+        product.name +
+        "\n" +
+
+        "Quantity: " +
+        quantity +
+        "\n" +
+
+        "Price: ₹" +
+        total.toLocaleString("en-IN") +
+        "\n\n" +
+
+        "Please provide more details.";
+
+
+    const whatsappURL =
+        "https://wa.me/" +
+        phoneNumber +
+        "?text=" +
+        encodeURIComponent(message);
+
+
+    window.open(
+        whatsappURL,
+        "_blank"
+    );
+
+}
+
+
+// ========================================
+// START
+// ========================================
+
+updateCartCount();
+
+</script>
+
+</body>
+</html>

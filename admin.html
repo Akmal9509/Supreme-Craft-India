@@ -1,0 +1,2166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Panel | Supreme Craft India</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        /* ========================================
+           PREMIUM ADMIN PANEL
+        ======================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f5f5f3;
+            color: #171717;
+        }
+
+        /* HEADER */
+
+        .admin-header {
+            background: #111;
+            color: white;
+            padding: 18px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 25px rgba(0,0,0,.15);
+        }
+
+        .admin-logo {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .admin-logo span {
+            color: #c9a227;
+        }
+
+        .admin-nav {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .admin-nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 16px;
+            border: 1px solid #444;
+            border-radius: 8px;
+            transition: .3s;
+        }
+
+        .admin-nav a:hover {
+            background: #c9a227;
+            color: #111;
+            border-color: #c9a227;
+        }
+
+
+        /* MAIN */
+
+        .admin-wrapper {
+            max-width: 1200px;
+            margin: auto;
+            padding: 45px 20px 80px;
+        }
+
+
+        /* TITLE */
+
+        .admin-title {
+            margin-bottom: 30px;
+        }
+
+        .admin-title small {
+            color: #b08b18;
+            font-weight: 700;
+            letter-spacing: 3px;
+        }
+
+        .admin-title h1 {
+            font-size: 42px;
+            margin: 8px 0;
+        }
+
+        .admin-title p {
+            color: #777;
+        }
+
+
+        /* DASHBOARD CARDS */
+
+        .dashboard {
+            display: grid;
+            grid-template-columns:
+                repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-card {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid #e6e6e6;
+            box-shadow: 0 10px 30px rgba(0,0,0,.05);
+        }
+
+        .dashboard-card span {
+            display: block;
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .dashboard-card strong {
+            font-size: 32px;
+        }
+
+
+        /* FORM CARD */
+
+        .admin-card {
+            background: white;
+            border: 1px solid #e4e4e4;
+            border-radius: 18px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 12px 35px rgba(0,0,0,.05);
+        }
+
+        .admin-card h2 {
+            margin-top: 0;
+            font-size: 25px;
+        }
+
+        .admin-card-subtitle {
+            color: #777;
+            margin-bottom: 25px;
+        }
+
+
+        /* FORM */
+
+        .product-form {
+            display: grid;
+            grid-template-columns:
+                repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 9px;
+            font-size: 15px;
+            outline: none;
+            background: #fafafa;
+            transition: .25s;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #b08b18;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(176,139,24,.08);
+        }
+
+
+        /* FILE INPUT */
+
+        .file-box {
+            border: 2px dashed #ccc;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            background: #fafafa;
+        }
+
+        .file-box:hover {
+            border-color: #b08b18;
+        }
+
+        .file-box input {
+            border: none;
+            background: transparent;
+        }
+
+        .file-help {
+            color: #777;
+            font-size: 13px;
+            margin-top: 8px;
+        }
+
+
+        /* IMAGE PREVIEW */
+
+        #imagePreviews {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fill, minmax(120px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .preview-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            background: white;
+        }
+
+        .preview-item img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .preview-number {
+            position: absolute;
+            top: 7px;
+            left: 7px;
+            background: #111;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 5px;
+            font-size: 11px;
+        }
+
+
+        /* ADD BUTTON */
+
+        .add-product-btn {
+            grid-column: 1 / -1;
+            padding: 16px;
+            border: none;
+            border-radius: 10px;
+            background: #111;
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .add-product-btn:hover {
+            background: #b08b18;
+            color: #111;
+            transform: translateY(-2px);
+        }
+
+
+        /* PRODUCTS */
+
+        .products-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .products-heading h2 {
+            margin: 0;
+        }
+
+        #adminProducts {
+            display: grid;
+            gap: 15px;
+        }
+
+        .admin-product {
+            background: white;
+            border: 1px solid #e5e5e5;
+            border-radius: 15px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            box-shadow: 0 8px 25px rgba(0,0,0,.04);
+        }
+
+        .admin-product-main-image {
+            width: 120px;
+            height: 95px;
+            object-fit: cover;
+            border-radius: 10px;
+            background: #f5f5f5;
+        }
+
+        .admin-product-info {
+            flex: 1;
+        }
+
+        .admin-product-info strong {
+            font-size: 18px;
+        }
+
+        .admin-product-info small {
+            color: #777;
+            line-height: 1.7;
+        }
+
+        .admin-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .edit-btn,
+        .delete-btn {
+            border: none;
+            padding: 10px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .edit-btn {
+            background: #111;
+            color: white;
+        }
+
+        .edit-btn:hover {
+            background: #b08b18;
+            color: #111;
+        }
+
+        .delete-btn {
+            background: #f1dada;
+            color: #a00000;
+        }
+
+        .delete-btn:hover {
+            background: #c00000;
+            color: white;
+        }
+
+
+        /* EDIT BOX */
+
+        #editBox {
+            display: none;
+            background: #fff;
+            border: 2px solid #b08b18;
+            border-radius: 18px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        #editBox h2 {
+            margin-top: 0;
+        }
+
+        #editBox label {
+            display: block;
+            font-weight: 700;
+            margin: 15px 0 7px;
+        }
+
+        #editBox input,
+        #editBox select,
+        #editBox textarea {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        #editPhotoContainer {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fill, minmax(160px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .edit-photo {
+            background: #fafafa;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .edit-photo img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 7px;
+            margin: 8px 0;
+        }
+
+        .edit-photo button {
+            width: 100%;
+            border: none;
+            padding: 9px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        .change-photo-btn {
+            background: #111;
+            color: white;
+        }
+
+        .remove-photo-btn {
+            background: #d00000;
+            color: white;
+        }
+
+        .add-photo-btn {
+            margin-top: 18px;
+            padding: 12px 18px;
+            background: #168000;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .save-edit-btn,
+        .cancel-edit-btn {
+            padding: 13px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 25px;
+            font-weight: 700;
+        }
+
+        .save-edit-btn {
+            background: #111;
+            color: white;
+        }
+
+        .cancel-edit-btn {
+            background: #777;
+            color: white;
+            margin-left: 8px;
+        }
+
+
+        /* EMPTY */
+
+        .no-products {
+            background: white;
+            padding: 40px;
+            text-align: center;
+            border-radius: 15px;
+            color: #777;
+            border: 1px solid #ddd;
+        }
+
+
+        /* MOBILE */
+
+        @media (max-width: 800px) {
+
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .product-form {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+            .add-product-btn {
+                grid-column: auto;
+            }
+
+            .admin-product {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .admin-product-main-image {
+                width: 100%;
+                height: 220px;
+            }
+
+            .admin-buttons {
+                width: 100%;
+            }
+
+            .admin-buttons button {
+                flex: 1;
+            }
+
+            .admin-title h1 {
+                font-size: 32px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ========================================
+     ADMIN HEADER
+======================================== -->
+
+<header class="admin-header">
+
+    <div class="admin-logo">
+        SUPREME CRAFT <span>INDIA</span>
+    </div>
+
+    <nav class="admin-nav">
+
+        <a href="index.html">
+            🏠 Website
+        </a>
+
+        <a href="cart.html">
+            🛒 Cart
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- ========================================
+     MAIN
+======================================== -->
+
+<main class="admin-wrapper">
+
+
+    <!-- TITLE -->
+
+    <div class="admin-title">
+
+        <small>SUPREME CRAFT INDIA</small>
+
+        <h1>Admin Dashboard</h1>
+
+        <p>
+            Manage your premium furniture products,
+            photos, prices and stock.
+        </p>
+
+    </div>
+
+
+
+    <!-- ========================================
+         DASHBOARD
+    ======================================== -->
+
+    <div class="dashboard">
+
+        <div class="dashboard-card">
+
+            <span>Total Products</span>
+
+            <strong id="totalProducts">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="dashboard-card">
+
+            <span>Total Stock</span>
+
+            <strong id="totalStock">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="dashboard-card">
+
+            <span>Photos Added</span>
+
+            <strong id="totalPhotos">
+                0
+            </strong>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ========================================
+         ADD PRODUCT
+    ======================================== -->
+
+    <div class="admin-card">
+
+        <h2>
+            ➕ Add New Product
+        </h2>
+
+        <p class="admin-card-subtitle">
+            Add your furniture product with
+            multiple high-quality photos.
+        </p>
+
+
+        <form
+            id="productForm"
+            class="product-form"
+        >
+
+
+            <!-- NAME -->
+
+            <div class="form-group">
+
+                <label>
+                    Product Name
+                </label>
+
+                <input
+                    type="text"
+                    id="productName"
+                    placeholder="Royal Wooden Sofa"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- PRICE -->
+
+            <div class="form-group">
+
+                <label>
+                    Price (₹)
+                </label>
+
+                <input
+                    type="number"
+                    id="productPrice"
+                    placeholder="24999"
+                    min="0"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- CATEGORY -->
+
+            <div class="form-group">
+
+                <label>
+                    Category
+                </label>
+
+                <select
+                    id="productCategory"
+                    required
+                >
+
+                    <option value="">
+                        Select Category
+                    </option>
+
+                    <option value="sofa">
+                        Sofa
+                    </option>
+
+                    <option value="chair">
+                        Chair
+                    </option>
+
+                    <option value="table">
+                        Table
+                    </option>
+
+                    <option value="bed">
+                        Bed
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <!-- STOCK -->
+
+            <div class="form-group">
+
+                <label>
+                    Stock
+                </label>
+
+                <input
+                    type="number"
+                    id="productStock"
+                    placeholder="10"
+                    min="0"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- PHOTOS -->
+
+            <div class="form-group full">
+
+                <label>
+                    Product Photos
+                </label>
+
+                <div class="file-box">
+
+                    <input
+                        type="file"
+                        id="productImages"
+                        accept="image/*"
+                        multiple
+                        required
+                    >
+
+                    <div class="file-help">
+                        Maximum 10 photos —
+                        Front, Side, Back, Detail,
+                        Lifestyle & Infographic.
+                    </div>
+
+                </div>
+
+
+                <div id="imagePreviews"></div>
+
+            </div>
+
+
+
+            <!-- DESCRIPTION -->
+
+            <div class="form-group full">
+
+                <label>
+                    Product Description
+                </label>
+
+                <textarea
+                    id="productDescription"
+                    rows="5"
+                    placeholder="Write a premium product description..."
+                    required
+                ></textarea>
+
+            </div>
+
+
+
+            <!-- SUBMIT -->
+
+            <button
+                type="submit"
+                class="add-product-btn"
+            >
+                ✨ Add Product to Store
+            </button>
+
+
+        </form>
+
+    </div>
+
+
+
+    <!-- ========================================
+         EDIT PRODUCT
+    ======================================== -->
+
+    <div id="editBox">
+
+        <h2>
+            ✏️ Edit Product
+        </h2>
+
+        <p class="admin-card-subtitle">
+            Update product details or manage photos.
+        </p>
+
+
+        <input
+            type="hidden"
+            id="editIndex"
+        >
+
+
+        <label>
+            Product Name
+        </label>
+
+        <input
+            type="text"
+            id="editName"
+        >
+
+
+        <label>
+            Price (₹)
+        </label>
+
+        <input
+            type="number"
+            id="editPrice"
+            min="0"
+        >
+
+
+        <label>
+            Category
+        </label>
+
+        <select id="editCategory">
+
+            <option value="sofa">
+                Sofa
+            </option>
+
+            <option value="chair">
+                Chair
+            </option>
+
+            <option value="table">
+                Table
+            </option>
+
+            <option value="bed">
+                Bed
+            </option>
+
+        </select>
+
+
+        <label>
+            Description
+        </label>
+
+        <textarea
+            id="editDescription"
+            rows="5"
+        ></textarea>
+
+
+        <label>
+            Stock
+        </label>
+
+        <input
+            type="number"
+            id="editStock"
+            min="0"
+        >
+
+
+        <h3 style="margin-top:30px;">
+            🖼️ Product Photos
+        </h3>
+
+
+        <p style="color:#777;">
+            Change or remove individual photos.
+        </p>
+
+
+        <div id="editPhotoContainer"></div>
+
+
+        <button
+            type="button"
+            class="add-photo-btn"
+            onclick="addNewEditPhoto()"
+        >
+            ➕ Add New Photo
+        </button>
+
+
+        <br>
+
+
+        <button
+            type="button"
+            class="save-edit-btn"
+            onclick="saveEditedProduct()"
+        >
+            💾 Save Changes
+        </button>
+
+
+        <button
+            type="button"
+            class="cancel-edit-btn"
+            onclick="cancelEdit()"
+        >
+            ✖ Cancel
+        </button>
+
+    </div>
+
+
+
+    <!-- ========================================
+         PRODUCTS
+    ======================================== -->
+
+    <div class="admin-card">
+
+        <div class="products-heading">
+
+            <div>
+
+                <h2>
+                    📦 Your Products
+                </h2>
+
+                <p
+                    class="admin-card-subtitle"
+                    style="margin:5px 0 0;"
+                >
+                    Products currently stored in your website.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div id="adminProducts"></div>
+
+    </div>
+
+
+</main>
+
+
+
+<!-- ========================================
+     JAVASCRIPT
+======================================== -->
+
+<script>
+
+
+// ========================================
+// GET PRODUCTS
+// ========================================
+
+function getProducts() {
+
+    return JSON.parse(
+        localStorage.getItem("products")
+    ) || [];
+
+}
+
+
+
+// ========================================
+// UPDATE DASHBOARD
+// ========================================
+
+function updateDashboard() {
+
+    const products =
+        getProducts();
+
+
+    let totalStock = 0;
+
+    let totalPhotos = 0;
+
+
+    products.forEach(function(product) {
+
+        totalStock +=
+            Number(product.stock || 0);
+
+
+        if (
+            product.images &&
+            Array.isArray(product.images)
+        ) {
+
+            totalPhotos +=
+                product.images.length;
+
+        } else if (
+            product.image
+        ) {
+
+            totalPhotos++;
+
+        }
+
+    });
+
+
+    document.getElementById(
+        "totalProducts"
+    ).innerText =
+        products.length;
+
+
+    document.getElementById(
+        "totalStock"
+    ).innerText =
+        totalStock;
+
+
+    document.getElementById(
+        "totalPhotos"
+    ).innerText =
+        totalPhotos;
+
+}
+
+
+
+// ========================================
+// IMAGE INPUT
+// ========================================
+
+const imageInput =
+    document.getElementById(
+        "productImages"
+    );
+
+
+const imagePreviews =
+    document.getElementById(
+        "imagePreviews"
+    );
+
+
+
+imageInput.addEventListener(
+    "change",
+    function() {
+
+        imagePreviews.innerHTML = "";
+
+
+        const files =
+            Array.from(this.files);
+
+
+        if (files.length > 10) {
+
+            alert(
+                "❌ Maximum 10 photos allowed."
+            );
+
+            this.value = "";
+
+            return;
+        }
+
+
+        files.forEach(
+            function(file, index) {
+
+                const reader =
+                    new FileReader();
+
+
+                reader.onload =
+                    function(event) {
+
+                        const div =
+                            document.createElement(
+                                "div"
+                            );
+
+
+                        div.className =
+                            "preview-item";
+
+
+                        div.innerHTML = `
+
+                            <span class="preview-number">
+                                ${index + 1}
+                            </span>
+
+                            <img
+                                src="${event.target.result}"
+                                alt="Preview"
+                            >
+
+                        `;
+
+
+                        imagePreviews.appendChild(
+                            div
+                        );
+
+                    };
+
+
+                reader.readAsDataURL(file);
+
+            }
+        );
+
+    }
+);
+
+
+
+// ========================================
+// ADD PRODUCT
+// ========================================
+
+document
+.getElementById("productForm")
+.addEventListener(
+    "submit",
+    function(event) {
+
+        event.preventDefault();
+
+
+        const files =
+            Array.from(
+                imageInput.files
+            );
+
+
+        if (files.length === 0) {
+
+            alert(
+                "❌ Please select at least one photo."
+            );
+
+            return;
+        }
+
+
+        if (files.length > 10) {
+
+            alert(
+                "❌ Maximum 10 photos allowed."
+            );
+
+            return;
+        }
+
+
+        const imagePromises =
+            files.map(function(file) {
+
+                return new Promise(
+                    function(resolve) {
+
+                        const reader =
+                            new FileReader();
+
+
+                        reader.onload =
+                            function(event) {
+
+                                resolve(
+                                    event.target.result
+                                );
+
+                            };
+
+
+                        reader.readAsDataURL(file);
+
+                    }
+                );
+
+            });
+
+
+        Promise.all(imagePromises)
+        .then(function(images) {
+
+
+            const product = {
+
+                name:
+                    document
+                    .getElementById(
+                        "productName"
+                    )
+                    .value
+                    .trim(),
+
+
+                price:
+                    Number(
+                        document
+                        .getElementById(
+                            "productPrice"
+                        )
+                        .value
+                    ),
+
+
+                category:
+                    document
+                    .getElementById(
+                        "productCategory"
+                    )
+                    .value,
+
+
+                images:
+                    images,
+
+
+                image:
+                    images[0],
+
+
+                description:
+                    document
+                    .getElementById(
+                        "productDescription"
+                    )
+                    .value
+                    .trim(),
+
+
+                stock:
+                    Number(
+                        document
+                        .getElementById(
+                            "productStock"
+                        )
+                        .value
+                    )
+
+            };
+
+
+            let products =
+                getProducts();
+
+
+            products.push(product);
+
+
+            localStorage.setItem(
+                "products",
+                JSON.stringify(products)
+            );
+
+
+            alert(
+                "✅ Product added successfully!"
+            );
+
+
+            document
+            .getElementById(
+                "productForm"
+            )
+            .reset();
+
+
+            imagePreviews.innerHTML =
+                "";
+
+
+            showAdminProducts();
+
+            updateDashboard();
+
+        });
+
+    }
+);
+
+
+
+// ========================================
+// SHOW PRODUCTS
+// ========================================
+
+function showAdminProducts() {
+
+    const products =
+        getProducts();
+
+
+    const container =
+        document.getElementById(
+            "adminProducts"
+        );
+
+
+    container.innerHTML = "";
+
+
+    if (products.length === 0) {
+
+        container.innerHTML = `
+
+            <div class="no-products">
+
+                <h3>
+                    No Products Yet
+                </h3>
+
+                <p>
+                    Add your first furniture product above.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    products.forEach(
+        function(product, index) {
+
+
+            let images =
+                product.images &&
+                Array.isArray(product.images) &&
+                product.images.length
+                ? product.images
+                : [product.image];
+
+
+            const photoCount =
+                images.length;
+
+
+            container.innerHTML += `
+
+                <div class="admin-product">
+
+                    <img
+                        class="admin-product-main-image"
+                        src="${images[0]}"
+                        alt="${escapeHTML(product.name)}"
+                    >
+
+
+                    <div class="admin-product-info">
+
+                        <strong>
+                            ${escapeHTML(product.name)}
+                        </strong>
+
+                        <br><br>
+
+                        <b>
+                            ₹${Number(
+                                product.price || 0
+                            ).toLocaleString("en-IN")}
+                        </b>
+
+                        <br>
+
+                        <small>
+
+                            ${String(
+                                product.category || "sofa"
+                            ).toUpperCase()}
+
+                            &nbsp; • &nbsp;
+
+                            ${photoCount} Photo(s)
+
+                            &nbsp; • &nbsp;
+
+                            Stock:
+                            ${product.stock || 0}
+
+                        </small>
+
+                    </div>
+
+
+                    <div class="admin-buttons">
+
+                        <button
+                            class="edit-btn"
+                            onclick="editProduct(${index})"
+                        >
+                            ✏️ Edit
+                        </button>
+
+
+                        <button
+                            class="delete-btn"
+                            onclick="deleteProduct(${index})"
+                        >
+                            🗑️ Delete
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+}
+
+
+
+// ========================================
+// ESCAPE HTML
+// ========================================
+
+function escapeHTML(text) {
+
+    return String(text || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+
+// ========================================
+// DELETE PRODUCT
+// ========================================
+
+function deleteProduct(index) {
+
+    let products =
+        getProducts();
+
+
+    if (!products[index]) {
+        return;
+    }
+
+
+    const confirmDelete =
+        confirm(
+            "Kya aap is product ko delete karna chahte hain?"
+        );
+
+
+    if (!confirmDelete) {
+        return;
+    }
+
+
+    products.splice(index, 1);
+
+
+    localStorage.setItem(
+        "products",
+        JSON.stringify(products)
+    );
+
+
+    showAdminProducts();
+
+    updateDashboard();
+
+
+    alert(
+        "✅ Product deleted!"
+    );
+
+}
+
+
+
+// ========================================
+// EDIT PRODUCT
+// ========================================
+
+function editProduct(index) {
+
+    let products =
+        getProducts();
+
+
+    let product =
+        products[index];
+
+
+    if (!product) {
+        return;
+    }
+
+
+    if (
+        !product.images ||
+        !Array.isArray(product.images)
+    ) {
+
+        product.images =
+            product.image
+            ? [product.image]
+            : [];
+
+    }
+
+
+    document.getElementById(
+        "editIndex"
+    ).value = index;
+
+
+    document.getElementById(
+        "editName"
+    ).value =
+        product.name || "";
+
+
+    document.getElementById(
+        "editPrice"
+    ).value =
+        product.price || 0;
+
+
+    document.getElementById(
+        "editCategory"
+    ).value =
+        product.category || "sofa";
+
+
+    document.getElementById(
+        "editDescription"
+    ).value =
+        product.description || "";
+
+
+    document.getElementById(
+        "editStock"
+    ).value =
+        product.stock || 0;
+
+
+    renderEditPhotos(
+        product.images
+    );
+
+
+    const editBox =
+        document.getElementById(
+            "editBox"
+        );
+
+
+    editBox.style.display =
+        "block";
+
+
+    editBox.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+
+}
+
+
+
+// ========================================
+// RENDER EDIT PHOTOS
+// ========================================
+
+function renderEditPhotos(images) {
+
+    const container =
+        document.getElementById(
+            "editPhotoContainer"
+        );
+
+
+    container.innerHTML = "";
+
+
+    images.forEach(
+        function(image, index) {
+
+            container.innerHTML += `
+
+                <div
+                    class="edit-photo"
+                >
+
+                    <strong>
+                        Photo ${index + 1}
+                    </strong>
+
+                    <img
+                        src="${image}"
+                        alt="Product Photo"
+                    >
+
+                    <button
+                        type="button"
+                        class="change-photo-btn"
+                        onclick="changePhoto(${index})"
+                    >
+                        🖼️ Change
+                    </button>
+
+                    <button
+                        type="button"
+                        class="remove-photo-btn"
+                        onclick="removePhoto(${index})"
+                    >
+                        🗑️ Remove
+                    </button>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+}
+
+
+
+// ========================================
+// CHANGE PHOTO
+// ========================================
+
+function changePhoto(photoIndex) {
+
+    const input =
+        document.createElement(
+            "input"
+        );
+
+
+    input.type = "file";
+
+    input.accept = "image/*";
+
+
+    input.click();
+
+
+    input.onchange =
+        function() {
+
+            const file =
+                input.files[0];
+
+
+            if (!file) {
+                return;
+            }
+
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                function(event) {
+
+                    const index =
+                        Number(
+                            document
+                            .getElementById(
+                                "editIndex"
+                            )
+                            .value
+                        );
+
+
+                    let products =
+                        getProducts();
+
+
+                    let product =
+                        products[index];
+
+
+                    if (!product) {
+                        return;
+                    }
+
+
+                    if (!product.images) {
+
+                        product.images = [
+                            product.image
+                        ];
+
+                    }
+
+
+                    product.images[
+                        photoIndex
+                    ] =
+                        event.target.result;
+
+
+                    product.image =
+                        product.images[0];
+
+
+                    products[index] =
+                        product;
+
+
+                    localStorage.setItem(
+                        "products",
+                        JSON.stringify(products)
+                    );
+
+
+                    renderEditPhotos(
+                        product.images
+                    );
+
+
+                    showAdminProducts();
+
+                    updateDashboard();
+
+                    alert(
+                        "✅ Photo changed!"
+                    );
+
+                };
+
+
+            reader.readAsDataURL(file);
+
+        };
+
+}
+
+
+
+// ========================================
+// REMOVE PHOTO
+// ========================================
+
+function removePhoto(photoIndex) {
+
+    const index =
+        Number(
+            document
+            .getElementById(
+                "editIndex"
+            )
+            .value
+        );
+
+
+    let products =
+        getProducts();
+
+
+    let product =
+        products[index];
+
+
+    if (!product) {
+        return;
+    }
+
+
+    if (!product.images) {
+
+        product.images = [
+            product.image
+        ];
+
+    }
+
+
+    if (product.images.length <= 1) {
+
+        alert(
+            "❌ Kam se kam 1 photo zaroor honi chahiye."
+        );
+
+        return;
+    }
+
+
+    const confirmRemove =
+        confirm(
+            "Kya aap Photo " +
+            (photoIndex + 1) +
+            " remove karna chahte hain?"
+        );
+
+
+    if (!confirmRemove) {
+        return;
+    }
+
+
+    product.images.splice(
+        photoIndex,
+        1
+    );
+
+
+    product.image =
+        product.images[0];
+
+
+    products[index] =
+        product;
+
+
+    localStorage.setItem(
+        "products",
+        JSON.stringify(products)
+    );
+
+
+    renderEditPhotos(
+        product.images
+    );
+
+
+    showAdminProducts();
+
+    updateDashboard();
+
+}
+
+
+
+// ========================================
+// ADD NEW PHOTO
+// ========================================
+
+function addNewEditPhoto() {
+
+    const index =
+        Number(
+            document
+            .getElementById(
+                "editIndex"
+            )
+            .value
+        );
+
+
+    let products =
+        getProducts();
+
+
+    let product =
+        products[index];
+
+
+    if (!product) {
+        return;
+    }
+
+
+    if (!product.images) {
+
+        product.images = [
+            product.image
+        ];
+
+    }
+
+
+    if (product.images.length >= 10) {
+
+        alert(
+            "❌ Maximum 10 photos allowed."
+        );
+
+        return;
+    }
+
+
+    const input =
+        document.createElement(
+            "input"
+        );
+
+
+    input.type = "file";
+
+    input.accept = "image/*";
+
+
+    input.click();
+
+
+    input.onchange =
+        function() {
+
+            const file =
+                input.files[0];
+
+
+            if (!file) {
+                return;
+            }
+
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                function(event) {
+
+                    product.images.push(
+                        event.target.result
+                    );
+
+
+                    product.image =
+                        product.images[0];
+
+
+                    products[index] =
+                        product;
+
+
+                    localStorage.setItem(
+                        "products",
+                        JSON.stringify(products)
+                    );
+
+
+                    renderEditPhotos(
+                        product.images
+                    );
+
+
+                    showAdminProducts();
+
+                    updateDashboard();
+
+
+                    alert(
+                        "✅ New photo added!"
+                    );
+
+                };
+
+
+            reader.readAsDataURL(file);
+
+        };
+
+}
+
+
+
+// ========================================
+// SAVE EDIT
+// ========================================
+
+function saveEditedProduct() {
+
+    const index =
+        Number(
+            document
+            .getElementById(
+                "editIndex"
+            )
+            .value
+        );
+
+
+    let products =
+        getProducts();
+
+
+    let product =
+        products[index];
+
+
+    if (!product) {
+        return;
+    }
+
+
+    product.name =
+        document
+        .getElementById(
+            "editName"
+        )
+        .value
+        .trim();
+
+
+    product.price =
+        Number(
+            document
+            .getElementById(
+                "editPrice"
+            )
+            .value
+        );
+
+
+    product.category =
+        document
+        .getElementById(
+            "editCategory"
+        )
+        .value;
+
+
+    product.description =
+        document
+        .getElementById(
+            "editDescription"
+        )
+        .value
+        .trim();
+
+
+    product.stock =
+        Number(
+            document
+            .getElementById(
+                "editStock"
+            )
+            .value
+        );
+
+
+    if (!product.images) {
+
+        product.images = [
+            product.image
+        ];
+
+    }
+
+
+    product.image =
+        product.images[0];
+
+
+    products[index] =
+        product;
+
+
+    localStorage.setItem(
+        "products",
+        JSON.stringify(products)
+    );
+
+
+    showAdminProducts();
+
+    updateDashboard();
+
+
+    alert(
+        "✅ Product updated successfully!"
+    );
+
+
+    cancelEdit();
+
+}
+
+
+
+// ========================================
+// CANCEL EDIT
+// ========================================
+
+function cancelEdit() {
+
+    document.getElementById(
+        "editBox"
+    ).style.display = "none";
+
+}
+
+
+
+// ========================================
+// START ADMIN
+// ========================================
+
+showAdminProducts();
+
+updateDashboard();
+
+
+</script>
+
+
+</body>
+
+</html>

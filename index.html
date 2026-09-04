@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Supreme Craft India | Premium Furniture</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header class="site-header">
+
+    <div class="logo">
+        SUPREME CRAFT <span>INDIA</span>
+    </div>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#products">Products</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <a href="cart.html" class="cart-link">
+        🛒 Cart
+        <span id="cartCount">0</span>
+    </a>
+
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<section id="home" class="hero">
+
+    <div class="hero-slider">
+
+        <img
+            id="heroImage"
+            src="images/image1.jpg"
+            alt="Supreme Craft India Furniture"
+        >
+
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+
+            <p class="small-title">
+                PREMIUM FURNITURE
+            </p>
+
+            <h1>
+                Crafted for<br>
+                Modern Living
+            </h1>
+
+            <p>
+                Discover premium furniture designed
+                with quality, comfort and timeless style.
+            </p>
+
+            <a href="#products" class="btn">
+                Explore Collection
+            </a>
+
+        </div>
+
+        <button
+            class="hero-prev"
+            id="heroPrev"
+            onclick="changeHeroImage(-1)"
+        >
+            ❮
+        </button>
+
+        <button
+            class="hero-next"
+            id="heroNext"
+            onclick="changeHeroImage(1)"
+        >
+            ❯
+        </button>
+
+        <div
+            class="hero-dots"
+            id="heroDots"
+        ></div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PRODUCTS ================= -->
+
+<section id="products" class="products">
+
+    <p class="small-title">
+        OUR COLLECTION
+    </p>
+
+    <h2>
+        Premium Furniture
+    </h2>
+
+    <div class="categories">
+
+        <button onclick="filterProducts('all')">
+            All
+        </button>
+
+        <button onclick="filterProducts('sofa')">
+            Sofas
+        </button>
+
+        <button onclick="filterProducts('chair')">
+            Chairs
+        </button>
+
+        <button onclick="filterProducts('table')">
+            Tables
+        </button>
+
+        <button onclick="filterProducts('bed')">
+            Beds
+        </button>
+
+    </div>
+
+    <div
+        class="product-container"
+        id="productContainer"
+    ></div>
+
+</section>
+
+
+<!-- ================= ABOUT ================= -->
+
+<section id="about" class="about">
+
+    <p class="small-title">
+        ABOUT US
+    </p>
+
+    <h2>
+        Supreme Craft India
+    </h2>
+
+    <p>
+        We create premium furniture combining
+        traditional craftsmanship with modern design.
+    </p>
+
+</section>
+
+
+<!-- ================= CONTACT ================= -->
+
+<section id="contact" class="contact">
+
+    <h2>
+        Contact Us
+    </h2>
+
+    <p>📞 +91 9509393894</p>
+
+    <p>📧 info@supremecraftindia.com</p>
+
+    <p>📍 Rajasthan, India</p>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <h3>
+        SUPREME CRAFT INDIA
+    </h3>
+
+    <p>
+        Premium Furniture • Crafted with Excellence
+    </p>
+
+    <p>
+        © 2026 Supreme Craft India
+    </p>
+
+</footer>
+
+
+<!-- ================= FLOATING BUTTONS ================= -->
+
+<div class="floating-buttons">
+
+    <a
+        href="https://wa.me/919509393894"
+        target="_blank"
+        class="float whatsapp"
+    >
+        💬
+    </a>
+
+    <a
+        href="https://www.instagram.com/"
+        target="_blank"
+        class="float instagram"
+    >
+        📸
+    </a>
+
+    <a
+        href="tel:+919509393894"
+        class="float phone"
+    >
+        ☎
+    </a>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>

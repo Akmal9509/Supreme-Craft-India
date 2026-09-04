@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Checkout | Supreme Craft India</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        SUPREME CRAFT <span>INDIA</span>
+    </div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="index.html#products">Products</a>
+        <a href="cart.html">🛒 Cart</a>
+    </nav>
+
+</header>
+
+
+<section class="checkout">
+
+    <div class="checkout-box">
+
+        <p class="small-title">SUPREME CRAFT INDIA</p>
+
+        <h1>Checkout</h1>
+
+        <form id="checkoutForm">
+
+            <label>Full Name</label>
+            <input
+                type="text"
+                id="name"
+                placeholder="Enter your name"
+                required
+            >
+
+
+            <label>Mobile Number</label>
+            <input
+                type="tel"
+                id="phone"
+                placeholder="Enter mobile number"
+                maxlength="10"
+                required
+            >
+
+
+            <label>Delivery Address</label>
+            <textarea
+                id="address"
+                placeholder="Enter complete delivery address"
+                rows="5"
+                required
+            ></textarea>
+
+
+            <label>Payment Method</label>
+
+            <select id="payment" required>
+
+                <option value="">
+                    Select Payment Method
+                </option>
+
+                <option value="Cash on Delivery">
+                    Cash on Delivery
+                </option>
+
+                <option value="UPI">
+                    UPI
+                </option>
+
+                <option value="Online Payment">
+                    Online Payment
+                </option>
+
+            </select>
+
+
+            <div class="order-summary">
+
+                <h2>Order Summary</h2>
+
+                <div id="checkoutItems"></div>
+
+                <h3>
+                    Total:
+                    ₹<span id="checkoutTotal">0</span>
+                </h3>
+
+            </div>
+
+
+            <button type="submit" class="place-order">
+                📲 Place Order on WhatsApp
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<script>
+
+let cart =
+    JSON.parse(localStorage.getItem("cart")) || [];
+
+
+function showOrderSummary() {
+
+    let items =
+        document.getElementById("checkoutItems");
+
+    let total = 0;
+
+    items.innerHTML = "";
+
+
+    cart.forEach(product => {
+
+        let productTotal =
+            product.price * product.quantity;
+
+        total += productTotal;
+
+
+        items.innerHTML += `
+            <p>
+                ${product.name}
+                × ${product.quantity}
+                — ₹${productTotal.toLocaleString("en-IN")}
+            </p>
+        `;
+
+    });
+
+
+    document.getElementById("checkoutTotal").innerText =
+        total.toLocaleString("en-IN");
+}
+
+
+showOrderSummary();
+
+
+document.getElementById("checkoutForm")
+.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+
+    if (cart.length === 0) {
+
+        alert("Your cart is empty!");
+
+        window.location.href = "index.html";
+
+        return;
+    }
+
+
+    let name =
+        document.getElementById("name").value;
+
+    let phone =
+        document.getElementById("phone").value;
+
+    let address =
+        document.getElementById("address").value;
+
+    let payment =
+        document.getElementById("payment").value;
+
+
+    let total = cart.reduce(
+        (sum, product) =>
+        sum + product.price * product.quantity,
+        0
+    );
+
+
+    let orderMessage =
+        "🛋️ *NEW ORDER - SUPREME CRAFT INDIA*%0A%0A" +
+
+        "*Customer Details*%0A" +
+        "Name: " + name + "%0A" +
+        "Mobile: " + phone + "%0A" +
+        "Address: " + address + "%0A%0A" +
+
+        "*Products*%0A";
+
+
+    cart.forEach(product => {
+
+        orderMessage +=
+            product.name +
+            " × " +
+            product.quantity +
+            " = ₹" +
+            (product.price * product.quantity) +
+            "%0A";
+
+    });
+
+
+    orderMessage +=
+        "%0A*Total: ₹" +
+        total +
+        "*%0A" +
+
+        "Payment: " +
+        payment;
+
+
+    // YOUR WHATSAPP NUMBER
+    let whatsappNumber = "919999999999";
+
+
+    let whatsappURL =
+        "https://wa.me/" +
+        whatsappNumber +
+        "?text=" +
+        orderMessage;
+
+
+    window.open(
+        whatsappURL,
+        "_blank"
+    );
+
+});
+
+</script>
+
+</body>
+</html>

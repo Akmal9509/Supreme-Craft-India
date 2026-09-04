@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Cart | Supreme Craft India</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        /* ========================================
+           CART PAGE
+        ======================================== */
+
+        .cart-page {
+            max-width: 1100px;
+            margin: 60px auto;
+            padding: 20px;
+        }
+
+        .cart-page h1 {
+            margin-bottom: 30px;
+            font-size: 38px;
+        }
+
+
+        /* ========================================
+           CART ITEM
+        ======================================== */
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+
+            padding: 20px;
+            margin-bottom: 15px;
+
+            border: 1px solid #ddd;
+            border-radius: 12px;
+
+            background: #fff;
+        }
+
+
+        .cart-item-image {
+            width: 130px;
+            height: 110px;
+
+            object-fit: contain;
+
+            background: #f7f7f7;
+
+            border-radius: 8px;
+        }
+
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+
+        .cart-item-info h3 {
+            margin: 0 0 8px;
+            font-size: 20px;
+        }
+
+
+        .cart-item-info p {
+            margin: 5px 0;
+            color: #666;
+        }
+
+
+        .cart-item-price {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+
+        /* ========================================
+           QUANTITY
+        ======================================== */
+
+        .cart-quantity {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+
+        .cart-quantity button {
+            width: 35px;
+            height: 35px;
+
+            border: 1px solid #ccc;
+
+            background: white;
+
+            cursor: pointer;
+
+            font-size: 20px;
+
+            border-radius: 5px;
+        }
+
+
+        .cart-quantity span {
+            min-width: 25px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+
+        /* ========================================
+           REMOVE
+        ======================================== */
+
+        .remove-cart-btn {
+            border: none;
+
+            background: #d00000;
+
+            color: white;
+
+            padding: 9px 12px;
+
+            border-radius: 5px;
+
+            cursor: pointer;
+        }
+
+
+        /* ========================================
+           CART SUMMARY
+        ======================================== */
+
+        .cart-summary {
+
+            margin-top: 30px;
+
+            padding: 25px;
+
+            border-radius: 12px;
+
+            background: #f7f7f7;
+
+            text-align: right;
+        }
+
+
+        .cart-summary h2 {
+            margin: 0 0 15px;
+        }
+
+
+        .cart-total {
+            font-size: 25px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+
+        .checkout-btn {
+
+            display: inline-block;
+
+            padding: 14px 25px;
+
+            background: #168000;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-size: 16px;
+
+            margin-left: 8px;
+        }
+
+
+        .clear-cart-btn {
+
+            padding: 14px 25px;
+
+            background: #d00000;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-size: 16px;
+        }
+
+
+        /* ========================================
+           EMPTY CART
+        ======================================== */
+
+        .empty-cart {
+
+            text-align: center;
+
+            padding: 80px 20px;
+
+            background: #f7f7f7;
+
+            border-radius: 12px;
+        }
+
+
+        .empty-cart h2 {
+            margin-bottom: 10px;
+        }
+
+
+        .continue-shopping {
+
+            display: inline-block;
+
+            margin-top: 20px;
+
+            padding: 13px 22px;
+
+            background: #222;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 6px;
+        }
+
+
+        /* ========================================
+           MOBILE
+        ======================================== */
+
+        @media (max-width: 700px) {
+
+            .cart-page {
+                margin: 30px auto;
+                padding: 15px;
+            }
+
+
+            .cart-page h1 {
+                font-size: 30px;
+            }
+
+
+            .cart-item {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+            }
+
+
+            .cart-item-image {
+
+                width: 100%;
+
+                height: 220px;
+
+            }
+
+
+            .cart-item-info {
+
+                width: 100%;
+
+            }
+
+
+            .cart-quantity {
+
+                margin: 10px 0;
+
+            }
+
+
+            .cart-summary {
+
+                text-align: left;
+
+            }
+
+
+            .checkout-btn,
+            .clear-cart-btn {
+
+                width: 100%;
+
+                margin: 5px 0;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ========================================
+     HEADER
+======================================== -->
+
+<header>
+
+    <div class="logo">
+
+        SUPREME CRAFT
+        <span>INDIA</span>
+
+    </div>
+
+
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="index.html#products">
+            Products
+        </a>
+
+        <a href="index.html#about">
+            About
+        </a>
+
+        <a href="index.html#contact">
+            Contact
+        </a>
+
+    </nav>
+
+
+    <a href="cart.html" class="cart-link">
+
+        🛒 Cart
+
+        <span id="cartCount">
+            0
+        </span>
+
+    </a>
+
+</header>
+
+
+
+<!-- ========================================
+     CART
+======================================== -->
+
+<section class="cart-page">
+
+    <p class="small-title">
+        YOUR SHOPPING CART
+    </p>
+
+
+    <h1>
+        Shopping Cart
+    </h1>
+
+
+    <!-- CART PRODUCTS -->
+
+    <div id="cartContainer"></div>
+
+
+    <!-- CART SUMMARY -->
+
+    <div
+        id="cartSummary"
+        class="cart-summary"
+        style="display:none;"
+    >
+
+        <h2>
+            Order Summary
+        </h2>
+
+
+        <div class="cart-total">
+
+            Total:
+
+            ₹<span id="cartTotal">
+                0
+            </span>
+
+        </div>
+
+
+        <button
+            class="clear-cart-btn"
+            onclick="clearCart()"
+        >
+
+            🗑️ Clear Cart
+
+        </button>
+
+
+        <button
+            class="checkout-btn"
+            onclick="checkoutWhatsApp()"
+        >
+
+            📱 Order on WhatsApp
+
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- ========================================
+     FOOTER
+======================================== -->
+
+<footer>
+
+    <h3>
+        SUPREME CRAFT INDIA
+    </h3>
+
+
+    <p>
+        Premium Furniture • Crafted with Excellence
+    </p>
+
+
+    <p>
+        © 2026 Supreme Craft India
+    </p>
+
+</footer>
+
+
+
+<script>
+
+
+// ========================================
+// GET CART
+// ========================================
+
+function getCart() {
+
+    return JSON.parse(
+        localStorage.getItem("cart")
+    ) || [];
+
+}
+
+
+
+// ========================================
+// SAVE CART
+// ========================================
+
+function saveCart(cart) {
+
+    localStorage.setItem(
+        "cart",
+        JSON.stringify(cart)
+    );
+
+}
+
+
+
+// ========================================
+// SHOW CART
+// ========================================
+
+function displayCart() {
+
+    const cart =
+        getCart();
+
+
+    const container =
+        document.getElementById(
+            "cartContainer"
+        );
+
+
+    const summary =
+        document.getElementById(
+            "cartSummary"
+        );
+
+
+    container.innerHTML = "";
+
+
+    // ====================================
+    // EMPTY CART
+    // ====================================
+
+    if (cart.length === 0) {
+
+        summary.style.display =
+            "none";
+
+
+        container.innerHTML = `
+
+            <div class="empty-cart">
+
+                <h2>
+                    🛒 Your Cart is Empty
+                </h2>
+
+                <p>
+                    You haven't added any products yet.
+                </p>
+
+
+                <a
+                    href="index.html#products"
+                    class="continue-shopping"
+                >
+                    Continue Shopping
+                </a>
+
+            </div>
+
+        `;
+
+
+        updateCartCount();
+
+        return;
+
+    }
+
+
+
+    // ====================================
+    // SHOW ITEMS
+    // ====================================
+
+    summary.style.display =
+        "block";
+
+
+    let total = 0;
+
+
+    cart.forEach(
+        function(item, index) {
+
+
+            const price =
+                Number(item.price) || 0;
+
+
+            const quantity =
+                Number(item.quantity) || 1;
+
+
+            const itemTotal =
+                price * quantity;
+
+
+            total += itemTotal;
+
+
+
+            // Find product image
+
+            let image =
+                "images/image1.jpg";
+
+
+            const products =
+                JSON.parse(
+                    localStorage.getItem(
+                        "products"
+                    )
+                ) || [];
+
+
+            const product =
+                products.find(
+                    p =>
+                    p.name === item.name
+                );
+
+
+            if (
+                product &&
+                product.images &&
+                product.images.length
+            ) {
+
+                image =
+                    product.images[0];
+
+            }
+            else if (
+                product &&
+                product.image
+            ) {
+
+                image =
+                    product.image;
+
+            }
+
+
+
+            container.innerHTML += `
+
+                <div class="cart-item">
+
+
+                    <!-- IMAGE -->
+
+                    <img
+                        class="cart-item-image"
+                        src="${image}"
+                        alt="${item.name}"
+                    >
+
+
+                    <!-- INFO -->
+
+                    <div class="cart-item-info">
+
+                        <h3>
+                            ${escapeHTML(
+                                item.name
+                            )}
+                        </h3>
+
+
+                        <p>
+                            Price:
+                            ₹${price.toLocaleString(
+                                "en-IN"
+                            )}
+                        </p>
+
+
+                        <p class="cart-item-price">
+
+                            Subtotal:
+                            ₹${itemTotal.toLocaleString(
+                                "en-IN"
+                            )}
+
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- QUANTITY -->
+
+                    <div class="cart-quantity">
+
+
+                        <button
+                            onclick="changeCartQuantity(
+                                ${index},
+                                -1
+                            )"
+                        >
+                            −
+                        </button>
+
+
+                        <span>
+                            ${quantity}
+                        </span>
+
+
+                        <button
+                            onclick="changeCartQuantity(
+                                ${index},
+                                1
+                            )"
+                        >
+                            +
+                        </button>
+
+
+                    </div>
+
+
+
+                    <!-- REMOVE -->
+
+                    <button
+                        class="remove-cart-btn"
+                        onclick="removeFromCart(
+                            ${index}
+                        )"
+                    >
+
+                        🗑️ Remove
+
+                    </button>
+
+
+                </div>
+
+            `;
+
+        }
+    );
+
+
+
+    // ====================================
+    // TOTAL
+    // ====================================
+
+    document.getElementById(
+        "cartTotal"
+    ).innerText =
+        total.toLocaleString(
+            "en-IN"
+        );
+
+
+    updateCartCount();
+
+}
+
+
+
+// ========================================
+// CHANGE QUANTITY
+// ========================================
+
+function changeCartQuantity(
+    index,
+    amount
+) {
+
+    let cart =
+        getCart();
+
+
+    if (!cart[index]) {
+        return;
+    }
+
+
+    cart[index].quantity =
+        Number(
+            cart[index].quantity
+        ) + amount;
+
+
+    // Minimum 1
+
+    if (
+        cart[index].quantity < 1
+    ) {
+
+        cart[index].quantity = 1;
+
+    }
+
+
+    saveCart(cart);
+
+
+    displayCart();
+
+}
+
+
+
+// ========================================
+// REMOVE PRODUCT
+// ========================================
+
+function removeFromCart(index) {
+
+    let cart =
+        getCart();
+
+
+    if (!cart[index]) {
+        return;
+    }
+
+
+    const confirmRemove =
+        confirm(
+            "Kya aap is product ko cart se remove karna chahte hain?"
+        );
+
+
+    if (!confirmRemove) {
+        return;
+    }
+
+
+    cart.splice(
+        index,
+        1
+    );
+
+
+    saveCart(cart);
+
+
+    displayCart();
+
+
+    alert(
+        "✅ Product removed from cart!"
+    );
+
+}
+
+
+
+// ========================================
+// CLEAR CART
+// ========================================
+
+function clearCart() {
+
+    const cart =
+        getCart();
+
+
+    if (cart.length === 0) {
+        return;
+    }
+
+
+    const confirmClear =
+        confirm(
+            "Kya aap poora cart clear karna chahte hain?"
+        );
+
+
+    if (!confirmClear) {
+        return;
+    }
+
+
+    localStorage.removeItem(
+        "cart"
+    );
+
+
+    displayCart();
+
+
+    alert(
+        "✅ Cart cleared!"
+    );
+
+}
+
+
+
+// ========================================
+// UPDATE CART NUMBER
+// ========================================
+
+function updateCartCount() {
+
+    const cart =
+        getCart();
+
+
+    let totalItems =
+        cart.reduce(
+            function(total, item) {
+
+                return total +
+                    Number(
+                        item.quantity || 0
+                    );
+
+            },
+            0
+        );
+
+
+    const cartCount =
+        document.getElementById(
+            "cartCount"
+        );
+
+
+    if (cartCount) {
+
+        cartCount.innerText =
+            totalItems;
+
+    }
+
+}
+
+
+
+// ========================================
+// WHATSAPP CHECKOUT
+// ========================================
+
+function checkoutWhatsApp() {
+
+    const cart =
+        getCart();
+
+
+    if (cart.length === 0) {
+
+        alert(
+            "❌ Your cart is empty."
+        );
+
+        return;
+
+    }
+
+
+    const phoneNumber =
+        "919509393894";
+
+
+    let message =
+        "Hello Supreme Craft India,%0A%0A";
+
+
+    message +=
+        "I want to place an order:%0A%0A";
+
+
+    let total = 0;
+
+
+    cart.forEach(
+        function(item, index) {
+
+            const price =
+                Number(item.price) || 0;
+
+
+            const quantity =
+                Number(item.quantity) || 1;
+
+
+            const subtotal =
+                price * quantity;
+
+
+            total += subtotal;
+
+
+            message +=
+                (index + 1) +
+                ". " +
+                item.name +
+                "%0A";
+
+
+            message +=
+                "Quantity: " +
+                quantity +
+                "%0A";
+
+
+            message +=
+                "Price: ₹" +
+                price.toLocaleString(
+                    "en-IN"
+                ) +
+                "%0A";
+
+
+            message +=
+                "Subtotal: ₹" +
+                subtotal.toLocaleString(
+                    "en-IN"
+                ) +
+                "%0A%0A";
+
+        }
+    );
+
+
+    message +=
+        "Total: ₹" +
+        total.toLocaleString(
+            "en-IN"
+        ) +
+        "%0A%0A";
+
+
+    message +=
+        "Please provide more details.";
+
+
+    const whatsappURL =
+        "https://wa.me/" +
+        phoneNumber +
+        "?text=" +
+        message;
+
+
+    window.open(
+        whatsappURL,
+        "_blank"
+    );
+
+}
+
+
+
+// ========================================
+// ESCAPE HTML
+// ========================================
+
+function escapeHTML(text) {
+
+    return String(text)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+
+// ========================================
+// START
+// ========================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        displayCart();
+
+        updateCartCount();
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>
