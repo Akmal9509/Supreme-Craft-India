@@ -1,23 +1,90 @@
-// ========================================
+// ======================================================
 // SUPREME CRAFT INDIA
-// COMPLETE MAIN JAVASCRIPT
-// ========================================
+// FIRESTORE CONNECTED MAIN JAVASCRIPT
+// ======================================================
 
 
-// ========================================
+// ======================================================
+// FIREBASE IMPORTS
+// ======================================================
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getFirestore,
+    collection,
+    getDocs,
+    addDoc,
+    deleteDoc,
+    doc,
+    updateDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+// ======================================================
+// FIREBASE CONFIG
+// ======================================================
+
+const firebaseConfig = {
+
+    apiKey: "AIzaSyAc9iuAS9RA1orVpkwdSomkSiS07QLe0Ak",
+
+    authDomain:
+        "supreme-craft-india.firebaseapp.com",
+
+    projectId:
+        "supreme-craft-india",
+
+    storageBucket:
+        "supreme-craft-india.firebasestorage.app",
+
+    messagingSenderId:
+        "9064158877",
+
+    appId:
+        "1:9064158877:web:fa4319ebc7cf50a2fe2674",
+
+    measurementId:
+        "G-RQ9Z44PEX5"
+};
+
+
+// ======================================================
+// INITIALIZE FIREBASE
+// ======================================================
+
+const app =
+    initializeApp(firebaseConfig);
+
+const db =
+    getFirestore(app);
+
+
+// ======================================================
+// GLOBAL PRODUCTS
+// ======================================================
+
+let products = [];
+
+
+// ======================================================
 // WHATSAPP ORDER
-// ========================================
+// ======================================================
 
 function orderProduct(productName, price) {
 
-    const phoneNumber = "919509393894";
+    const phoneNumber =
+        "919509393894";
 
     const message =
-        "Hello Supreme Craft India,\n\n" +
-        "I want to order:\n" +
-        "Product: " + productName + "\n" +
-        "Price: ₹" + price + "\n\n" +
-        "Please provide more details.";
+        `Hello Supreme Craft India,
+
+I want to order:
+
+Product: ${productName}
+Price: ₹${price}
+
+Please provide more details.`;
 
     const whatsappURL =
         "https://wa.me/" +
@@ -25,18 +92,28 @@ function orderProduct(productName, price) {
         "?text=" +
         encodeURIComponent(message);
 
-    window.open(whatsappURL, "_blank");
+    window.open(
+        whatsappURL,
+        "_blank"
+    );
 }
 
 
-// ========================================
+// ======================================================
 // CART
-// ========================================
+// ======================================================
 
-function addToCart(productName, price, quantity = 1) {
+function addToCart(
+    productName,
+    price,
+    image = ""
+) {
 
     let cart =
-        JSON.parse(localStorage.getItem("cart")) || [];
+        JSON.parse(
+            localStorage.getItem("cart")
+        ) || [];
+
 
     let existingProduct =
         cart.find(
@@ -44,27 +121,38 @@ function addToCart(productName, price, quantity = 1) {
                 product.name === productName
         );
 
+
     if (existingProduct) {
 
-        existingProduct.quantity +=
-            Number(quantity);
+        existingProduct.quantity++;
 
     } else {
 
         cart.push({
-            name: productName,
-            price: Number(price),
-            quantity: Number(quantity)
-        });
 
+            name:
+                productName,
+
+            price:
+                Number(price),
+
+            image:
+                image,
+
+            quantity:
+                1
+        });
     }
+
 
     localStorage.setItem(
         "cart",
         JSON.stringify(cart)
     );
 
+
     updateCartCount();
+
 
     alert(
         productName +
@@ -73,9 +161,9 @@ function addToCart(productName, price, quantity = 1) {
 }
 
 
-// ========================================
+// ======================================================
 // CART COUNT
-// ========================================
+// ======================================================
 
 function updateCartCount() {
 
@@ -84,9 +172,10 @@ function updateCartCount() {
             localStorage.getItem("cart")
         ) || [];
 
+
     const totalItems =
         cart.reduce(
-            (total, product) => {
+            function(total, product) {
 
                 return total +
                     Number(
@@ -97,50 +186,144 @@ function updateCartCount() {
             0
         );
 
+
     const cartCount =
         document.getElementById(
             "cartCount"
         );
 
+
     if (cartCount) {
 
         cartCount.innerText =
             totalItems;
-
     }
 }
 
 
-// ========================================
-// GET PRODUCTS
-// ========================================
+// ======================================================
+// LOAD PRODUCTS FROM FIRESTORE
+// ======================================================
 
-function getProducts() {
-
-    return JSON.parse(
-        localStorage.getItem("products")
-    ) || [];
-
-}
-
-
-// ========================================
-// LOAD PRODUCTS
-// ========================================
-
-function loadProducts() {
-
-    const products =
-        getProducts();
+async function loadProducts() {
 
     const container =
         document.getElementById(
             "productContainer"
         );
 
+
     if (!container) {
+
         return;
     }
+
+
+    container.innerHTML = `
+
+        <div class="loading-products">
+
+            <h3>
+                Loading Products...
+            </h3>
+
+            <p>
+                Please wait.
+            </p>
+
+        </div>
+
+    `;
+
+
+    try {
+
+        const querySnapshot =
+            await getDocs(
+                collection(
+                    db,
+                    "products"
+                )
+            );
+
+
+        products = [];
+
+
+        querySnapshot.forEach(
+            function(documentSnapshot) {
+
+                products.push({
+
+                    id:
+                        documentSnapshot.id,
+
+                    ...documentSnapshot.data()
+
+                });
+
+            }
+        );
+
+
+        console.log(
+            "Firestore Products:",
+            products
+        );
+
+
+        displayProducts();
+
+
+    } catch (error) {
+
+        console.error(
+            "Firestore Error:",
+            error
+        );
+
+
+        container.innerHTML = `
+
+            <div class="no-products">
+
+                <h3>
+                    Products Load Nahi Hue
+                </h3>
+
+                <p>
+                    Firebase connection ya
+                    Firestore Rules check karein.
+                </p>
+
+                <small>
+                    ${error.message}
+                </small>
+
+            </div>
+
+        `;
+    }
+}
+
+
+// ======================================================
+// DISPLAY PRODUCTS
+// ======================================================
+
+function displayProducts() {
+
+    const container =
+        document.getElementById(
+            "productContainer"
+        );
+
+
+    if (!container) {
+
+        return;
+    }
+
 
     container.innerHTML = "";
 
@@ -156,7 +339,7 @@ function loadProducts() {
                 </h3>
 
                 <p>
-                    Please add products from Admin Panel.
+                    Admin Panel se product add karein.
                 </p>
 
             </div>
@@ -176,7 +359,9 @@ function loadProducts() {
 
 
             const price =
-                Number(product.price) || 0;
+                Number(
+                    product.price || 0
+                );
 
 
             const category =
@@ -193,14 +378,18 @@ function loadProducts() {
 
 
             if (
-                Array.isArray(product.images) &&
+                Array.isArray(
+                    product.images
+                ) &&
                 product.images.length > 0
             ) {
 
                 images =
                     product.images;
 
-            } else if (
+            }
+
+            else if (
                 product.image
             ) {
 
@@ -208,12 +397,13 @@ function loadProducts() {
                     product.image
                 ];
 
-            } else {
+            }
+
+            else {
 
                 images = [
                     "images/image1.jpg"
                 ];
-
             }
 
 
@@ -229,13 +419,14 @@ function loadProducts() {
                     <div class="product-slider">
 
                         <a
-                            href="product.html?id=${index}"
+                            href="product.html?id=${product.id}"
                         >
 
                             <img
                                 id="productImage${index}"
                                 src="${images[0]}"
                                 alt="${name}"
+                                onerror="this.src='images/image1.jpg'"
                             >
 
                         </a>
@@ -252,6 +443,7 @@ function loadProducts() {
                                     ❮
                                 </button>
 
+
                                 <button
                                     class="slider-next"
                                     onclick="changeProductImage(${index}, 1)"
@@ -259,10 +451,12 @@ function loadProducts() {
                                     ❯
                                 </button>
 
+
                                 <div
                                     class="slider-dots"
                                     id="sliderDots${index}"
-                                ></div>
+                                >
+                                </div>
 
                             `
                             : ""
@@ -271,23 +465,23 @@ function loadProducts() {
                     </div>
 
 
-                    <!-- PRODUCT INFO -->
+                    <!-- PRODUCT INFORMATION -->
 
                     <div class="product-info">
 
                         <span>
-                            ${escapeHTML(
-                                category.toUpperCase()
-                            )}
+                            ${category.toUpperCase()}
                         </span>
 
 
                         <h3>
 
                             <a
-                                href="product.html?id=${index}"
+                                href="product.html?id=${product.id}"
                             >
+
                                 ${escapeHTML(name)}
+
                             </a>
 
                         </h3>
@@ -299,14 +493,18 @@ function loadProducts() {
 
 
                         <h4>
+
                             ₹${price.toLocaleString("en-IN")}
+
                         </h4>
 
 
                         <button
-                            onclick="addProductFromAdmin(${index})"
+                            onclick="addProductFromFirestore(${index})"
                         >
+
                             🛒 Add to Cart
+
                         </button>
 
                     </div>
@@ -316,113 +514,143 @@ function loadProducts() {
             `;
 
 
-            if (images.length > 1) {
+            if (
+                images.length > 1
+            ) {
 
                 createSliderDots(
                     index,
                     images.length
                 );
-
             }
 
         }
     );
-
 }
 
 
-// ========================================
+// ======================================================
 // ESCAPE HTML
-// ========================================
+// ======================================================
 
 function escapeHTML(text) {
 
     return String(text)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
 
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 }
 
 
-// ========================================
-// PRODUCT IMAGE SLIDER
-// ========================================
+// ======================================================
+// PRODUCT SLIDER
+// ======================================================
 
 let productSliderIndexes = {};
 
 
-// ========================================
+// ======================================================
 // CHANGE PRODUCT IMAGE
-// ========================================
+// ======================================================
 
 function changeProductImage(
     productIndex,
     direction
 ) {
 
-    const products =
-        getProducts();
-
     const product =
         products[productIndex];
 
+
     if (!product) {
+
         return;
     }
 
 
     let images =
-        Array.isArray(product.images) &&
-        product.images.length
+        Array.isArray(
+            product.images
+        )
         ? product.images
         : [product.image];
 
 
-    if (images.length <= 1) {
+    if (
+        images.length <= 1
+    ) {
+
         return;
     }
 
 
     if (
-        productSliderIndexes[productIndex]
-        === undefined
+        productSliderIndexes[
+            productIndex
+        ] === undefined
     ) {
 
-        productSliderIndexes[productIndex] = 0;
-
+        productSliderIndexes[
+            productIndex
+        ] = 0;
     }
 
 
-    productSliderIndexes[productIndex]
-        += direction;
+    productSliderIndexes[
+        productIndex
+    ] += direction;
 
 
     if (
-        productSliderIndexes[productIndex]
-        >= images.length
+        productSliderIndexes[
+            productIndex
+        ] >= images.length
     ) {
 
-        productSliderIndexes[productIndex] = 0;
-
+        productSliderIndexes[
+            productIndex
+        ] = 0;
     }
 
 
     if (
-        productSliderIndexes[productIndex]
-        < 0
+        productSliderIndexes[
+            productIndex
+        ] < 0
     ) {
 
-        productSliderIndexes[productIndex] =
-            images.length - 1;
-
+        productSliderIndexes[
+            productIndex
+        ] = images.length - 1;
     }
 
 
     const currentIndex =
-        productSliderIndexes[productIndex];
+        productSliderIndexes[
+            productIndex
+        ];
 
 
     const image =
@@ -436,7 +664,6 @@ function changeProductImage(
 
         image.src =
             images[currentIndex];
-
     }
 
 
@@ -444,13 +671,12 @@ function changeProductImage(
         productIndex,
         currentIndex
     );
-
 }
 
 
-// ========================================
+// ======================================================
 // CREATE PRODUCT DOTS
-// ========================================
+// ======================================================
 
 function createSliderDots(
     productIndex,
@@ -463,9 +689,12 @@ function createSliderDots(
             productIndex
         );
 
+
     if (!container) {
+
         return;
     }
+
 
     container.innerHTML = "";
 
@@ -476,34 +705,24 @@ function createSliderDots(
         i++
     ) {
 
-        const dot =
-            document.createElement(
-                "span"
-            );
+        container.innerHTML += `
 
-        dot.className =
-            "slider-dot";
+            <span
+                class="slider-dot ${
+                    i === 0
+                    ? "active"
+                    : ""
+                }"
+            ></span>
 
-
-        if (i === 0) {
-
-            dot.classList.add(
-                "active"
-            );
-
-        }
-
-
-        container.appendChild(dot);
-
+        `;
     }
-
 }
 
 
-// ========================================
+// ======================================================
 // UPDATE PRODUCT DOTS
-// ========================================
+// ======================================================
 
 function updateSliderDots(
     productIndex,
@@ -516,7 +735,9 @@ function updateSliderDots(
             productIndex
         );
 
+
     if (!container) {
+
         return;
     }
 
@@ -537,41 +758,50 @@ function updateSliderDots(
 
         }
     );
-
 }
 
 
-// ========================================
-// ADD ADMIN PRODUCT TO CART
-// ========================================
+// ======================================================
+// ADD FIRESTORE PRODUCT TO CART
+// ======================================================
 
-function addProductFromAdmin(index) {
-
-    const products =
-        getProducts();
+function addProductFromFirestore(
+    index
+) {
 
     const product =
         products[index];
 
+
     if (!product) {
+
         return;
     }
+
+
+    const images =
+        Array.isArray(
+            product.images
+        )
+        ? product.images
+        : [product.image];
 
 
     addToCart(
         product.name,
         product.price,
-        1
+        images[0]
     );
-
 }
 
 
-// ========================================
+// ======================================================
 // CATEGORY FILTER
-// ========================================
+// ======================================================
 
-function filterProducts(category) {
+function filterProducts(
+    category
+) {
 
     const productCards =
         document.querySelectorAll(
@@ -584,7 +814,8 @@ function filterProducts(category) {
 
             if (
                 category === "all" ||
-                product.dataset.category === category
+                product.dataset.category ===
+                    category
             ) {
 
                 product.style.display =
@@ -594,22 +825,21 @@ function filterProducts(category) {
 
                 product.style.display =
                     "none";
-
             }
 
         }
     );
-
 }
 
 
-// ========================================
+// ======================================================
 // HERO SLIDER
-// ========================================
+// ======================================================
 
 const heroImages = [
 
     "images/image1.jpg",
+
     "images/image2.jpg"
 
 ];
@@ -618,9 +848,9 @@ const heroImages = [
 let currentHeroImage = 0;
 
 
-// ========================================
+// ======================================================
 // SHOW HERO
-// ========================================
+// ======================================================
 
 function showHeroImage() {
 
@@ -629,25 +859,30 @@ function showHeroImage() {
             "heroImage"
         );
 
+
     if (!heroImage) {
+
         return;
     }
 
 
     heroImage.src =
-        heroImages[currentHeroImage];
+        heroImages[
+            currentHeroImage
+        ];
 
 
     updateHeroDots();
-
 }
 
 
-// ========================================
+// ======================================================
 // CHANGE HERO
-// ========================================
+// ======================================================
 
-function changeHeroImage(direction) {
+function changeHeroImage(
+    direction
+) {
 
     currentHeroImage +=
         direction;
@@ -659,7 +894,6 @@ function changeHeroImage(direction) {
     ) {
 
         currentHeroImage = 0;
-
     }
 
 
@@ -669,18 +903,16 @@ function changeHeroImage(direction) {
 
         currentHeroImage =
             heroImages.length - 1;
-
     }
 
 
     showHeroImage();
-
 }
 
 
-// ========================================
-// CREATE HERO DOTS
-// ========================================
+// ======================================================
+// HERO DOTS
+// ======================================================
 
 function createHeroDots() {
 
@@ -689,7 +921,9 @@ function createHeroDots() {
             "heroDots"
         );
 
+
     if (!dots) {
+
         return;
     }
 
@@ -710,12 +944,13 @@ function createHeroDots() {
                 "hero-dot";
 
 
-            if (index === 0) {
+            if (
+                index === 0
+            ) {
 
                 dot.classList.add(
                     "active"
                 );
-
             }
 
 
@@ -732,17 +967,18 @@ function createHeroDots() {
             );
 
 
-            dots.appendChild(dot);
+            dots.appendChild(
+                dot
+            );
 
         }
     );
-
 }
 
 
-// ========================================
+// ======================================================
 // UPDATE HERO DOTS
-// ========================================
+// ======================================================
 
 function updateHeroDots() {
 
@@ -757,27 +993,30 @@ function updateHeroDots() {
 
             dot.classList.toggle(
                 "active",
-                index === currentHeroImage
+                index ===
+                    currentHeroImage
             );
 
         }
     );
-
 }
 
 
-// ========================================
+// ======================================================
 // START WEBSITE
-// ========================================
+// ======================================================
 
 document.addEventListener(
     "DOMContentLoaded",
     function() {
 
+        // Load Firestore products
         loadProducts();
 
+        // Cart
         updateCartCount();
 
+        // Hero
         createHeroDots();
 
         showHeroImage();
@@ -786,24 +1025,38 @@ document.addEventListener(
 );
 
 
-// ========================================
+// ======================================================
 // HERO AUTO SLIDER
-// ========================================
+// ======================================================
 
 setInterval(
     function() {
-
-        const heroImage =
-            document.getElementById(
-                "heroImage"
-            );
-
-        if (!heroImage) {
-            return;
-        }
 
         changeHeroImage(1);
 
     },
     5000
 );
+
+
+// ======================================================
+// MAKE FUNCTIONS AVAILABLE TO HTML
+// ======================================================
+
+window.changeProductImage =
+    changeProductImage;
+
+window.filterProducts =
+    filterProducts;
+
+window.addProductFromFirestore =
+    addProductFromFirestore;
+
+window.changeHeroImage =
+    changeHeroImage;
+
+window.orderProduct =
+    orderProduct;
+
+window.addToCart =
+    addToCart;

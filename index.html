@@ -226,7 +226,36 @@
 </div>
 
 
-<script src="script.js"></script>
+
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+        getFirestore,
+        collection,
+        getDocs
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAc9iuAS9RA1orVpkwdSomkSiS07QLe0Ak",
+        authDomain: "supreme-craft-india.firebaseapp.com",
+        projectId: "supreme-craft-india",
+        storageBucket: "supreme-craft-india.firebasestorage.app",
+        messagingSenderId: "9064158877",
+        appId: "1:9064158877:web:fa4319ebc7cf50a2fe2674",
+        measurementId: "G-RQ9Z44PEX5"
+    };
+
+    const app = initializeApp(firebaseConfig);
+
+    const db = getFirestore(app);
+
+    window.firebaseDB = db;
+    window.firebaseCollection = collection;
+    window.firebaseGetDocs = getDocs;
+</script>
+
+<script type="module" src="script.js"></script>
 
 </body>
 </html>
