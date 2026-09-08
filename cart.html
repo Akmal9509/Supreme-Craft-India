@@ -5,8 +5,10 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Cart | Supreme Craft India</title>
 
@@ -19,296 +21,285 @@
         ======================================== */
 
         .cart-page {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 60px auto;
             padding: 20px;
         }
 
-        .cart-page h1 {
-            margin-bottom: 30px;
-            font-size: 38px;
+        .cart-page-header {
+            margin-bottom: 35px;
         }
 
+        .cart-page-header .small-title {
+            margin-bottom: 8px;
+        }
+
+        .cart-page-header h1 {
+            font-size: 42px;
+            margin: 0;
+        }
+
+        .cart-layout {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 35px;
+            align-items: start;
+        }
 
         /* ========================================
-           CART ITEM
+           CART ITEMS
         ======================================== */
+
+        .cart-items {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
 
         .cart-item {
-            display: flex;
-            align-items: center;
+            display: grid;
+            grid-template-columns: 110px 1fr auto;
             gap: 20px;
-
-            padding: 20px;
-            margin-bottom: 15px;
-
-            border: 1px solid #ddd;
-            border-radius: 12px;
-
+            align-items: center;
+            padding: 18px;
             background: #fff;
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
         }
-
 
         .cart-item-image {
-            width: 130px;
-            height: 110px;
-
-            object-fit: contain;
-
-            background: #f7f7f7;
-
+            width: 110px;
+            height: 90px;
+            object-fit: cover;
             border-radius: 8px;
+            background: #f5f5f5;
         }
-
-
-        .cart-item-info {
-            flex: 1;
-        }
-
 
         .cart-item-info h3 {
-            margin: 0 0 8px;
-            font-size: 20px;
+            margin: 0 0 7px;
+            font-size: 19px;
         }
-
-
-        .cart-item-info p {
-            margin: 5px 0;
-            color: #666;
-        }
-
 
         .cart-item-price {
-            font-weight: bold;
-            font-size: 18px;
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 12px;
         }
 
-
-        /* ========================================
-           QUANTITY
-        ======================================== */
-
-        .cart-quantity {
+        .quantity-control {
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-
-        .cart-quantity button {
-            width: 35px;
-            height: 35px;
-
-            border: 1px solid #ccc;
-
-            background: white;
-
+        .quantity-control button {
+            width: 34px;
+            height: 34px;
+            border: 1px solid #ddd;
+            background: #fff;
+            border-radius: 6px;
             cursor: pointer;
-
-            font-size: 20px;
-
-            border-radius: 5px;
+            font-size: 18px;
         }
 
+        .quantity-control button:hover {
+            background: #f1f1f1;
+        }
 
-        .cart-quantity span {
+        .quantity-value {
             min-width: 25px;
             text-align: center;
-            font-weight: bold;
+            font-weight: 600;
         }
 
-
-        /* ========================================
-           REMOVE
-        ======================================== */
-
-        .remove-cart-btn {
-            border: none;
-
-            background: #d00000;
-
-            color: white;
-
-            padding: 9px 12px;
-
-            border-radius: 5px;
-
-            cursor: pointer;
-        }
-
-
-        /* ========================================
-           CART SUMMARY
-        ======================================== */
-
-        .cart-summary {
-
-            margin-top: 30px;
-
-            padding: 25px;
-
-            border-radius: 12px;
-
-            background: #f7f7f7;
-
+        .cart-item-total {
             text-align: right;
         }
 
+        .cart-item-total strong {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .remove-btn {
+            border: none;
+            background: #d00000;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .remove-btn:hover {
+            opacity: 0.85;
+        }
+
+        /* ========================================
+           SUMMARY
+        ======================================== */
+
+        .cart-summary {
+            background: #fafafa;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 25px;
+            position: sticky;
+            top: 20px;
+        }
 
         .cart-summary h2 {
-            margin: 0 0 15px;
+            margin-top: 0;
+            margin-bottom: 25px;
         }
 
-
-        .cart-total {
-            font-size: 25px;
-            font-weight: bold;
-            margin-bottom: 20px;
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 10px 0;
         }
 
+        .summary-total {
+            border-top: 1px solid #ddd;
+            margin-top: 10px;
+            padding-top: 18px;
+            font-size: 21px;
+            font-weight: 700;
+        }
 
         .checkout-btn {
-
-            display: inline-block;
-
-            padding: 14px 25px;
-
+            width: 100%;
+            border: none;
+            padding: 15px;
+            margin-top: 20px;
             background: #168000;
-
             color: white;
-
-            border: none;
-
-            border-radius: 6px;
-
+            border-radius: 7px;
             cursor: pointer;
-
             font-size: 16px;
-
-            margin-left: 8px;
+            font-weight: 600;
         }
 
-
-        .clear-cart-btn {
-
-            padding: 14px 25px;
-
-            background: #d00000;
-
-            color: white;
-
-            border: none;
-
-            border-radius: 6px;
-
-            cursor: pointer;
-
-            font-size: 16px;
+        .checkout-btn:hover {
+            opacity: 0.9;
         }
 
+        .continue-btn {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            margin-top: 12px;
+            padding: 13px;
+            border: 1px solid #222;
+            color: #222;
+            border-radius: 7px;
+        }
 
         /* ========================================
            EMPTY CART
         ======================================== */
 
         .empty-cart {
-
             text-align: center;
-
-            padding: 80px 20px;
-
-            background: #f7f7f7;
-
+            padding: 70px 20px;
+            border: 1px solid #eee;
             border-radius: 12px;
+            background: #fafafa;
         }
 
+        .empty-cart-icon {
+            font-size: 55px;
+            margin-bottom: 15px;
+        }
 
         .empty-cart h2 {
             margin-bottom: 10px;
         }
 
-
-        .continue-shopping {
-
-            display: inline-block;
-
-            margin-top: 20px;
-
-            padding: 13px 22px;
-
-            background: #222;
-
-            color: white;
-
-            text-decoration: none;
-
-            border-radius: 6px;
+        .empty-cart p {
+            color: #666;
+            margin-bottom: 25px;
         }
 
+        .shop-btn {
+            display: inline-block;
+            padding: 13px 25px;
+            background: #222;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+        }
+
+        /* ========================================
+           HEADER CART COUNT
+        ======================================== */
+
+        #cartCount {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 20px;
+            height: 20px;
+            padding: 0 5px;
+            background: #222;
+            color: white;
+            border-radius: 20px;
+            font-size: 12px;
+        }
 
         /* ========================================
            MOBILE
         ======================================== */
 
-        @media (max-width: 700px) {
+        @media (max-width: 800px) {
 
             .cart-page {
                 margin: 30px auto;
                 padding: 15px;
             }
 
-
-            .cart-page h1 {
-                font-size: 30px;
+            .cart-page-header h1 {
+                font-size: 32px;
             }
 
-
-            .cart-item {
-
-                flex-direction: column;
-
-                align-items: flex-start;
-
+            .cart-layout {
+                grid-template-columns: 1fr;
             }
-
-
-            .cart-item-image {
-
-                width: 100%;
-
-                height: 220px;
-
-            }
-
-
-            .cart-item-info {
-
-                width: 100%;
-
-            }
-
-
-            .cart-quantity {
-
-                margin: 10px 0;
-
-            }
-
 
             .cart-summary {
-
-                text-align: left;
-
+                position: static;
             }
 
+        }
 
-            .checkout-btn,
-            .clear-cart-btn {
+        @media (max-width: 600px) {
 
-                width: 100%;
+            .cart-item {
+                grid-template-columns: 80px 1fr;
+                gap: 12px;
+            }
 
-                margin: 5px 0;
+            .cart-item-image {
+                width: 80px;
+                height: 75px;
+            }
 
+            .cart-item-info h3 {
+                font-size: 16px;
+            }
+
+            .cart-item-total {
+                grid-column: 1 / -1;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                border-top: 1px solid #eee;
+                padding-top: 12px;
+            }
+
+            .cart-item-total strong {
+                margin: 0;
             }
 
         }
@@ -325,15 +316,11 @@
      HEADER
 ======================================== -->
 
-<header>
+<header class="site-header">
 
     <div class="logo">
-
-        SUPREME CRAFT
-        <span>INDIA</span>
-
+        SUPREME CRAFT <span>INDIA</span>
     </div>
-
 
     <nav>
 
@@ -353,91 +340,129 @@
             Contact
         </a>
 
+        <a href="cart.html" class="cart-link">
+            🛒 Cart
+            <span id="cartCount">0</span>
+        </a>
+
     </nav>
 
-
-    <a href="cart.html" class="cart-link">
-
-        🛒 Cart
-
-        <span id="cartCount">
-            0
-        </span>
-
-    </a>
-
 </header>
-
 
 
 <!-- ========================================
      CART
 ======================================== -->
 
-<section class="cart-page">
-
-    <p class="small-title">
-        YOUR SHOPPING CART
-    </p>
+<main class="cart-page">
 
 
-    <h1>
-        Shopping Cart
-    </h1>
+    <div class="cart-page-header">
 
+        <p class="small-title">
+            YOUR SHOPPING CART
+        </p>
 
-    <!-- CART PRODUCTS -->
-
-    <div id="cartContainer"></div>
-
-
-    <!-- CART SUMMARY -->
-
-    <div
-        id="cartSummary"
-        class="cart-summary"
-        style="display:none;"
-    >
-
-        <h2>
-            Order Summary
-        </h2>
-
-
-        <div class="cart-total">
-
-            Total:
-
-            ₹<span id="cartTotal">
-                0
-            </span>
-
-        </div>
-
-
-        <button
-            class="clear-cart-btn"
-            onclick="clearCart()"
-        >
-
-            🗑️ Clear Cart
-
-        </button>
-
-
-        <button
-            class="checkout-btn"
-            onclick="checkoutWhatsApp()"
-        >
-
-            📱 Order on WhatsApp
-
-        </button>
+        <h1>
+            Your Cart
+        </h1>
 
     </div>
 
-</section>
 
+    <!-- CART CONTENT -->
+
+    <div
+        id="cartContent"
+        class="cart-layout"
+    >
+
+        <!-- ITEMS -->
+
+        <div
+            id="cartItems"
+            class="cart-items"
+        ></div>
+
+
+        <!-- SUMMARY -->
+
+        <aside
+            id="cartSummary"
+            class="cart-summary"
+        >
+
+            <h2>
+                Order Summary
+            </h2>
+
+            <div class="summary-row">
+
+                <span>
+                    Items
+                </span>
+
+                <span id="summaryItems">
+                    0
+                </span>
+
+            </div>
+
+            <div class="summary-row">
+
+                <span>
+                    Subtotal
+                </span>
+
+                <span>
+                    ₹<span id="summarySubtotal">0</span>
+                </span>
+
+            </div>
+
+            <div class="summary-row">
+
+                <span>
+                    Shipping
+                </span>
+
+                <span>
+                    To be calculated
+                </span>
+
+            </div>
+
+            <div class="summary-row summary-total">
+
+                <span>
+                    Total
+                </span>
+
+                <span>
+                    ₹<span id="summaryTotal">0</span>
+                </span>
+
+            </div>
+
+            <button
+                class="checkout-btn"
+                onclick="checkoutWhatsApp()"
+            >
+                📱 Order on WhatsApp
+            </button>
+
+            <a
+                href="index.html#products"
+                class="continue-btn"
+            >
+                Continue Shopping
+            </a>
+
+        </aside>
+
+    </div>
+
+</main>
 
 
 <!-- ========================================
@@ -450,11 +475,9 @@
         SUPREME CRAFT INDIA
     </h3>
 
-
     <p>
         Premium Furniture • Crafted with Excellence
     </p>
-
 
     <p>
         © 2026 Supreme Craft India
@@ -463,27 +486,49 @@
 </footer>
 
 
+<!-- ========================================
+     SCRIPT
+======================================== -->
 
 <script>
 
+"use strict";
 
-// ========================================
-// GET CART
-// ========================================
+
+/* ========================================
+   GET CART
+======================================== */
 
 function getCart() {
 
-    return JSON.parse(
-        localStorage.getItem("cart")
-    ) || [];
+    try {
+
+        const cart =
+            JSON.parse(
+                localStorage.getItem("cart")
+            );
+
+        return Array.isArray(cart)
+            ? cart
+            : [];
+
+    } catch (error) {
+
+        console.error(
+            "Cart data error:",
+            error
+        );
+
+        return [];
+
+    }
 
 }
 
 
-
-// ========================================
-// SAVE CART
-// ========================================
+/* ========================================
+   SAVE CART
+======================================== */
 
 function saveCart(cart) {
 
@@ -495,20 +540,88 @@ function saveCart(cart) {
 }
 
 
+/* ========================================
+   FORMAT PRICE
+======================================== */
 
-// ========================================
-// SHOW CART
-// ========================================
+function formatPrice(price) {
 
-function displayCart() {
+    return Number(
+        price || 0
+    ).toLocaleString("en-IN");
+
+}
+
+
+/* ========================================
+   ESCAPE HTML
+======================================== */
+
+function escapeHTML(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* ========================================
+   UPDATE CART COUNT
+======================================== */
+
+function updateCartCount() {
+
+    const cart =
+        getCart();
+
+    const totalItems =
+        cart.reduce(
+            function(total, item) {
+
+                return total +
+                    Math.max(
+                        0,
+                        Number(item.quantity) || 0
+                    );
+
+            },
+            0
+        );
+
+
+    const count =
+        document.getElementById(
+            "cartCount"
+        );
+
+
+    if (count) {
+
+        count.innerText =
+            totalItems;
+
+    }
+
+}
+
+
+/* ========================================
+   RENDER CART
+======================================== */
+
+function renderCart() {
 
     const cart =
         getCart();
 
 
-    const container =
+    const itemsContainer =
         document.getElementById(
-            "cartContainer"
+            "cartItems"
         );
 
 
@@ -518,42 +631,50 @@ function displayCart() {
         );
 
 
-    container.innerHTML = "";
+    if (!itemsContainer) {
+        return;
+    }
 
 
-    // ====================================
-    // EMPTY CART
-    // ====================================
+    /* EMPTY CART */
 
     if (cart.length === 0) {
 
-        summary.style.display =
-            "none";
-
-
-        container.innerHTML = `
+        itemsContainer.innerHTML = `
 
             <div class="empty-cart">
 
+                <div class="empty-cart-icon">
+                    🛒
+                </div>
+
                 <h2>
-                    🛒 Your Cart is Empty
+                    Your Cart is Empty
                 </h2>
 
                 <p>
-                    You haven't added any products yet.
+                    Add some premium furniture
+                    to your cart.
                 </p>
-
 
                 <a
                     href="index.html#products"
-                    class="continue-shopping"
+                    class="shop-btn"
                 >
-                    Continue Shopping
+                    Explore Products
                 </a>
 
             </div>
 
         `;
+
+
+        if (summary) {
+
+            summary.style.display =
+                "none";
+
+        }
 
 
         updateCartCount();
@@ -563,20 +684,28 @@ function displayCart() {
     }
 
 
+    if (summary) {
 
-    // ====================================
-    // SHOW ITEMS
-    // ====================================
+        summary.style.display =
+            "block";
 
-    summary.style.display =
-        "block";
+    }
 
 
-    let total = 0;
+    let subtotal = 0;
+
+    let totalItems = 0;
+
+
+    itemsContainer.innerHTML = "";
 
 
     cart.forEach(
         function(item, index) {
+
+            const name =
+                item.name ||
+                "Premium Furniture";
 
 
             const price =
@@ -584,153 +713,99 @@ function displayCart() {
 
 
             const quantity =
-                Number(item.quantity) || 1;
+                Math.max(
+                    1,
+                    Number(item.quantity) || 1
+                );
 
 
             const itemTotal =
                 price * quantity;
 
 
-            total += itemTotal;
+            subtotal +=
+                itemTotal;
 
 
+            totalItems +=
+                quantity;
 
-            // Find product image
 
-            let image =
+            /*
+             * Old cart items may not have
+             * an image. Use a safe fallback.
+             */
+
+            const image =
+                item.image ||
                 "images/image1.jpg";
 
 
-            const products =
-                JSON.parse(
-                    localStorage.getItem(
-                        "products"
-                    )
-                ) || [];
-
-
-            const product =
-                products.find(
-                    p =>
-                    p.name === item.name
-                );
-
-
-            if (
-                product &&
-                product.images &&
-                product.images.length
-            ) {
-
-                image =
-                    product.images[0];
-
-            }
-            else if (
-                product &&
-                product.image
-            ) {
-
-                image =
-                    product.image;
-
-            }
-
-
-
-            container.innerHTML += `
+            itemsContainer.innerHTML += `
 
                 <div class="cart-item">
 
-
-                    <!-- IMAGE -->
-
                     <img
                         class="cart-item-image"
-                        src="${image}"
-                        alt="${item.name}"
+                        src="${escapeHTML(image)}"
+                        alt="${escapeHTML(name)}"
+                        onerror="
+                            this.src='images/image1.jpg'
+                        "
                     >
-
-
-                    <!-- INFO -->
 
                     <div class="cart-item-info">
 
                         <h3>
-                            ${escapeHTML(
-                                item.name
-                            )}
+                            ${escapeHTML(name)}
                         </h3>
 
+                        <div class="cart-item-price">
 
-                        <p>
-                            Price:
-                            ₹${price.toLocaleString(
-                                "en-IN"
-                            )}
-                        </p>
+                            ₹${formatPrice(price)}
+                            each
 
+                        </div>
 
-                        <p class="cart-item-price">
+                        <div class="quantity-control">
 
-                            Subtotal:
-                            ₹${itemTotal.toLocaleString(
-                                "en-IN"
-                            )}
+                            <button
+                                type="button"
+                                onclick="changeCartQuantity(${index}, -1)"
+                            >
+                                −
+                            </button>
 
-                        </p>
+                            <span class="quantity-value">
+                                ${quantity}
+                            </span>
 
-                    </div>
+                            <button
+                                type="button"
+                                onclick="changeCartQuantity(${index}, 1)"
+                            >
+                                +
+                            </button>
 
-
-
-                    <!-- QUANTITY -->
-
-                    <div class="cart-quantity">
-
-
-                        <button
-                            onclick="changeCartQuantity(
-                                ${index},
-                                -1
-                            )"
-                        >
-                            −
-                        </button>
-
-
-                        <span>
-                            ${quantity}
-                        </span>
-
-
-                        <button
-                            onclick="changeCartQuantity(
-                                ${index},
-                                1
-                            )"
-                        >
-                            +
-                        </button>
-
+                        </div>
 
                     </div>
 
+                    <div class="cart-item-total">
 
+                        <strong>
+                            ₹${formatPrice(itemTotal)}
+                        </strong>
 
-                    <!-- REMOVE -->
+                        <button
+                            type="button"
+                            class="remove-btn"
+                            onclick="removeCartItem(${index})"
+                        >
+                            🗑️ Remove
+                        </button>
 
-                    <button
-                        class="remove-cart-btn"
-                        onclick="removeFromCart(
-                            ${index}
-                        )"
-                    >
-
-                        🗑️ Remove
-
-                    </button>
-
+                    </div>
 
                 </div>
 
@@ -740,17 +815,22 @@ function displayCart() {
     );
 
 
+    document.getElementById(
+        "summaryItems"
+    ).innerText =
+        totalItems;
 
-    // ====================================
-    // TOTAL
-    // ====================================
 
     document.getElementById(
-        "cartTotal"
+        "summarySubtotal"
     ).innerText =
-        total.toLocaleString(
-            "en-IN"
-        );
+        formatPrice(subtotal);
+
+
+    document.getElementById(
+        "summaryTotal"
+    ).innerText =
+        formatPrice(subtotal);
 
 
     updateCartCount();
@@ -758,58 +838,61 @@ function displayCart() {
 }
 
 
-
-// ========================================
-// CHANGE QUANTITY
-// ========================================
+/* ========================================
+   CHANGE QUANTITY
+======================================== */
 
 function changeCartQuantity(
     index,
-    amount
+    change
 ) {
 
-    let cart =
+    const cart =
         getCart();
 
 
     if (!cart[index]) {
         return;
+    }
+
+
+    let quantity =
+        Number(
+            cart[index].quantity
+        ) || 1;
+
+
+    quantity +=
+        Number(change) || 0;
+
+
+    if (quantity <= 0) {
+
+        removeCartItem(index);
+
+        return;
+
     }
 
 
     cart[index].quantity =
-        Number(
-            cart[index].quantity
-        ) + amount;
-
-
-    // Minimum 1
-
-    if (
-        cart[index].quantity < 1
-    ) {
-
-        cart[index].quantity = 1;
-
-    }
+        quantity;
 
 
     saveCart(cart);
 
-
-    displayCart();
+    renderCart();
 
 }
 
 
+/* ========================================
+   REMOVE ITEM
+======================================== */
 
-// ========================================
-// REMOVE PRODUCT
-// ========================================
+function removeCartItem(index) {
 
-function removeFromCart(index) {
-
-    let cart =
+    const cart =
         getCart();
 
 
@@ -818,13 +901,20 @@ function removeFromCart(index) {
     }
 
 
-    const confirmRemove =
+    const productName =
+        cart[index].name ||
+        "this product";
+
+
+    const confirmed =
         confirm(
-            "Kya aap is product ko cart se remove karna chahte hain?"
+            "Kya aap \"" +
+            productName +
+            "\" ko cart se remove karna chahte hain?"
         );
 
 
-    if (!confirmRemove) {
+    if (!confirmed) {
         return;
     }
 
@@ -837,21 +927,14 @@ function removeFromCart(index) {
 
     saveCart(cart);
 
-
-    displayCart();
-
-
-    alert(
-        "✅ Product removed from cart!"
-    );
+    renderCart();
 
 }
 
 
-
-// ========================================
-// CLEAR CART
-// ========================================
+/* ========================================
+   CLEAR CART
+======================================== */
 
 function clearCart() {
 
@@ -864,13 +947,13 @@ function clearCart() {
     }
 
 
-    const confirmClear =
+    const confirmed =
         confirm(
             "Kya aap poora cart clear karna chahte hain?"
         );
 
 
-    if (!confirmClear) {
+    if (!confirmed) {
         return;
     }
 
@@ -880,61 +963,14 @@ function clearCart() {
     );
 
 
-    displayCart();
-
-
-    alert(
-        "✅ Cart cleared!"
-    );
+    renderCart();
 
 }
 
 
-
-// ========================================
-// UPDATE CART NUMBER
-// ========================================
-
-function updateCartCount() {
-
-    const cart =
-        getCart();
-
-
-    let totalItems =
-        cart.reduce(
-            function(total, item) {
-
-                return total +
-                    Number(
-                        item.quantity || 0
-                    );
-
-            },
-            0
-        );
-
-
-    const cartCount =
-        document.getElementById(
-            "cartCount"
-        );
-
-
-    if (cartCount) {
-
-        cartCount.innerText =
-            totalItems;
-
-    }
-
-}
-
-
-
-// ========================================
-// WHATSAPP CHECKOUT
-// ========================================
+/* ========================================
+   WHATSAPP CHECKOUT
+======================================== */
 
 function checkoutWhatsApp() {
 
@@ -945,7 +981,7 @@ function checkoutWhatsApp() {
     if (cart.length === 0) {
 
         alert(
-            "❌ Your cart is empty."
+            "Your cart is empty."
         );
 
         return;
@@ -957,141 +993,97 @@ function checkoutWhatsApp() {
         "919509393894";
 
 
-    let message =
-        "Hello Supreme Craft India,%0A%0A";
-
-
-    message +=
-        "I want to place an order:%0A%0A";
-
-
     let total = 0;
+
+    let message =
+        "Hello Supreme Craft India,\n\n" +
+        "I want to order the following products:\n\n";
 
 
     cart.forEach(
         function(item, index) {
+
+            const name =
+                item.name ||
+                "Premium Furniture";
+
 
             const price =
                 Number(item.price) || 0;
 
 
             const quantity =
-                Number(item.quantity) || 1;
+                Math.max(
+                    1,
+                    Number(item.quantity) || 1
+                );
 
 
-            const subtotal =
+            const itemTotal =
                 price * quantity;
 
 
-            total += subtotal;
+            total +=
+                itemTotal;
 
 
             message +=
                 (index + 1) +
                 ". " +
-                item.name +
-                "%0A";
+                name +
+                "\n" +
 
-
-            message +=
                 "Quantity: " +
                 quantity +
-                "%0A";
+                "\n" +
 
-
-            message +=
                 "Price: ₹" +
-                price.toLocaleString(
-                    "en-IN"
-                ) +
-                "%0A";
+                formatPrice(price) +
+                "\n" +
 
-
-            message +=
-                "Subtotal: ₹" +
-                subtotal.toLocaleString(
-                    "en-IN"
-                ) +
-                "%0A%0A";
+                "Total: ₹" +
+                formatPrice(itemTotal) +
+                "\n\n";
 
         }
     );
 
 
     message +=
-        "Total: ₹" +
-        total.toLocaleString(
-            "en-IN"
-        ) +
-        "%0A%0A";
+        "Grand Total: ₹" +
+        formatPrice(total) +
+        "\n\n" +
 
-
-    message +=
-        "Please provide more details.";
+        "Please provide more details about delivery and payment.";
 
 
     const whatsappURL =
         "https://wa.me/" +
         phoneNumber +
         "?text=" +
-        message;
+        encodeURIComponent(
+            message
+        );
 
 
     window.open(
         whatsappURL,
-        "_blank"
+        "_blank",
+        "noopener,noreferrer"
     );
 
 }
 
 
-
-// ========================================
-// ESCAPE HTML
-// ========================================
-
-function escapeHTML(text) {
-
-    return String(text)
-
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-
-        .replace(
-            /</g,
-            "&lt;"
-        )
-
-        .replace(
-            />/g,
-            "&gt;"
-        )
-
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-
-}
-
-
-
-// ========================================
-// START
-// ========================================
+/* ========================================
+   START
+======================================== */
 
 document.addEventListener(
     "DOMContentLoaded",
     function() {
 
-        displayCart();
+        renderCart();
 
         updateCartCount();
 

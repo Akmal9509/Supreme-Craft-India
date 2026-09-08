@@ -5,14 +5,23 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Admin Panel | Supreme Craft India</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
     <style>
+
+        /* ================================
+           ADMIN
+        ================================= */
 
         .admin-panel {
             padding: 60px 20px;
@@ -26,7 +35,12 @@
         .admin-box form {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
+        }
+
+        .admin-box label {
+            font-weight: 600;
+            margin-top: 8px;
         }
 
         .admin-box input,
@@ -35,18 +49,43 @@
             width: 100%;
             padding: 13px;
             box-sizing: border-box;
-            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 7px;
+            font-family: inherit;
+        }
+
+        .admin-box textarea {
+            resize: vertical;
         }
 
         .admin-box button {
             cursor: pointer;
         }
 
+        .main-admin-btn {
+            background: #111;
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 7px;
+            margin-top: 10px;
+            font-size: 15px;
+        }
+
+        .main-admin-btn:disabled {
+            opacity: .6;
+            cursor: not-allowed;
+        }
+
+        /* ================================
+           IMAGE PREVIEW
+        ================================= */
+
         #imagePreviews {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
-            margin: 15px 0 25px;
+            margin: 15px 0;
         }
 
         .preview-item {
@@ -60,6 +99,7 @@
             object-fit: cover;
             border-radius: 8px;
             border: 1px solid #ddd;
+            display: block;
         }
 
         .preview-number {
@@ -72,6 +112,39 @@
             border-radius: 4px;
             font-size: 12px;
         }
+
+        /* ================================
+           STATUS
+        ================================= */
+
+        #adminStatus {
+            margin: 15px 0;
+            padding: 12px;
+            border-radius: 7px;
+            display: none;
+        }
+
+        #adminStatus.success {
+            display: block;
+            background: #e8f7e8;
+            color: #176b17;
+        }
+
+        #adminStatus.error {
+            display: block;
+            background: #ffeaea;
+            color: #a00000;
+        }
+
+        #adminStatus.loading {
+            display: block;
+            background: #f2f2f2;
+            color: #333;
+        }
+
+        /* ================================
+           PRODUCT LIST
+        ================================= */
 
         .admin-product {
             display: flex;
@@ -86,13 +159,22 @@
 
         .admin-product-main-image {
             width: 120px;
-            height: 90px;
+            height: 95px;
             object-fit: cover;
             border-radius: 8px;
+            background: #f5f5f5;
         }
 
         .admin-product-info {
             flex: 1;
+        }
+
+        .admin-product-info strong {
+            font-size: 18px;
+        }
+
+        .admin-product-info small {
+            color: #777;
         }
 
         .admin-buttons {
@@ -104,7 +186,7 @@
         .edit-btn,
         .delete-btn {
             border: none;
-            padding: 10px 15px;
+            padding: 10px 14px;
             border-radius: 6px;
             color: white;
         }
@@ -114,8 +196,12 @@
         }
 
         .delete-btn {
-            background: #c00;
+            background: #c40000;
         }
+
+        /* ================================
+           EDIT BOX
+        ================================= */
 
         #editBox {
             display: none;
@@ -146,23 +232,27 @@
             height: 105px;
             object-fit: cover;
             border-radius: 6px;
+            display: block;
+            margin-bottom: 8px;
         }
 
         .edit-photo button {
             width: 100%;
             border: none;
-            padding: 8px;
-            margin-top: 7px;
+            padding: 9px;
+            margin-top: 5px;
             border-radius: 5px;
-            color: white;
+            cursor: pointer;
         }
 
         .change-photo-btn {
             background: #222;
+            color: white;
         }
 
         .remove-photo-btn {
-            background: #c00;
+            background: #c40000;
+            color: white;
         }
 
         .add-photo-btn {
@@ -193,14 +283,15 @@
             margin-left: 8px;
         }
 
-        .status-message {
-            padding: 12px;
-            margin: 15px 0;
-            border-radius: 6px;
-            display: none;
-        }
+        /* ================================
+           RESPONSIVE
+        ================================= */
 
-        @media(max-width:700px) {
+        @media (max-width: 700px) {
+
+            .admin-panel {
+                padding: 35px 15px;
+            }
 
             .admin-product {
                 flex-direction: column;
@@ -209,7 +300,15 @@
 
             .admin-product-main-image {
                 width: 100%;
-                height: 200px;
+                height: 220px;
+            }
+
+            .admin-buttons {
+                width: 100%;
+            }
+
+            .admin-buttons button {
+                flex: 1;
             }
 
             .edit-photo {
@@ -218,7 +317,7 @@
 
             .edit-photo img {
                 width: 100%;
-                height: 180px;
+                height: 200px;
             }
 
         }
@@ -231,83 +330,81 @@
 <body>
 
 
-<header>
+<!-- ================= HEADER ================= -->
+
+<header class="site-header">
 
     <div class="logo">
         SUPREME CRAFT <span>INDIA</span>
     </div>
 
     <nav>
-
         <a href="index.html">
             View Website
         </a>
-
     </nav>
 
 </header>
 
 
+<!-- ================= ADMIN ================= -->
 
 <section class="admin-panel">
 
     <div class="admin-box">
 
-
         <p class="small-title">
             SUPREME CRAFT INDIA
         </p>
-
 
         <h1>
             Admin Panel
         </h1>
 
-
-        <div
-            id="statusMessage"
-            class="status-message"
-        ></div>
+        <p>
+            Add and manage your furniture products.
+        </p>
 
 
-        <!-- ==================================
-             ADD PRODUCT
-        ================================== -->
+        <!-- STATUS -->
+
+        <div id="adminStatus"></div>
+
+
+        <!-- ================= ADD PRODUCT ================= -->
 
         <h2>
             Add New Product
         </h2>
 
-
         <form id="productForm">
 
-
-            <label>
+            <label for="productName">
                 Product Name
             </label>
 
             <input
                 type="text"
                 id="productName"
-                placeholder="Royal Wooden Sofa"
+                placeholder="Example: Royal Wooden Sofa"
                 required
             >
 
 
-            <label>
+            <label for="productPrice">
                 Price
             </label>
 
             <input
                 type="number"
                 id="productPrice"
+                placeholder="Example: 24999"
                 min="0"
-                placeholder="24999"
                 required
             >
 
 
-            <label>
+            <label for="productCategory">
                 Category
             </label>
 
@@ -339,7 +436,7 @@
             </select>
 
 
-            <label>
+            <label for="productImages">
                 Product Photos
             </label>
 
@@ -351,16 +448,15 @@
                 required
             >
 
-
-            <small>
+            <p style="font-size:14px;color:#777;">
                 Maximum 10 photos.
-            </small>
+            </p>
 
 
             <div id="imagePreviews"></div>
 
 
-            <label>
+            <label for="productDescription">
                 Description
             </label>
 
@@ -372,35 +468,38 @@
             ></textarea>
 
 
-            <label>
+            <label for="productStock">
                 Stock
             </label>
 
             <input
                 type="number"
                 id="productStock"
+                placeholder="Example: 10"
                 min="0"
-                placeholder="10"
                 required
             >
 
 
-            <button type="submit">
+            <button
+                type="submit"
+                id="addProductButton"
+                class="main-admin-btn"
+            >
                 ➕ Add Product
             </button>
-
 
         </form>
 
 
+        <hr style="
+            margin:45px 0;
+            border:none;
+            border-top:1px solid #ddd;
+        ">
 
-        <hr style="margin:50px 0;">
 
-
-
-        <!-- ==================================
-             EDIT PRODUCT
-        ================================== -->
+        <!-- ================= EDIT BOX ================= -->
 
         <div id="editBox">
 
@@ -411,7 +510,7 @@
 
             <input
                 type="hidden"
-                id="editIndex"
+                id="editId"
             >
 
 
@@ -432,6 +531,7 @@
             <input
                 type="number"
                 id="editPrice"
+                min="0"
             >
 
 
@@ -477,13 +577,13 @@
             <input
                 type="number"
                 id="editStock"
+                min="0"
             >
 
 
-            <h3>
+            <h3 style="margin-top:30px;">
                 🖼️ Product Photos
             </h3>
-
 
             <div id="editPhotoContainer"></div>
 
@@ -503,6 +603,7 @@
             <button
                 type="button"
                 class="save-edit-btn"
+                id="saveEditButton"
                 onclick="saveEditedProduct()"
             >
                 💾 Save Changes
@@ -520,15 +621,11 @@
         </div>
 
 
+        <!-- ================= PRODUCTS ================= -->
 
-        <!-- ==================================
-             PRODUCTS
-        ================================== -->
-
-        <h2 style="margin-top:50px;">
-            Added Products
+        <h2 style="margin-top:45px;">
+            Products
         </h2>
-
 
         <div id="adminProducts">
 
@@ -538,146 +635,112 @@
 
         </div>
 
-
     </div>
 
 </section>
 
 
-
-<!-- =========================================
-     FIREBASE
-========================================= -->
+<!-- ================= SCRIPT ================= -->
 
 <script type="module">
 
-    import {
-        initializeApp
-    }
-    from
-    "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+    db
+} from "./firebase.js";
+
+import {
+    collection,
+    addDoc,
+    getDocs,
+    updateDoc,
+    deleteDoc,
+    doc,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-    import {
-        getFirestore,
-        collection,
-        addDoc,
-        getDocs,
-        updateDoc,
-        deleteDoc,
-        doc
-    }
-    from
-    "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+// ========================================
+// FIRESTORE COLLECTION
+// ========================================
+
+const productsCollection =
+    collection(db, "products");
 
 
-    const firebaseConfig = {
+// ========================================
+// DOM
+// ========================================
 
-        apiKey:
-            "AIzaSyAc9iuAS9RA1orVpkwdSomkSiS07QLe0Ak",
+const productForm =
+    document.getElementById("productForm");
 
-        authDomain:
-            "supreme-craft-india.firebaseapp.com",
+const imageInput =
+    document.getElementById("productImages");
 
-        projectId:
-            "supreme-craft-india",
+const imagePreviews =
+    document.getElementById("imagePreviews");
 
-        storageBucket:
-            "supreme-craft-india.firebasestorage.app",
+const adminProducts =
+    document.getElementById("adminProducts");
 
-        messagingSenderId:
-            "9064158877",
+const statusBox =
+    document.getElementById("adminStatus");
 
-        appId:
-            "1:9064158877:web:fa4319ebc7cf50a2fe2674",
-
-        measurementId:
-            "G-RQ9Z44PEX5"
-
-    };
+const addProductButton =
+    document.getElementById("addProductButton");
 
 
-    const app =
-        initializeApp(
-            firebaseConfig
-        );
+// ========================================
+// STATUS MESSAGE
+// ========================================
+
+function showStatus(message, type = "loading") {
+
+    statusBox.textContent =
+        message;
+
+    statusBox.className =
+        type;
+
+}
 
 
-    const db =
-        getFirestore(app);
+function hideStatus() {
+
+    statusBox.textContent =
+        "";
+
+    statusBox.className =
+        "";
+
+}
 
 
-    // Make Firebase available to functions
-
-    window.firebaseDB =
-        db;
-
-    window.firebaseCollection =
-        collection;
-
-    window.firebaseAddDoc =
-        addDoc;
-
-    window.firebaseGetDocs =
-        getDocs;
-
-    window.firebaseUpdateDoc =
-        updateDoc;
-
-    window.firebaseDeleteDoc =
-        deleteDoc;
-
-    window.firebaseDoc =
-        doc;
-
-
-    // Start admin
-
-    showAdminProducts();
-
-</script>
-
-
-
-<script>
-
-
-// ==================================================
-// GET IMAGE AS BASE64
-// ==================================================
+// ========================================
+// IMAGE FILE -> BASE64
+// ========================================
 
 function fileToBase64(file) {
 
     return new Promise(
-        function(resolve, reject) {
+        (resolve, reject) => {
 
             const reader =
                 new FileReader();
 
-
             reader.onload =
-                function() {
-
-                    resolve(
-                        reader.result
-                    );
-
-                };
-
+                () => resolve(
+                    reader.result
+                );
 
             reader.onerror =
-                function() {
+                () => reject(
+                    new Error(
+                        "Image read failed."
+                    )
+                );
 
-                    reject(
-                        reader.error
-                    );
-
-                };
-
-
-            reader.readAsDataURL(
-                file
-            );
+            reader.readAsDataURL(file);
 
         }
     );
@@ -685,34 +748,18 @@ function fileToBase64(file) {
 }
 
 
-
-// ==================================================
+// ========================================
 // IMAGE PREVIEW
-// ==================================================
-
-const imageInput =
-    document.getElementById(
-        "productImages"
-    );
-
-
-const imagePreviews =
-    document.getElementById(
-        "imagePreviews"
-    );
-
+// ========================================
 
 imageInput.addEventListener(
     "change",
-    function() {
+    async function() {
 
         imagePreviews.innerHTML = "";
 
-
         const files =
-            Array.from(
-                this.files
-            );
+            Array.from(this.files || []);
 
 
         if (files.length > 10) {
@@ -728,37 +775,40 @@ imageInput.addEventListener(
 
 
         files.forEach(
-            function(file, index) {
+            (file, index) => {
 
                 const reader =
                     new FileReader();
 
-
                 reader.onload =
-                    function(event) {
+                    event => {
 
-                        imagePreviews.innerHTML += `
+                        const div =
+                            document.createElement(
+                                "div"
+                            );
 
-                            <div class="preview-item">
+                        div.className =
+                            "preview-item";
 
-                                <span class="preview-number">
-                                    ${index + 1}
-                                </span>
+                        div.innerHTML = `
+                            <span class="preview-number">
+                                ${index + 1}
+                            </span>
 
-                                <img
-                                    src="${event.target.result}"
-                                >
-
-                            </div>
-
+                            <img
+                                src="${event.target.result}"
+                                alt="Preview ${index + 1}"
+                            >
                         `;
+
+                        imagePreviews.appendChild(
+                            div
+                        );
 
                     };
 
-
-                reader.readAsDataURL(
-                    file
-                );
+                reader.readAsDataURL(file);
 
             }
         );
@@ -767,14 +817,11 @@ imageInput.addEventListener(
 );
 
 
+// ========================================
+// ADD PRODUCT
+// ========================================
 
-// ==================================================
-// ADD PRODUCT TO FIRESTORE
-// ==================================================
-
-document
-.getElementById("productForm")
-.addEventListener(
+productForm.addEventListener(
     "submit",
     async function(event) {
 
@@ -783,24 +830,17 @@ document
 
         const files =
             Array.from(
-                imageInput.files
+                imageInput.files || []
             );
 
 
-        if (files.length === 0) {
+        if (
+            files.length < 1 ||
+            files.length > 10
+        ) {
 
             alert(
-                "Please select at least one photo."
-            );
-
-            return;
-        }
-
-
-        if (files.length > 10) {
-
-            alert(
-                "Maximum 10 photos allowed."
+                "Please select 1 to 10 photos."
             );
 
             return;
@@ -809,23 +849,28 @@ document
 
         try {
 
+            addProductButton.disabled =
+                true;
+
             showStatus(
-                "Uploading product...",
-                false
+                "Adding product to Firestore...",
+                "loading"
             );
 
 
-            // Convert photos
+            const images = [];
 
-            const images =
-                await Promise.all(
-                    files.map(
-                        fileToBase64
-                    )
-                );
+            for (const file of files) {
+
+                const image =
+                    await fileToBase64(file);
+
+                images.push(image);
+
+            }
 
 
-            const product = {
+            const productData = {
 
                 name:
                     document
@@ -834,7 +879,6 @@ document
                     )
                     .value
                     .trim(),
-
 
                 price:
                     Number(
@@ -845,7 +889,6 @@ document
                         .value
                     ),
 
-
                 category:
                     document
                     .getElementById(
@@ -853,14 +896,11 @@ document
                     )
                     .value,
 
-
                 images:
                     images,
 
-
                 image:
                     images[0],
-
 
                 description:
                     document
@@ -869,7 +909,6 @@ document
                     )
                     .value
                     .trim(),
-
 
                 stock:
                     Number(
@@ -880,70 +919,51 @@ document
                         .value
                     ),
 
-
                 createdAt:
-                    new Date().toISOString()
+                    serverTimestamp(),
+
+                updatedAt:
+                    serverTimestamp()
 
             };
 
 
-            await window.firebaseAddDoc(
-
-                window.firebaseCollection(
-                    window.firebaseDB,
-                    "products"
-                ),
-
-                product
-
+            await addDoc(
+                productsCollection,
+                productData
             );
 
 
-            alert(
-                "✅ Product Firestore me successfully add ho gaya!"
-            );
-
-
-            document
-            .getElementById(
-                "productForm"
-            )
-            .reset();
-
+            productForm.reset();
 
             imagePreviews.innerHTML =
                 "";
 
-
-            showAdminProducts();
-
-
             showStatus(
-                "Product successfully added.",
-                false
+                "✅ Product added successfully!",
+                "success"
             );
 
 
-        }
+            await loadProducts();
 
-        catch(error) {
+
+        } catch (error) {
 
             console.error(
+                "Add Product Error:",
                 error
             );
 
-
-            alert(
-                "❌ Product add nahi hua.\n\n" +
-                error.message
-            );
-
-
             showStatus(
-                "Error: " +
-                error.message,
-                true
+                "❌ Product add nahi hua. Console me error check karo.",
+                "error"
             );
+
+        } finally {
+
+            addProductButton.disabled =
+                false;
 
         }
 
@@ -951,25 +971,13 @@ document
 );
 
 
+// ========================================
+// LOAD PRODUCTS
+// ========================================
 
-// ==================================================
-// SHOW PRODUCTS
-// ==================================================
+async function loadProducts() {
 
-async function showAdminProducts() {
-
-    const container =
-        document.getElementById(
-            "adminProducts"
-        );
-
-
-    if (!container) {
-        return;
-    }
-
-
-    container.innerHTML = `
+    adminProducts.innerHTML = `
         <p>Loading products...</p>
     `;
 
@@ -977,24 +985,14 @@ async function showAdminProducts() {
     try {
 
         const snapshot =
-            await window.firebaseGetDocs(
-
-                window.firebaseCollection(
-                    window.firebaseDB,
-                    "products"
-                )
-
+            await getDocs(
+                productsCollection
             );
 
 
-        container.innerHTML = "";
+        if (snapshot.empty) {
 
-
-        if (
-            snapshot.empty
-        ) {
-
-            container.innerHTML = `
+            adminProducts.innerHTML = `
                 <p>
                     No products added yet.
                 </p>
@@ -1004,124 +1002,174 @@ async function showAdminProducts() {
         }
 
 
+        adminProducts.innerHTML =
+            "";
+
+
         snapshot.forEach(
-            function(docSnapshot) {
+            docSnapshot => {
 
                 const product =
                     docSnapshot.data();
-
 
                 const id =
                     docSnapshot.id;
 
 
-                const image =
-                    product.image ||
-                    (
-                        product.images &&
-                        product.images[0]
-                    ) ||
-                    "images/image1.jpg";
-
-
-                const photoCount =
-                    product.images &&
+                const images =
                     Array.isArray(
                         product.images
                     )
-                    ?
-                    product.images.length
-                    :
-                    1;
+                    ? product.images
+                    : product.image
+                        ? [product.image]
+                        : [];
 
 
-                container.innerHTML += `
+                const mainImage =
+                    images[0] || "";
 
-                    <div class="admin-product">
 
-                        <img
-                            class="admin-product-main-image"
-                            src="${image}"
-                            alt="${escapeHTML(
-                                product.name || ""
-                            )}"
+                const name =
+                    escapeHTML(
+                        product.name ||
+                        "Premium Furniture"
+                    );
+
+
+                const category =
+                    escapeHTML(
+                        product.category ||
+                        "sofa"
+                    );
+
+
+                const price =
+                    Number(
+                        product.price || 0
+                    );
+
+
+                const stock =
+                    Number(
+                        product.stock || 0
+                    );
+
+
+                const item =
+                    document.createElement(
+                        "div"
+                    );
+
+                item.className =
+                    "admin-product";
+
+
+                item.innerHTML = `
+
+                    <img
+                        class="admin-product-main-image"
+                        src="${mainImage}"
+                        alt="${name}"
+                    >
+
+                    <div class="admin-product-info">
+
+                        <strong>
+                            ${name}
+                        </strong>
+
+                        <br>
+
+                        ₹${price.toLocaleString("en-IN")}
+
+                        <br>
+
+                        <small>
+                            ${category.toUpperCase()}
+                            •
+                            ${images.length} photo(s)
+                            •
+                            Stock: ${stock}
+                        </small>
+
+                    </div>
+
+                    <div class="admin-buttons">
+
+                        <button
+                            class="edit-btn"
+                            data-id="${id}"
                         >
+                            ✏️ Edit
+                        </button>
 
-
-                        <div class="admin-product-info">
-
-                            <strong>
-                                ${escapeHTML(
-                                    product.name ||
-                                    "Product"
-                                )}
-                            </strong>
-
-                            <br>
-
-                            ₹${Number(
-                                product.price || 0
-                            ).toLocaleString(
-                                "en-IN"
-                            )}
-
-                            <br>
-
-                            <small>
-
-                                ${(product.category || "")
-                                    .toUpperCase()}
-
-                                •
-                                ${photoCount}
-                                photo(s)
-
-                                •
-                                Stock:
-                                ${product.stock || 0}
-
-                            </small>
-
-                        </div>
-
-
-                        <div class="admin-buttons">
-
-                            <button
-                                class="edit-btn"
-                                onclick="editProduct('${id}')"
-                            >
-                                ✏️ Edit
-                            </button>
-
-
-                            <button
-                                class="delete-btn"
-                                onclick="deleteProduct('${id}')"
-                            >
-                                🗑️ Delete
-                            </button>
-
-                        </div>
+                        <button
+                            class="delete-btn"
+                            data-id="${id}"
+                        >
+                            🗑️ Delete
+                        </button>
 
                     </div>
 
                 `;
 
+
+                const editButton =
+                    item.querySelector(
+                        ".edit-btn"
+                    );
+
+
+                const deleteButton =
+                    item.querySelector(
+                        ".delete-btn"
+                    );
+
+
+                editButton.addEventListener(
+                    "click",
+                    () => {
+
+                        editProduct(
+                            id,
+                            product
+                        );
+
+                    }
+                );
+
+
+                deleteButton.addEventListener(
+                    "click",
+                    () => {
+
+                        deleteProduct(
+                            id
+                        );
+
+                    }
+                );
+
+
+                adminProducts.appendChild(
+                    item
+                );
+
             }
         );
 
-    }
 
-    catch(error) {
+    } catch (error) {
 
         console.error(
+            "Load Products Error:",
             error
         );
 
-
-        container.innerHTML = `
-            <p>
+        adminProducts.innerHTML = `
+            <p style="color:#b00000;">
                 ❌ Products load nahi ho rahe.
             </p>
         `;
@@ -1131,160 +1179,117 @@ async function showAdminProducts() {
 }
 
 
+// ========================================
+// ESCAPE HTML
+// ========================================
 
-// ==================================================
-// EDIT PRODUCT
-// ==================================================
+function escapeHTML(text) {
 
-async function editProduct(id) {
-
-    try {
-
-        const snapshot =
-            await window.firebaseGetDocs(
-
-                window.firebaseCollection(
-                    window.firebaseDB,
-                    "products"
-                )
-
-            );
-
-
-        let product = null;
-
-
-        snapshot.forEach(
-            function(docSnapshot) {
-
-                if (
-                    docSnapshot.id === id
-                ) {
-
-                    product = {
-
-                        id:
-                            docSnapshot.id,
-
-                        ...docSnapshot.data()
-
-                    };
-
-                }
-
-            }
+    return String(text)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
         );
-
-
-        if (!product) {
-
-            alert(
-                "Product nahi mila."
-            );
-
-            return;
-        }
-
-
-        if (!product.images) {
-
-            product.images = [
-                product.image
-            ];
-
-        }
-
-
-        document
-        .getElementById(
-            "editIndex"
-        )
-        .value =
-            id;
-
-
-        document
-        .getElementById(
-            "editName"
-        )
-        .value =
-            product.name || "";
-
-
-        document
-        .getElementById(
-            "editPrice"
-        )
-        .value =
-            product.price || 0;
-
-
-        document
-        .getElementById(
-            "editCategory"
-        )
-        .value =
-            product.category || "sofa";
-
-
-        document
-        .getElementById(
-            "editDescription"
-        )
-        .value =
-            product.description || "";
-
-
-        document
-        .getElementById(
-            "editStock"
-        )
-        .value =
-            product.stock || 0;
-
-
-        renderEditPhotos(
-            product.images
-        );
-
-
-        const editBox =
-            document.getElementById(
-                "editBox"
-            );
-
-
-        editBox.style.display =
-            "block";
-
-
-        editBox.scrollIntoView({
-            behavior: "smooth"
-        });
-
-    }
-
-    catch(error) {
-
-        console.error(
-            error
-        );
-
-        alert(
-            "Edit load nahi hua."
-        );
-
-    }
 
 }
 
 
+// ========================================
+// EDIT PRODUCT
+// ========================================
 
-// ==================================================
+function editProduct(id, product) {
+
+    let images =
+        Array.isArray(product.images)
+        ? [...product.images]
+        : product.image
+            ? [product.image]
+            : [];
+
+
+    document
+    .getElementById("editId")
+    .value =
+        id;
+
+
+    document
+    .getElementById("editName")
+    .value =
+        product.name || "";
+
+
+    document
+    .getElementById("editPrice")
+    .value =
+        Number(product.price || 0);
+
+
+    document
+    .getElementById("editCategory")
+    .value =
+        product.category || "sofa";
+
+
+    document
+    .getElementById("editDescription")
+    .value =
+        product.description || "";
+
+
+    document
+    .getElementById("editStock")
+    .value =
+        Number(product.stock || 0);
+
+
+    window.editImages =
+        images;
+
+
+    renderEditPhotos();
+
+
+    const editBox =
+        document.getElementById(
+            "editBox"
+        );
+
+
+    editBox.style.display =
+        "block";
+
+
+    editBox.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+
+}
+
+
+// ========================================
 // RENDER EDIT PHOTOS
-// ==================================================
+// ========================================
 
-function renderEditPhotos(images) {
+function renderEditPhotos() {
 
     const container =
         document.getElementById(
@@ -1292,110 +1297,99 @@ function renderEditPhotos(images) {
         );
 
 
-    container.innerHTML = "";
+    container.innerHTML =
+        "";
+
+
+    const images =
+        window.editImages || [];
 
 
     images.forEach(
-        function(image, index) {
+        (image, index) => {
 
-            container.innerHTML += `
+            const div =
+                document.createElement(
+                    "div"
+                );
 
-                <div class="edit-photo">
+            div.className =
+                "edit-photo";
 
-                    <strong>
-                        Photo ${index + 1}
-                    </strong>
 
-                    <img
-                        src="${image}"
-                    >
+            div.innerHTML = `
 
-                    <button
-                        type="button"
-                        class="change-photo-btn"
-                        onclick="changePhoto(${index})"
-                    >
-                        🖼️ Change Photo
-                    </button>
+                <strong>
+                    Photo ${index + 1}
+                </strong>
 
-                    <button
-                        type="button"
-                        class="remove-photo-btn"
-                        onclick="removePhoto(${index})"
-                    >
-                        🗑️ Remove Photo
-                    </button>
+                <img
+                    src="${image}"
+                    alt="Product Photo ${index + 1}"
+                >
 
-                </div>
+                <button
+                    type="button"
+                    class="change-photo-btn"
+                    data-index="${index}"
+                >
+                    🖼️ Change Photo
+                </button>
+
+                <button
+                    type="button"
+                    class="remove-photo-btn"
+                    data-index="${index}"
+                >
+                    🗑️ Remove Photo
+                </button>
 
             `;
 
-        }
-    );
 
-}
-
-
-
-// ==================================================
-// GET EDIT PRODUCT
-// ==================================================
-
-async function getEditProduct() {
-
-    const id =
-        document.getElementById(
-            "editIndex"
-        ).value;
-
-
-    const snapshot =
-        await window.firebaseGetDocs(
-
-            window.firebaseCollection(
-                window.firebaseDB,
-                "products"
+            div
+            .querySelector(
+                ".change-photo-btn"
             )
+            .addEventListener(
+                "click",
+                () => {
 
-        );
+                    changePhoto(index);
+
+                }
+            );
 
 
-    let product = null;
+            div
+            .querySelector(
+                ".remove-photo-btn"
+            )
+            .addEventListener(
+                "click",
+                () => {
+
+                    removePhoto(index);
+
+                }
+            );
 
 
-    snapshot.forEach(
-        function(docSnapshot) {
-
-            if (
-                docSnapshot.id === id
-            ) {
-
-                product = {
-
-                    id:
-                        docSnapshot.id,
-
-                    ...docSnapshot.data()
-
-                };
-
-            }
+            container.appendChild(
+                div
+            );
 
         }
     );
 
-
-    return product;
-
 }
 
 
-
-// ==================================================
+// ========================================
 // CHANGE PHOTO
-// ==================================================
+// ========================================
 
-function changePhoto(photoIndex) {
+function changePhoto(index) {
 
     const input =
         document.createElement(
@@ -1406,7 +1400,6 @@ function changePhoto(photoIndex) {
     input.type =
         "file";
 
-
     input.accept =
         "image/*";
 
@@ -1415,6 +1408,7 @@ function changePhoto(photoIndex) {
         async function() {
 
             const file =
+                input.files &&
                 input.files[0];
 
 
@@ -1431,75 +1425,19 @@ function changePhoto(photoIndex) {
                     );
 
 
-                const product =
-                    await getEditProduct();
-
-
-                if (!product) {
-                    return;
-                }
-
-
-                if (!product.images) {
-
-                    product.images = [
-                        product.image
-                    ];
-
-                }
-
-
-                product.images[
-                    photoIndex
-                ] =
+                window.editImages[index] =
                     image;
 
 
-                product.image =
-                    product.images[0];
+                renderEditPhotos();
 
 
-                await window.firebaseUpdateDoc(
+            } catch (error) {
 
-                    window.firebaseDoc(
-                        window.firebaseDB,
-                        "products",
-                        product.id
-                    ),
-
-                    {
-                        images:
-                            product.images,
-
-                        image:
-                            product.image
-                    }
-
-                );
-
-
-                renderEditPhotos(
-                    product.images
-                );
-
-
-                showAdminProducts();
-
+                console.error(error);
 
                 alert(
-                    "✅ Photo changed!"
-                );
-
-            }
-
-            catch(error) {
-
-                console.error(
-                    error
-                );
-
-                alert(
-                    "Photo change nahi hui."
+                    "Photo change nahi ho payi."
                 );
 
             }
@@ -1512,34 +1450,166 @@ function changePhoto(photoIndex) {
 }
 
 
-
-// ==================================================
+// ========================================
 // REMOVE PHOTO
-// ==================================================
+// ========================================
 
-async function removePhoto(photoIndex) {
+function removePhoto(index) {
 
-    const product =
-        await getEditProduct();
+    const images =
+        window.editImages || [];
 
 
-    if (!product) {
+    if (images.length <= 1) {
+
+        alert(
+            "Kam se kam 1 photo zaroor honi chahiye."
+        );
+
         return;
     }
 
 
-    if (!product.images) {
+    const confirmed =
+        confirm(
+            `Photo ${index + 1} remove karni hai?`
+        );
 
-        product.images = [
-            product.image
-        ];
 
+    if (!confirmed) {
+        return;
     }
 
 
-    if (
-        product.images.length <= 1
-    ) {
+    images.splice(
+        index,
+        1
+    );
+
+
+    window.editImages =
+        images;
+
+
+    renderEditPhotos();
+
+}
+
+
+// ========================================
+// ADD NEW EDIT PHOTO
+// ========================================
+
+function addNewEditPhoto() {
+
+    const images =
+        window.editImages || [];
+
+
+    if (images.length >= 10) {
+
+        alert(
+            "Maximum 10 photos allowed."
+        );
+
+        return;
+    }
+
+
+    const input =
+        document.createElement(
+            "input"
+        );
+
+
+    input.type =
+        "file";
+
+    input.accept =
+        "image/*";
+
+
+    input.onchange =
+        async function() {
+
+            const file =
+                input.files &&
+                input.files[0];
+
+
+            if (!file) {
+                return;
+            }
+
+
+            try {
+
+                const image =
+                    await fileToBase64(
+                        file
+                    );
+
+
+                images.push(
+                    image
+                );
+
+
+                window.editImages =
+                    images;
+
+
+                renderEditPhotos();
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                alert(
+                    "Photo add nahi ho payi."
+                );
+
+            }
+
+        };
+
+
+    input.click();
+
+}
+
+
+// ========================================
+// SAVE EDITED PRODUCT
+// ========================================
+
+window.saveEditedProduct =
+async function() {
+
+    const id =
+        document
+        .getElementById(
+            "editId"
+        )
+        .value;
+
+
+    if (!id) {
+
+        alert(
+            "Product ID missing."
+        );
+
+        return;
+    }
+
+
+    const images =
+        window.editImages || [];
+
+
+    if (images.length === 0) {
 
         alert(
             "Kam se kam 1 photo honi chahiye."
@@ -1549,216 +1619,30 @@ async function removePhoto(photoIndex) {
     }
 
 
-    const confirmRemove =
-        confirm(
-            "Photo remove karni hai?"
-        );
-
-
-    if (!confirmRemove) {
-        return;
-    }
-
-
-    product.images.splice(
-        photoIndex,
-        1
-    );
-
-
-    product.image =
-        product.images[0];
-
-
-    await window.firebaseUpdateDoc(
-
-        window.firebaseDoc(
-            window.firebaseDB,
-            "products",
-            product.id
-        ),
-
-        {
-
-            images:
-                product.images,
-
-            image:
-                product.image
-
-        }
-
-    );
-
-
-    renderEditPhotos(
-        product.images
-    );
-
-
-    showAdminProducts();
-
-}
-
-
-
-// ==================================================
-// ADD NEW PHOTO
-// ==================================================
-
-function addNewEditPhoto() {
-
-    const input =
-        document.createElement(
-            "input"
-        );
-
-
-    input.type =
-        "file";
-
-
-    input.accept =
-        "image/*";
-
-
-    input.onchange =
-        async function() {
-
-            const file =
-                input.files[0];
-
-
-            if (!file) {
-                return;
-            }
-
-
-            try {
-
-                const product =
-                    await getEditProduct();
-
-
-                if (!product) {
-                    return;
-                }
-
-
-                if (!product.images) {
-
-                    product.images = [
-                        product.image
-                    ];
-
-                }
-
-
-                if (
-                    product.images.length >= 10
-                ) {
-
-                    alert(
-                        "Maximum 10 photos allowed."
-                    );
-
-                    return;
-                }
-
-
-                const image =
-                    await fileToBase64(
-                        file
-                    );
-
-
-                product.images.push(
-                    image
-                );
-
-
-                await window.firebaseUpdateDoc(
-
-                    window.firebaseDoc(
-                        window.firebaseDB,
-                        "products",
-                        product.id
-                    ),
-
-                    {
-                        images:
-                            product.images
-                    }
-
-                );
-
-
-                renderEditPhotos(
-                    product.images
-                );
-
-
-                showAdminProducts();
-
-
-                alert(
-                    "✅ New photo added!"
-                );
-
-            }
-
-            catch(error) {
-
-                console.error(
-                    error
-                );
-
-                alert(
-                    "Photo add nahi hui."
-                );
-
-            }
-
-        };
-
-
-    input.click();
-
-}
-
-
-
-// ==================================================
-// SAVE EDITED PRODUCT
-// ==================================================
-
-async function saveEditedProduct() {
-
-    const id =
+    const saveButton =
         document.getElementById(
-            "editIndex"
-        ).value;
-
-
-    if (!id) {
-        return;
-    }
+            "saveEditButton"
+        );
 
 
     try {
 
-        const product =
-            await getEditProduct();
+        saveButton.disabled =
+            true;
 
 
-        if (!product) {
+        showStatus(
+            "Saving changes...",
+            "loading"
+        );
 
-            alert(
-                "Product nahi mila."
+
+        const productRef =
+            doc(
+                db,
+                "products",
+                id
             );
-
-            return;
-        }
 
 
         const updatedProduct = {
@@ -1771,7 +1655,6 @@ async function saveEditedProduct() {
                 .value
                 .trim(),
 
-
             price:
                 Number(
                     document
@@ -1781,14 +1664,12 @@ async function saveEditedProduct() {
                     .value
                 ),
 
-
             category:
                 document
                 .getElementById(
                     "editCategory"
                 )
                 .value,
-
 
             description:
                 document
@@ -1798,7 +1679,6 @@ async function saveEditedProduct() {
                 .value
                 .trim(),
 
-
             stock:
                 Number(
                     document
@@ -1806,101 +1686,113 @@ async function saveEditedProduct() {
                         "editStock"
                     )
                     .value
-                )
+                ),
+
+            images:
+                images,
+
+            image:
+                images[0],
+
+            updatedAt:
+                serverTimestamp()
 
         };
 
 
-        await window.firebaseUpdateDoc(
-
-            window.firebaseDoc(
-                window.firebaseDB,
-                "products",
-                id
-            ),
-
+        await updateDoc(
+            productRef,
             updatedProduct
-
         );
 
 
-        alert(
-            "✅ Product updated successfully!"
+        showStatus(
+            "✅ Product updated successfully!",
+            "success"
         );
 
 
         cancelEdit();
 
 
-        showAdminProducts();
+        await loadProducts();
 
-    }
 
-    catch(error) {
+    } catch (error) {
 
         console.error(
+            "Update Product Error:",
             error
         );
 
-
-        alert(
-            "❌ Product update nahi hua."
+        showStatus(
+            "❌ Product update nahi hua.",
+            "error"
         );
+
+    } finally {
+
+        saveButton.disabled =
+            false;
 
     }
 
-}
+};
 
 
-
-// ==================================================
+// ========================================
 // DELETE PRODUCT
-// ==================================================
+// ========================================
 
 async function deleteProduct(id) {
 
-    const confirmDelete =
+    const confirmed =
         confirm(
             "Kya aap is product ko delete karna chahte hain?"
         );
 
 
-    if (!confirmDelete) {
+    if (!confirmed) {
         return;
     }
 
 
     try {
 
-        await window.firebaseDeleteDoc(
+        showStatus(
+            "Deleting product...",
+            "loading"
+        );
 
-            window.firebaseDoc(
-                window.firebaseDB,
+
+        await deleteDoc(
+            doc(
+                db,
                 "products",
                 id
             )
-
         );
 
 
-        alert(
-            "✅ Product deleted!"
+        showStatus(
+            "✅ Product deleted successfully!",
+            "success"
         );
 
 
-        showAdminProducts();
+        await loadProducts();
 
-    }
 
-    catch(error) {
+    } catch (error) {
 
         console.error(
+            "Delete Product Error:",
             error
         );
 
-
-        alert(
-            "❌ Product delete nahi hua."
+        showStatus(
+            "❌ Product delete nahi hua.",
+            "error"
         );
 
     }
@@ -1908,12 +1800,12 @@ async function deleteProduct(id) {
 }
 
 
-
-// ==================================================
+// ========================================
 // CANCEL EDIT
-// ==================================================
+// ========================================
 
-function cancelEdit() {
+window.cancelEdit =
+function() {
 
     document
     .getElementById(
@@ -1922,79 +1814,29 @@ function cancelEdit() {
     .style.display =
         "none";
 
-}
+
+    document
+    .getElementById(
+        "editId"
+    )
+    .value =
+        "";
 
 
+    window.editImages =
+        [];
 
-// ==================================================
-// STATUS
-// ==================================================
-
-function showStatus(
-    message,
-    error
-) {
-
-    const box =
-        document.getElementById(
-            "statusMessage"
-        );
+};
 
 
-    if (!box) {
-        return;
-    }
+// ========================================
+// START
+// ========================================
 
-
-    box.innerText =
-        message;
-
-
-    box.style.display =
-        "block";
-
-}
-
-
-
-// ==================================================
-// ESCAPE HTML
-// ==================================================
-
-function escapeHTML(text) {
-
-    return String(text)
-
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-
-        .replace(
-            /</g,
-            "&lt;"
-        )
-
-        .replace(
-            />/g,
-            "&gt;"
-        )
-
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-
-}
+loadProducts();
 
 </script>
 
 
 </body>
-
 </html>

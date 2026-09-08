@@ -7,6 +7,96 @@
     <title>Supreme Craft India | Premium Furniture</title>
 
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* Product loading / error */
+        .product-loading {
+            width: 100%;
+            text-align: center;
+            padding: 60px 20px;
+            font-size: 18px;
+        }
+
+        .product-error {
+            width: 100%;
+            text-align: center;
+            padding: 50px 20px;
+            color: #b00020;
+        }
+
+        .product-empty {
+            width: 100%;
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .product-card {
+            overflow: hidden;
+        }
+
+        .product-info {
+            padding: 18px;
+        }
+
+        .product-info h3 {
+            margin: 0 0 8px;
+        }
+
+        .product-info p {
+            margin: 0 0 12px;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            overflow: hidden;
+        }
+
+        .product-price {
+            font-weight: 700;
+            font-size: 20px;
+            margin-bottom: 14px;
+        }
+
+        .product-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .product-buttons a,
+        .product-buttons button {
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px 16px;
+            border-radius: 6px;
+        }
+
+        .view-product {
+            display: inline-block;
+        }
+
+        .add-cart {
+            background: #111;
+            color: #fff;
+        }
+
+        .no-image {
+            height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eee;
+            color: #777;
+        }
+    </style>
 </head>
 
 <body>
@@ -71,17 +161,19 @@
         </div>
 
         <button
+            type="button"
             class="hero-prev"
             id="heroPrev"
-            onclick="changeHeroImage(-1)"
+            aria-label="Previous image"
         >
             ❮
         </button>
 
         <button
+            type="button"
             class="hero-next"
             id="heroNext"
-            onclick="changeHeroImage(1)"
+            aria-label="Next image"
         >
             ❯
         </button>
@@ -110,32 +202,57 @@
 
     <div class="categories">
 
-        <button onclick="filterProducts('all')">
+        <button
+            type="button"
+            class="category-btn active"
+            data-category="all"
+        >
             All
         </button>
 
-        <button onclick="filterProducts('sofa')">
+        <button
+            type="button"
+            class="category-btn"
+            data-category="sofa"
+        >
             Sofas
         </button>
 
-        <button onclick="filterProducts('chair')">
+        <button
+            type="button"
+            class="category-btn"
+            data-category="chair"
+        >
             Chairs
         </button>
 
-        <button onclick="filterProducts('table')">
+        <button
+            type="button"
+            class="category-btn"
+            data-category="table"
+        >
             Tables
         </button>
 
-        <button onclick="filterProducts('bed')">
+        <button
+            type="button"
+            class="category-btn"
+            data-category="bed"
+        >
             Beds
         </button>
 
     </div>
 
+
     <div
         class="product-container"
         id="productContainer"
-    ></div>
+    >
+        <div class="product-loading">
+            Loading products...
+        </div>
+    </div>
 
 </section>
 
@@ -203,7 +320,9 @@
     <a
         href="https://wa.me/919509393894"
         target="_blank"
+        rel="noopener noreferrer"
         class="float whatsapp"
+        aria-label="WhatsApp"
     >
         💬
     </a>
@@ -211,7 +330,9 @@
     <a
         href="https://www.instagram.com/"
         target="_blank"
+        rel="noopener noreferrer"
         class="float instagram"
+        aria-label="Instagram"
     >
         📸
     </a>
@@ -219,6 +340,7 @@
     <a
         href="tel:+919509393894"
         class="float phone"
+        aria-label="Call"
     >
         ☎
     </a>
@@ -226,36 +348,948 @@
 </div>
 
 
-
+<!-- =====================================================
+     FIREBASE + FIRESTORE
+===================================================== -->
 
 <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+    import { initializeApp } from
+        "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
     import {
         getFirestore,
         collection,
         getDocs
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    } from
+        "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+    /* ================= FIREBASE CONFIG ================= */
 
     const firebaseConfig = {
-        apiKey: "AIzaSyAc9iuAS9RA1orVpkwdSomkSiS07QLe0Ak",
-        authDomain: "supreme-craft-india.firebaseapp.com",
-        projectId: "supreme-craft-india",
-        storageBucket: "supreme-craft-india.firebasestorage.app",
-        messagingSenderId: "9064158877",
-        appId: "1:9064158877:web:fa4319ebc7cf50a2fe2674",
-        measurementId: "G-RQ9Z44PEX5"
+
+        apiKey:
+            "AIzaSyAc9iuAS9RA1orVpkwdSomkSiS07QLe0Ak",
+
+        authDomain:
+            "supreme-craft-india.firebaseapp.com",
+
+        projectId:
+            "supreme-craft-india",
+
+        storageBucket:
+            "supreme-craft-india.firebasestorage.app",
+
+        messagingSenderId:
+            "9064158877",
+
+        appId:
+            "1:9064158877:web:fa4319ebc7cf50a2fe2674",
+
+        measurementId:
+            "G-RQ9Z44PEX5"
     };
+
+
+    /* ================= INITIALIZE FIREBASE ================= */
 
     const app = initializeApp(firebaseConfig);
 
     const db = getFirestore(app);
 
-    window.firebaseDB = db;
-    window.firebaseCollection = collection;
-    window.firebaseGetDocs = getDocs;
-</script>
 
-<script type="module" src="script.js"></script>
+    /* ================= GLOBAL VARIABLES ================= */
+
+    let allProducts = [];
+
+    let currentCategory = "all";
+
+
+    /* =====================================================
+       LOAD PRODUCTS FROM FIRESTORE
+    ===================================================== */
+
+    async function loadProducts() {
+
+        const container =
+            document.getElementById("productContainer");
+
+        container.innerHTML = `
+            <div class="product-loading">
+                Loading products...
+            </div>
+        `;
+
+
+        try {
+
+            const productsRef =
+                collection(db, "products");
+
+            const snapshot =
+                await getDocs(productsRef);
+
+
+            allProducts = [];
+
+
+            snapshot.forEach((doc) => {
+
+                const data = doc.data();
+
+
+                /*
+                    IMPORTANT:
+
+                    doc.id = Firestore Product ID
+
+                    Example:
+                    product.html?id=ABC123
+                */
+
+                allProducts.push({
+
+                    id: doc.id,
+
+                    ...data
+
+                });
+
+            });
+
+
+            console.log(
+                "Firestore Products:",
+                allProducts
+            );
+
+
+            if (allProducts.length === 0) {
+
+                container.innerHTML = `
+                    <div class="product-empty">
+                        <h3>No products found</h3>
+                        <p>
+                            Please add products from admin panel.
+                        </p>
+                    </div>
+                `;
+
+                return;
+            }
+
+
+            renderProducts();
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Firestore Error:",
+                error
+            );
+
+
+            container.innerHTML = `
+                <div class="product-error">
+
+                    <h3>
+                        Products could not be loaded
+                    </h3>
+
+                    <p>
+                        Please check Firebase connection
+                        and Firestore rules.
+                    </p>
+
+                    <small>
+                        ${escapeHTML(error.message)}
+                    </small>
+
+                </div>
+            `;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       RENDER PRODUCTS
+    ===================================================== */
+
+    function renderProducts() {
+
+        const container =
+            document.getElementById("productContainer");
+
+
+        let products =
+            [...allProducts];
+
+
+        /* CATEGORY FILTER */
+
+        if (currentCategory !== "all") {
+
+            products =
+                products.filter(product => {
+
+                    const category =
+                        String(
+                            product.category || ""
+                        ).toLowerCase().trim();
+
+                    return category === currentCategory;
+
+                });
+
+        }
+
+
+        if (products.length === 0) {
+
+            container.innerHTML = `
+                <div class="product-empty">
+
+                    <h3>
+                        No products in this category
+                    </h3>
+
+                    <p>
+                        Try another category.
+                    </p>
+
+                </div>
+            `;
+
+            return;
+        }
+
+
+        container.innerHTML =
+            products.map(product => {
+
+                return createProductCard(product);
+
+            }).join("");
+
+
+        /* Add cart buttons */
+
+        container
+            .querySelectorAll(".add-cart")
+            .forEach(button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        const id =
+                            button.dataset.id;
+
+                        addToCart(id);
+
+                    }
+                );
+
+            });
+
+    }
+
+
+    /* =====================================================
+       PRODUCT CARD
+    ===================================================== */
+
+    function createProductCard(product) {
+
+        const id =
+            String(product.id || "");
+
+
+        const name =
+            String(
+                product.name ||
+                product.title ||
+                "Premium Furniture"
+            );
+
+
+        const description =
+            String(
+                product.description ||
+                "Premium quality furniture."
+            );
+
+
+        const price =
+            Number(product.price) || 0;
+
+
+        /*
+            Supports:
+
+            image
+            imageUrl
+            imageURL
+            img
+            images
+        */
+
+        let image = "";
+
+
+        if (
+            typeof product.image === "string" &&
+            product.image.trim() !== ""
+        ) {
+
+            image = product.image.trim();
+
+        }
+
+        else if (
+            typeof product.imageUrl === "string" &&
+            product.imageUrl.trim() !== ""
+        ) {
+
+            image = product.imageUrl.trim();
+
+        }
+
+        else if (
+            typeof product.imageURL === "string" &&
+            product.imageURL.trim() !== ""
+        ) {
+
+            image = product.imageURL.trim();
+
+        }
+
+        else if (
+            typeof product.img === "string" &&
+            product.img.trim() !== ""
+        ) {
+
+            image = product.img.trim();
+
+        }
+
+        else if (
+            Array.isArray(product.images) &&
+            product.images.length > 0
+        ) {
+
+            image =
+                String(product.images[0]);
+
+        }
+
+
+        const safeId =
+            encodeURIComponent(id);
+
+
+        const safeName =
+            escapeHTML(name);
+
+
+        const safeDescription =
+            escapeHTML(description);
+
+
+        const formattedPrice =
+            price.toLocaleString("en-IN");
+
+
+        const imageHTML =
+            image
+                ? `
+                    <img
+                        src="${escapeAttribute(image)}"
+                        alt="${escapeAttribute(name)}"
+                        loading="lazy"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                    >
+
+                    <div
+                        class="no-image"
+                        style="display:none;"
+                    >
+                        Image unavailable
+                    </div>
+                  `
+                : `
+                    <div class="no-image">
+                        No image
+                    </div>
+                  `;
+
+
+        return `
+
+            <article
+                class="product-card"
+                data-product-id="${safeId}"
+            >
+
+                ${imageHTML}
+
+
+                <div class="product-info">
+
+                    <h3>
+                        ${safeName}
+                    </h3>
+
+
+                    <p>
+                        ${safeDescription}
+                    </p>
+
+
+                    <div class="product-price">
+
+                        ₹${formattedPrice}
+
+                    </div>
+
+
+                    <div class="product-buttons">
+
+                        <a
+                            href="product.html?id=${safeId}"
+                            class="view-product btn"
+                        >
+                            View Product
+                        </a>
+
+
+                        <button
+                            type="button"
+                            class="add-cart"
+                            data-id="${safeId}"
+                        >
+                            Add to Cart
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+        `;
+
+    }
+
+
+    /* =====================================================
+       CATEGORY FILTER
+    ===================================================== */
+
+    function setupCategoryFilter() {
+
+        const buttons =
+            document.querySelectorAll(
+                ".category-btn"
+            );
+
+
+        buttons.forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    buttons.forEach(btn => {
+
+                        btn.classList.remove(
+                            "active"
+                        );
+
+                    });
+
+
+                    button.classList.add(
+                        "active"
+                    );
+
+
+                    currentCategory =
+                        button.dataset.category ||
+                        "all";
+
+
+                    renderProducts();
+
+                }
+            );
+
+        });
+
+    }
+
+
+    /* =====================================================
+       CART
+    ===================================================== */
+
+    function getCart() {
+
+        try {
+
+            const cart =
+                JSON.parse(
+                    localStorage.getItem("cart")
+                );
+
+
+            return Array.isArray(cart)
+                ? cart
+                : [];
+
+        }
+
+        catch {
+
+            return [];
+
+        }
+
+    }
+
+
+    function saveCart(cart) {
+
+        localStorage.setItem(
+            "cart",
+            JSON.stringify(cart)
+        );
+
+    }
+
+
+    function addToCart(productId) {
+
+        const product =
+            allProducts.find(
+                item =>
+                    String(item.id) ===
+                    String(productId)
+            );
+
+
+        if (!product) {
+
+            alert(
+                "Product not found."
+            );
+
+            return;
+
+        }
+
+
+        const cart =
+            getCart();
+
+
+        const existing =
+            cart.find(
+                item =>
+                    String(item.id) ===
+                    String(product.id)
+            );
+
+
+        const price =
+            Number(product.price) || 0;
+
+
+        const image =
+            getProductImage(product);
+
+
+        if (existing) {
+
+            existing.quantity =
+                Number(existing.quantity || 0) + 1;
+
+        }
+
+        else {
+
+            cart.push({
+
+                id:
+                    product.id,
+
+                name:
+                    product.name ||
+                    product.title ||
+                    "Product",
+
+                price:
+                    price,
+
+                image:
+                    image,
+
+                quantity:
+                    1
+
+            });
+
+        }
+
+
+        saveCart(cart);
+
+        updateCartCount();
+
+
+        alert(
+            "Product added to cart!"
+        );
+
+    }
+
+
+    /* =====================================================
+       PRODUCT IMAGE
+    ===================================================== */
+
+    function getProductImage(product) {
+
+        if (
+            typeof product.image === "string" &&
+            product.image.trim()
+        ) {
+
+            return product.image.trim();
+
+        }
+
+
+        if (
+            typeof product.imageUrl === "string" &&
+            product.imageUrl.trim()
+        ) {
+
+            return product.imageUrl.trim();
+
+        }
+
+
+        if (
+            typeof product.imageURL === "string" &&
+            product.imageURL.trim()
+        ) {
+
+            return product.imageURL.trim();
+
+        }
+
+
+        if (
+            typeof product.img === "string" &&
+            product.img.trim()
+        ) {
+
+            return product.img.trim();
+
+        }
+
+
+        if (
+            Array.isArray(product.images) &&
+            product.images.length
+        ) {
+
+            return String(
+                product.images[0]
+            );
+
+        }
+
+
+        return "";
+
+    }
+
+
+    /* =====================================================
+       CART COUNT
+    ===================================================== */
+
+    function updateCartCount() {
+
+        const cart =
+            getCart();
+
+
+        const count =
+            cart.reduce(
+                (total, item) => {
+
+                    return total +
+                        Number(
+                            item.quantity || 0
+                        );
+
+                },
+                0
+            );
+
+
+        const cartCount =
+            document.getElementById(
+                "cartCount"
+            );
+
+
+        if (cartCount) {
+
+            cartCount.textContent =
+                count;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       HERO SLIDER
+    ===================================================== */
+
+    const heroImages = [
+
+        "images/image1.jpg",
+
+        "images/image2.jpg"
+
+    ];
+
+
+    let heroIndex = 0;
+
+
+    const heroImage =
+        document.getElementById(
+            "heroImage"
+        );
+
+
+    const heroDots =
+        document.getElementById(
+            "heroDots"
+        );
+
+
+    function renderHeroDots() {
+
+        if (!heroDots) return;
+
+
+        heroDots.innerHTML =
+            heroImages.map(
+                (_, index) => {
+
+                    return `
+                        <button
+                            type="button"
+                            class="hero-dot ${
+                                index === heroIndex
+                                    ? "active"
+                                    : ""
+                            }"
+                            data-index="${index}"
+                            aria-label="Slide ${
+                                index + 1
+                            }"
+                        ></button>
+                    `;
+
+                }
+            ).join("");
+
+
+        heroDots
+            .querySelectorAll(".hero-dot")
+            .forEach(dot => {
+
+                dot.addEventListener(
+                    "click",
+                    () => {
+
+                        heroIndex =
+                            Number(
+                                dot.dataset.index
+                            );
+
+                        updateHero();
+
+                    }
+                );
+
+            });
+
+    }
+
+
+    function updateHero() {
+
+        if (!heroImage) return;
+
+
+        heroImage.src =
+            heroImages[heroIndex];
+
+
+        renderHeroDots();
+
+    }
+
+
+    function changeHeroImage(direction) {
+
+        heroIndex += direction;
+
+
+        if (
+            heroIndex >=
+            heroImages.length
+        ) {
+
+            heroIndex = 0;
+
+        }
+
+
+        if (heroIndex < 0) {
+
+            heroIndex =
+                heroImages.length - 1;
+
+        }
+
+
+        updateHero();
+
+    }
+
+
+    const heroPrev =
+        document.getElementById(
+            "heroPrev"
+        );
+
+
+    const heroNext =
+        document.getElementById(
+            "heroNext"
+        );
+
+
+    if (heroPrev) {
+
+        heroPrev.addEventListener(
+            "click",
+            () => {
+
+                changeHeroImage(-1);
+
+            }
+        );
+
+    }
+
+
+    if (heroNext) {
+
+        heroNext.addEventListener(
+            "click",
+            () => {
+
+                changeHeroImage(1);
+
+            }
+        );
+
+    }
+
+
+    /* Auto Hero Slider */
+
+    if (heroImages.length > 1) {
+
+        setInterval(
+            () => {
+
+                changeHeroImage(1);
+
+            },
+            5000
+        );
+
+    }
+
+
+    /* =====================================================
+       SECURITY / HTML ESCAPE HELPERS
+    ===================================================== */
+
+    function escapeHTML(value) {
+
+        return String(value)
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+            .replace(
+                /</g,
+                "&lt;"
+            )
+            .replace(
+                />/g,
+                "&gt;"
+            )
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+
+    }
+
+
+    function escapeAttribute(value) {
+
+        return escapeHTML(value);
+
+    }
+
+
+    /* =====================================================
+       START
+    ===================================================== */
+
+    setupCategoryFilter();
+
+    updateCartCount();
+
+    renderHeroDots();
+
+    loadProducts();
+
+</script>
 
 </body>
 </html>

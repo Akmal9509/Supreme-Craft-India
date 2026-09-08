@@ -1,72 +1,607 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Checkout | Supreme Craft India</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <style>
+
+        /* =====================================================
+           CHECKOUT PAGE
+           ===================================================== */
+
+        .checkout {
+            min-height: calc(100vh - 80px);
+
+            padding: 70px 20px;
+
+            background: #f7f7f7;
+        }
+
+
+        .checkout-box {
+            width: 100%;
+
+            max-width: 850px;
+
+            margin: 0 auto;
+
+            padding: 45px;
+
+            background: #ffffff;
+
+            border: 1px solid #e8e8e8;
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 15px 45px rgba(
+                    0,
+                    0,
+                    0,
+                    0.07
+                );
+        }
+
+
+        .checkout-box .small-title {
+            margin-bottom: 8px;
+
+            color: #777777;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            letter-spacing: 3px;
+        }
+
+
+        .checkout-box h1 {
+            margin-bottom: 35px;
+
+            font-size: 42px;
+
+            line-height: 1.15;
+        }
+
+
+        /* =====================================================
+           FORM
+           ===================================================== */
+
+        #checkoutForm {
+            width: 100%;
+        }
+
+
+        #checkoutForm label {
+            display: block;
+
+            margin-top: 20px;
+
+            margin-bottom: 7px;
+
+            color: #222222;
+
+            font-size: 14px;
+
+            font-weight: 600;
+        }
+
+
+        #checkoutForm input,
+        #checkoutForm textarea,
+        #checkoutForm select {
+
+            width: 100%;
+
+            padding: 14px 15px;
+
+            border: 1px solid #dddddd;
+
+            border-radius: 6px;
+
+            outline: none;
+
+            background: #ffffff;
+
+            color: #222222;
+
+            font-size: 14px;
+
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+
+        #checkoutForm input:focus,
+        #checkoutForm textarea:focus,
+        #checkoutForm select:focus {
+
+            border-color: #222222;
+
+            box-shadow:
+                0 0 0 3px rgba(
+                    0,
+                    0,
+                    0,
+                    0.05
+                );
+        }
+
+
+        #checkoutForm textarea {
+
+            resize: vertical;
+
+            min-height: 120px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =====================================================
+           ORDER SUMMARY
+           ===================================================== */
+
+        .order-summary {
+
+            margin-top: 35px;
+
+            padding: 25px;
+
+            background: #f8f8f8;
+
+            border: 1px solid #eeeeee;
+
+            border-radius: 10px;
+        }
+
+
+        .order-summary h2 {
+
+            margin-bottom: 20px;
+
+            font-size: 22px;
+
+            color: #111111;
+        }
+
+
+        #checkoutItems {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 12px;
+        }
+
+
+        .checkout-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+
+            padding: 12px 0;
+
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+
+        .checkout-item:last-child {
+
+            border-bottom: none;
+        }
+
+
+        .checkout-item-image {
+
+            width: 65px;
+
+            height: 60px;
+
+            flex: 0 0 65px;
+
+            object-fit: cover;
+
+            border-radius: 7px;
+
+            background: #eeeeee;
+        }
+
+
+        .checkout-item-info {
+
+            flex: 1;
+
+            min-width: 0;
+        }
+
+
+        .checkout-item-name {
+
+            margin-bottom: 3px;
+
+            color: #222222;
+
+            font-size: 14px;
+
+            font-weight: 700;
+        }
+
+
+        .checkout-item-quantity {
+
+            color: #777777;
+
+            font-size: 12px;
+        }
+
+
+        .checkout-item-price {
+
+            white-space: nowrap;
+
+            color: #111111;
+
+            font-size: 14px;
+
+            font-weight: 700;
+        }
+
+
+        .empty-checkout {
+
+            padding: 20px 0;
+
+            text-align: center;
+
+            color: #777777;
+
+            font-size: 14px;
+        }
+
+
+        .order-summary h3 {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-top: 20px;
+
+            padding-top: 20px;
+
+            border-top: 1px solid #dddddd;
+
+            color: #111111;
+
+            font-size: 20px;
+        }
+
+
+        /* =====================================================
+           PLACE ORDER
+           ===================================================== */
+
+        .place-order {
+
+            width: 100%;
+
+            margin-top: 25px;
+
+            padding: 16px 20px;
+
+            border: 1px solid #168000;
+
+            border-radius: 5px;
+
+            background: #168000;
+
+            color: #ffffff;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition:
+                background 0.25s ease,
+                transform 0.25s ease;
+        }
+
+
+        .place-order:hover {
+
+            background: #116800;
+
+            transform: translateY(-2px);
+        }
+
+
+        .place-order:disabled {
+
+            opacity: 0.6;
+
+            cursor: not-allowed;
+
+            transform: none;
+        }
+
+
+        /* =====================================================
+           BACK LINK
+           ===================================================== */
+
+        .checkout-back {
+
+            display: inline-block;
+
+            margin-top: 20px;
+
+            color: #555555;
+
+            font-size: 13px;
+
+            text-decoration: underline;
+        }
+
+
+        .checkout-back:hover {
+
+            color: #111111;
+        }
+
+
+        /* =====================================================
+           MOBILE
+           ===================================================== */
+
+        @media (max-width: 768px) {
+
+            .checkout {
+
+                padding: 35px 14px;
+            }
+
+
+            .checkout-box {
+
+                padding: 28px 20px;
+
+                border-radius: 10px;
+            }
+
+
+            .checkout-box h1 {
+
+                margin-bottom: 25px;
+
+                font-size: 32px;
+            }
+
+
+            .order-summary {
+
+                padding: 18px;
+            }
+
+
+            .order-summary h2 {
+
+                font-size: 19px;
+            }
+
+
+            .order-summary h3 {
+
+                font-size: 18px;
+            }
+
+        }
+
+
+        @media (max-width: 480px) {
+
+            .checkout {
+
+                padding: 20px 10px;
+            }
+
+
+            .checkout-box {
+
+                padding: 23px 15px;
+            }
+
+
+            .checkout-box h1 {
+
+                font-size: 29px;
+            }
+
+
+            .checkout-item-image {
+
+                width: 55px;
+
+                height: 52px;
+
+                flex-basis: 55px;
+            }
+
+
+            .checkout-item-name {
+
+                font-size: 13px;
+            }
+
+
+            .checkout-item-price {
+
+                font-size: 12px;
+            }
+
+
+            #checkoutForm input,
+            #checkoutForm textarea,
+            #checkoutForm select {
+
+                padding: 13px;
+            }
+
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
-<header>
+
+<!-- =====================================================
+     HEADER
+     ===================================================== -->
+
+<header class="site-header">
 
     <div class="logo">
-        SUPREME CRAFT <span>INDIA</span>
+
+        SUPREME CRAFT
+        <span>INDIA</span>
+
     </div>
 
+
     <nav>
-        <a href="index.html">Home</a>
-        <a href="index.html#products">Products</a>
-        <a href="cart.html">🛒 Cart</a>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="index.html#products">
+            Products
+        </a>
+
+        <a href="cart.html">
+            🛒 Cart
+            <span id="cartCount">0</span>
+        </a>
+
     </nav>
 
 </header>
 
 
+
+<!-- =====================================================
+     CHECKOUT
+     ===================================================== -->
+
 <section class="checkout">
 
     <div class="checkout-box">
 
-        <p class="small-title">SUPREME CRAFT INDIA</p>
+        <p class="small-title">
+            SUPREME CRAFT INDIA
+        </p>
 
-        <h1>Checkout</h1>
+
+        <h1>
+            Checkout
+        </h1>
+
 
         <form id="checkoutForm">
 
-            <label>Full Name</label>
+            <!-- NAME -->
+
+            <label for="name">
+                Full Name
+            </label>
+
             <input
                 type="text"
                 id="name"
-                placeholder="Enter your name"
+                placeholder="Enter your full name"
+                autocomplete="name"
+                minlength="2"
+                maxlength="80"
                 required
             >
 
 
-            <label>Mobile Number</label>
+
+            <!-- PHONE -->
+
+            <label for="phone">
+                Mobile Number
+            </label>
+
             <input
                 type="tel"
                 id="phone"
-                placeholder="Enter mobile number"
+                placeholder="10 digit mobile number"
+                autocomplete="tel"
+                inputmode="numeric"
                 maxlength="10"
                 required
             >
 
 
-            <label>Delivery Address</label>
+
+            <!-- ADDRESS -->
+
+            <label for="address">
+                Delivery Address
+            </label>
+
             <textarea
                 id="address"
-                placeholder="Enter complete delivery address"
-                rows="5"
+                placeholder="House/Shop No., Street, City, State, PIN Code"
+                autocomplete="street-address"
+                minlength="10"
+                maxlength="500"
                 required
             ></textarea>
 
 
-            <label>Payment Method</label>
 
-            <select id="payment" required>
+            <!-- PAYMENT -->
+
+            <label for="payment">
+                Payment Method
+            </label>
+
+            <select
+                id="payment"
+                required
+            >
 
                 <option value="">
                     Select Payment Method
@@ -87,23 +622,53 @@
             </select>
 
 
+
+            <!-- ORDER SUMMARY -->
+
             <div class="order-summary">
 
-                <h2>Order Summary</h2>
+                <h2>
+                    Order Summary
+                </h2>
 
-                <div id="checkoutItems"></div>
+
+                <div id="checkoutItems">
+                </div>
+
 
                 <h3>
-                    Total:
-                    ₹<span id="checkoutTotal">0</span>
+
+                    <span>
+                        Total
+                    </span>
+
+                    <span>
+                        ₹<span id="checkoutTotal">0</span>
+                    </span>
+
                 </h3>
 
             </div>
 
 
-            <button type="submit" class="place-order">
+
+            <!-- PLACE ORDER -->
+
+            <button
+                type="submit"
+                class="place-order"
+                id="placeOrderButton"
+            >
                 📲 Place Order on WhatsApp
             </button>
+
+
+            <a
+                href="cart.html"
+                class="checkout-back"
+            >
+                ← Back to Cart
+            </a>
 
         </form>
 
@@ -112,137 +677,603 @@
 </section>
 
 
+
+<!-- =====================================================
+     JAVASCRIPT
+     ===================================================== -->
+
 <script>
 
-let cart =
-    JSON.parse(localStorage.getItem("cart")) || [];
+"use strict";
 
 
-function showOrderSummary() {
+// =========================================================
+// CART
+// =========================================================
 
-    let items =
-        document.getElementById("checkoutItems");
+let cart = [];
 
-    let total = 0;
+try {
 
-    items.innerHTML = "";
+    cart =
+        JSON.parse(
+            localStorage.getItem("cart")
+        ) || [];
 
+    if (!Array.isArray(cart)) {
 
-    cart.forEach(product => {
+        cart = [];
 
-        let productTotal =
-            product.price * product.quantity;
+    }
 
-        total += productTotal;
+} catch (error) {
 
+    console.error(
+        "Cart loading error:",
+        error
+    );
 
-        items.innerHTML += `
-            <p>
-                ${product.name}
-                × ${product.quantity}
-                — ₹${productTotal.toLocaleString("en-IN")}
-            </p>
-        `;
+    cart = [];
 
-    });
-
-
-    document.getElementById("checkoutTotal").innerText =
-        total.toLocaleString("en-IN");
 }
 
 
-showOrderSummary();
+
+// =========================================================
+// CART COUNT
+// =========================================================
+
+function updateCartCount() {
+
+    const cartCount =
+        document.getElementById(
+            "cartCount"
+        );
 
 
-document.getElementById("checkoutForm")
-.addEventListener("submit", function(event) {
+    if (!cartCount) {
 
-    event.preventDefault();
+        return;
+
+    }
+
+
+    const totalItems =
+        cart.reduce(
+            function(total, item) {
+
+                return total +
+                    Number(
+                        item.quantity || 0
+                    );
+
+            },
+            0
+        );
+
+
+    cartCount.innerText =
+        totalItems;
+
+}
+
+
+
+// =========================================================
+// FORMAT PRICE
+// =========================================================
+
+function formatPrice(price) {
+
+    return Number(price || 0)
+        .toLocaleString("en-IN");
+
+}
+
+
+
+// =========================================================
+// PRODUCT IMAGE
+// =========================================================
+
+function getProductImage(product) {
+
+    if (
+        product &&
+        Array.isArray(product.images) &&
+        product.images.length > 0
+    ) {
+
+        return product.images[0];
+
+    }
+
+
+    if (
+        product &&
+        product.image
+    ) {
+
+        return product.image;
+
+    }
+
+
+    return "images/placeholder.jpg";
+
+}
+
+
+
+// =========================================================
+// SHOW ORDER SUMMARY
+// =========================================================
+
+function showOrderSummary() {
+
+    const itemsContainer =
+        document.getElementById(
+            "checkoutItems"
+        );
+
+
+    const totalElement =
+        document.getElementById(
+            "checkoutTotal"
+        );
+
+
+    if (!itemsContainer || !totalElement) {
+
+        return;
+
+    }
 
 
     if (cart.length === 0) {
 
-        alert("Your cart is empty!");
+        itemsContainer.innerHTML = `
 
-        window.location.href = "index.html";
+            <div class="empty-checkout">
+
+                Your cart is empty.
+
+                <br><br>
+
+                <a href="index.html">
+                    Continue Shopping →
+                </a>
+
+            </div>
+
+        `;
+
+
+        totalElement.innerText =
+            "0";
+
 
         return;
+
     }
 
 
-    let name =
-        document.getElementById("name").value;
-
-    let phone =
-        document.getElementById("phone").value;
-
-    let address =
-        document.getElementById("address").value;
-
-    let payment =
-        document.getElementById("payment").value;
+    let total = 0;
 
 
-    let total = cart.reduce(
-        (sum, product) =>
-        sum + product.price * product.quantity,
-        0
+    itemsContainer.innerHTML = "";
+
+
+    cart.forEach(
+        function(product) {
+
+            const price =
+                Number(product.price) || 0;
+
+
+            const quantity =
+                Number(product.quantity) || 0;
+
+
+            const productTotal =
+                price * quantity;
+
+
+            total += productTotal;
+
+
+            const image =
+                getProductImage(product);
+
+
+            const item =
+                document.createElement("div");
+
+
+            item.className =
+                "checkout-item";
+
+
+            item.innerHTML = `
+
+                <img
+                    class="checkout-item-image"
+                    src="${image}"
+                    alt=""
+                    onerror="
+                        this.src='images/placeholder.jpg';
+                    "
+                >
+
+                <div class="checkout-item-info">
+
+                    <div class="checkout-item-name">
+                        ${escapeHTML(product.name || "Product")}
+                    </div>
+
+                    <div class="checkout-item-quantity">
+                        ₹${formatPrice(price)}
+                        × ${quantity}
+                    </div>
+
+                </div>
+
+                <div class="checkout-item-price">
+                    ₹${formatPrice(productTotal)}
+                </div>
+
+            `;
+
+
+            itemsContainer.appendChild(item);
+
+        }
     );
 
 
-    let orderMessage =
-        "🛋️ *NEW ORDER - SUPREME CRAFT INDIA*%0A%0A" +
+    totalElement.innerText =
+        formatPrice(total);
 
-        "*Customer Details*%0A" +
-        "Name: " + name + "%0A" +
-        "Mobile: " + phone + "%0A" +
-        "Address: " + address + "%0A%0A" +
-
-        "*Products*%0A";
+}
 
 
-    cart.forEach(product => {
 
-        orderMessage +=
-            product.name +
-            " × " +
-            product.quantity +
-            " = ₹" +
-            (product.price * product.quantity) +
-            "%0A";
+// =========================================================
+// HTML ESCAPE
+// =========================================================
 
-    });
+function escapeHTML(value) {
 
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 
-    orderMessage +=
-        "%0A*Total: ₹" +
-        total +
-        "*%0A" +
-
-        "Payment: " +
-        payment;
+}
 
 
-    // YOUR WHATSAPP NUMBER
-    let whatsappNumber = "919999999999";
+
+// =========================================================
+// PHONE VALIDATION
+// =========================================================
+
+function validatePhone(phone) {
+
+    return /^[6-9][0-9]{9}$/.test(phone);
+
+}
 
 
-    let whatsappURL =
-        "https://wa.me/" +
-        whatsappNumber +
-        "?text=" +
-        orderMessage;
 
+// =========================================================
+// CHECKOUT FORM
+// =========================================================
 
-    window.open(
-        whatsappURL,
-        "_blank"
+const checkoutForm =
+    document.getElementById(
+        "checkoutForm"
     );
 
-});
+
+if (checkoutForm) {
+
+    checkoutForm.addEventListener(
+        "submit",
+        function(event) {
+
+            event.preventDefault();
+
+
+            // ---------------------------------------------
+            // EMPTY CART CHECK
+            // ---------------------------------------------
+
+            if (cart.length === 0) {
+
+                alert(
+                    "Your cart is empty!"
+                );
+
+                window.location.href =
+                    "index.html";
+
+                return;
+
+            }
+
+
+            // ---------------------------------------------
+            // GET FORM VALUES
+            // ---------------------------------------------
+
+            const name =
+                document
+                .getElementById("name")
+                .value
+                .trim();
+
+
+            const phone =
+                document
+                .getElementById("phone")
+                .value
+                .replace(/\D/g, "")
+                .trim();
+
+
+            const address =
+                document
+                .getElementById("address")
+                .value
+                .trim();
+
+
+            const payment =
+                document
+                .getElementById("payment")
+                .value;
+
+
+
+            // ---------------------------------------------
+            // VALIDATION
+            // ---------------------------------------------
+
+            if (name.length < 2) {
+
+                alert(
+                    "Please enter your full name."
+                );
+
+                return;
+
+            }
+
+
+            if (!validatePhone(phone)) {
+
+                alert(
+                    "Please enter a valid 10 digit Indian mobile number."
+                );
+
+                return;
+
+            }
+
+
+            if (address.length < 10) {
+
+                alert(
+                    "Please enter your complete delivery address."
+                );
+
+                return;
+
+            }
+
+
+            if (!payment) {
+
+                alert(
+                    "Please select a payment method."
+                );
+
+                return;
+
+            }
+
+
+
+            // ---------------------------------------------
+            // CALCULATE TOTAL
+            // ---------------------------------------------
+
+            let total = 0;
+
+
+            cart.forEach(
+                function(product) {
+
+                    const price =
+                        Number(product.price) || 0;
+
+
+                    const quantity =
+                        Number(product.quantity) || 0;
+
+
+                    total +=
+                        price * quantity;
+
+                }
+            );
+
+
+
+            // ---------------------------------------------
+            // WHATSAPP MESSAGE
+            // ---------------------------------------------
+
+            let message =
+                "🛋️ NEW ORDER - SUPREME CRAFT INDIA\n\n";
+
+
+            message +=
+                "CUSTOMER DETAILS\n";
+
+
+            message +=
+                "Name: " +
+                name +
+                "\n";
+
+
+            message +=
+                "Mobile: " +
+                phone +
+                "\n";
+
+
+            message +=
+                "Address: " +
+                address +
+                "\n\n";
+
+
+            message +=
+                "PRODUCTS\n";
+
+
+            cart.forEach(
+                function(product) {
+
+                    const price =
+                        Number(product.price) || 0;
+
+
+                    const quantity =
+                        Number(product.quantity) || 0;
+
+
+                    const productTotal =
+                        price * quantity;
+
+
+                    message +=
+                        product.name +
+                        " × " +
+                        quantity +
+                        " = ₹" +
+                        formatPrice(
+                            productTotal
+                        ) +
+                        "\n";
+
+                }
+            );
+
+
+            message +=
+                "\nTOTAL: ₹" +
+                formatPrice(total) +
+                "\n";
+
+
+            message +=
+                "Payment: " +
+                payment;
+
+
+
+            // =================================================
+            // YOUR SUPREME CRAFT INDIA WHATSAPP NUMBER
+            // =================================================
+
+            const whatsappNumber =
+                "919509393894";
+
+
+
+            // =================================================
+            // WHATSAPP URL
+            // =================================================
+
+            const whatsappURL =
+                "https://wa.me/" +
+                whatsappNumber +
+                "?text=" +
+                encodeURIComponent(
+                    message
+                );
+
+
+
+            // =================================================
+            // PREVENT DOUBLE CLICK
+            // =================================================
+
+            const button =
+                document.getElementById(
+                    "placeOrderButton"
+                );
+
+
+            if (button) {
+
+                button.disabled = true;
+
+                button.innerText =
+                    "Opening WhatsApp...";
+
+            }
+
+
+
+            // =================================================
+            // OPEN WHATSAPP
+            // =================================================
+
+            window.open(
+                whatsappURL,
+                "_blank"
+            );
+
+
+
+            // =================================================
+            // CLEAR CART
+            // =================================================
+
+            localStorage.removeItem(
+                "cart"
+            );
+
+
+            cart = [];
+
+
+            updateCartCount();
+
+        }
+    );
+
+}
+
+
+
+// =========================================================
+// START
+// =========================================================
+
+updateCartCount();
+
+showOrderSummary();
 
 </script>
 
+
 </body>
+
 </html>

@@ -3,11 +3,11 @@
 // FIREBASE CONFIGURATION
 // ========================================
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
     getFirestore
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 // ========================================
@@ -48,7 +48,7 @@ const app =
 
 
 // ========================================
-// FIRESTORE DATABASE
+// INITIALIZE FIRESTORE
 // ========================================
 
 const db =
