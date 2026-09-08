@@ -1,18 +1,27 @@
-// ========================================
+// ===============================
 // SUPREME CRAFT INDIA
 // FIREBASE CONFIGURATION
-// ========================================
+// ===============================
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp } from
+    "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
-    getFirestore
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    getFirestore,
+    collection,
+    getDocs,
+    getDoc,
+    doc,
+    addDoc,
+    updateDoc,
+    deleteDoc
+} from
+    "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-// ========================================
+// ===============================
 // FIREBASE CONFIG
-// ========================================
+// ===============================
 
 const firebaseConfig = {
 
@@ -35,31 +44,37 @@ const firebaseConfig = {
 
     measurementId:
         "G-RQ9Z44PEX5"
-
 };
 
 
-// ========================================
+// ===============================
 // INITIALIZE FIREBASE
-// ========================================
+// ===============================
 
-const app =
-    initializeApp(firebaseConfig);
-
-
-// ========================================
-// INITIALIZE FIRESTORE
-// ========================================
-
-const db =
-    getFirestore(app);
+const app = initializeApp(firebaseConfig);
 
 
-// ========================================
-// EXPORT
-// ========================================
+// ===============================
+// FIRESTORE DATABASE
+// ===============================
+
+const db = getFirestore(app);
+
+
+// ===============================
+// EXPORT EVERYTHING
+// ===============================
 
 export {
     app,
-    db
+    db,
+
+    collection,
+    getDocs,
+    getDoc,
+    doc,
+
+    addDoc,
+    updateDoc,
+    deleteDoc
 };
