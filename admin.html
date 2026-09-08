@@ -2,29 +2,21 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Admin Panel | Supreme Craft India</title>
 
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
+    <link rel="stylesheet" href="style.css">
 
     <style>
-
         /* ================================
-           ADMIN
+           ADMIN PANEL
         ================================= */
 
         .admin-panel {
             padding: 60px 20px;
+            min-height: 80vh;
         }
 
         .admin-box {
@@ -40,26 +32,39 @@
 
         .admin-box label {
             font-weight: 600;
-            margin-top: 8px;
+            margin-top: 10px;
         }
 
         .admin-box input,
         .admin-box select,
         .admin-box textarea {
             width: 100%;
-            padding: 13px;
             box-sizing: border-box;
+            padding: 13px;
             border: 1px solid #ddd;
             border-radius: 7px;
             font-family: inherit;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .admin-box input:focus,
+        .admin-box select:focus,
+        .admin-box textarea:focus {
+            border-color: #111;
         }
 
         .admin-box textarea {
             resize: vertical;
         }
 
-        .admin-box button {
+        button {
             cursor: pointer;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
 
         .main-admin-btn {
@@ -68,13 +73,41 @@
             border: none;
             padding: 14px 20px;
             border-radius: 7px;
-            margin-top: 10px;
+            margin-top: 12px;
             font-size: 15px;
         }
 
-        .main-admin-btn:disabled {
-            opacity: .6;
-            cursor: not-allowed;
+        .main-admin-btn:hover:not(:disabled) {
+            background: #333;
+        }
+
+        /* ================================
+           STATUS
+        ================================= */
+
+        #adminStatus {
+            display: none;
+            margin: 20px 0;
+            padding: 13px;
+            border-radius: 7px;
+        }
+
+        #adminStatus.success {
+            display: block;
+            background: #e8f7e8;
+            color: #176b17;
+        }
+
+        #adminStatus.error {
+            display: block;
+            background: #ffeaea;
+            color: #a00000;
+        }
+
+        #adminStatus.loading {
+            display: block;
+            background: #f2f2f2;
+            color: #333;
         }
 
         /* ================================
@@ -97,54 +130,31 @@
             width: 120px;
             height: 90px;
             object-fit: cover;
+            display: block;
             border-radius: 8px;
             border: 1px solid #ddd;
-            display: block;
+            background: #f5f5f5;
         }
 
         .preview-number {
             position: absolute;
             top: 5px;
             left: 5px;
+            z-index: 2;
             background: #111;
-            color: white;
+            color: #fff;
             padding: 3px 7px;
             border-radius: 4px;
             font-size: 12px;
         }
 
         /* ================================
-           STATUS
-        ================================= */
-
-        #adminStatus {
-            margin: 15px 0;
-            padding: 12px;
-            border-radius: 7px;
-            display: none;
-        }
-
-        #adminStatus.success {
-            display: block;
-            background: #e8f7e8;
-            color: #176b17;
-        }
-
-        #adminStatus.error {
-            display: block;
-            background: #ffeaea;
-            color: #a00000;
-        }
-
-        #adminStatus.loading {
-            display: block;
-            background: #f2f2f2;
-            color: #333;
-        }
-
-        /* ================================
            PRODUCT LIST
         ================================= */
+
+        #adminProducts {
+            margin-top: 20px;
+        }
 
         .admin-product {
             display: flex;
@@ -154,7 +164,7 @@
             margin: 15px 0;
             border: 1px solid #ddd;
             border-radius: 12px;
-            background: white;
+            background: #fff;
         }
 
         .admin-product-main-image {
@@ -163,18 +173,22 @@
             object-fit: cover;
             border-radius: 8px;
             background: #f5f5f5;
+            flex-shrink: 0;
         }
 
         .admin-product-info {
             flex: 1;
+            min-width: 0;
         }
 
         .admin-product-info strong {
             font-size: 18px;
+            word-break: break-word;
         }
 
         .admin-product-info small {
             color: #777;
+            line-height: 1.6;
         }
 
         .admin-buttons {
@@ -189,14 +203,23 @@
             padding: 10px 14px;
             border-radius: 6px;
             color: white;
+            font-size: 14px;
         }
 
         .edit-btn {
             background: #222;
         }
 
+        .edit-btn:hover {
+            background: #444;
+        }
+
         .delete-btn {
             background: #c40000;
+        }
+
+        .delete-btn:hover {
+            background: #a00000;
         }
 
         /* ================================
@@ -224,7 +247,8 @@
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 8px;
-            background: white;
+            background: #fff;
+            box-sizing: border-box;
         }
 
         .edit-photo img {
@@ -233,7 +257,8 @@
             object-fit: cover;
             border-radius: 6px;
             display: block;
-            margin-bottom: 8px;
+            margin: 8px 0;
+            background: #f5f5f5;
         }
 
         .edit-photo button {
@@ -242,7 +267,6 @@
             padding: 9px;
             margin-top: 5px;
             border-radius: 5px;
-            cursor: pointer;
         }
 
         .change-photo-btn {
@@ -284,7 +308,19 @@
         }
 
         /* ================================
-           RESPONSIVE
+           EMPTY / ERROR
+        ================================= */
+
+        .admin-empty {
+            padding: 25px;
+            border: 1px dashed #ccc;
+            border-radius: 10px;
+            text-align: center;
+            color: #777;
+        }
+
+        /* ================================
+           MOBILE
         ================================= */
 
         @media (max-width: 700px) {
@@ -320,1523 +356,1934 @@
                 height: 200px;
             }
 
+            .cancel-edit-btn {
+                margin-left: 0;
+            }
+
+            #imagePreviews {
+                gap: 8px;
+            }
+
+            .preview-item,
+            .preview-item img {
+                width: 95px;
+            }
+
+            .preview-item img {
+                height: 75px;
+            }
         }
-
     </style>
-
 </head>
-
 
 <body>
 
+    <!-- ================= HEADER ================= -->
 
-<!-- ================= HEADER ================= -->
+    <header class="site-header">
 
-<header class="site-header">
-
-    <div class="logo">
-        SUPREME CRAFT <span>INDIA</span>
-    </div>
-
-    <nav>
-        <a href="index.html">
-            View Website
-        </a>
-    </nav>
-
-</header>
-
-
-<!-- ================= ADMIN ================= -->
-
-<section class="admin-panel">
-
-    <div class="admin-box">
-
-        <p class="small-title">
-            SUPREME CRAFT INDIA
-        </p>
-
-        <h1>
-            Admin Panel
-        </h1>
-
-        <p>
-            Add and manage your furniture products.
-        </p>
-
-
-        <!-- STATUS -->
-
-        <div id="adminStatus"></div>
-
-
-        <!-- ================= ADD PRODUCT ================= -->
-
-        <h2>
-            Add New Product
-        </h2>
-
-        <form id="productForm">
-
-            <label for="productName">
-                Product Name
-            </label>
-
-            <input
-                type="text"
-                id="productName"
-                placeholder="Example: Royal Wooden Sofa"
-                required
-            >
-
-
-            <label for="productPrice">
-                Price
-            </label>
-
-            <input
-                type="number"
-                id="productPrice"
-                placeholder="Example: 24999"
-                min="0"
-                required
-            >
-
-
-            <label for="productCategory">
-                Category
-            </label>
-
-            <select
-                id="productCategory"
-                required
-            >
-
-                <option value="">
-                    Select Category
-                </option>
-
-                <option value="sofa">
-                    Sofa
-                </option>
-
-                <option value="chair">
-                    Chair
-                </option>
-
-                <option value="table">
-                    Table
-                </option>
-
-                <option value="bed">
-                    Bed
-                </option>
-
-            </select>
-
-
-            <label for="productImages">
-                Product Photos
-            </label>
-
-            <input
-                type="file"
-                id="productImages"
-                accept="image/*"
-                multiple
-                required
-            >
-
-            <p style="font-size:14px;color:#777;">
-                Maximum 10 photos.
-            </p>
-
-
-            <div id="imagePreviews"></div>
-
-
-            <label for="productDescription">
-                Description
-            </label>
-
-            <textarea
-                id="productDescription"
-                rows="5"
-                placeholder="Product description"
-                required
-            ></textarea>
-
-
-            <label for="productStock">
-                Stock
-            </label>
-
-            <input
-                type="number"
-                id="productStock"
-                placeholder="Example: 10"
-                min="0"
-                required
-            >
-
-
-            <button
-                type="submit"
-                id="addProductButton"
-                class="main-admin-btn"
-            >
-                ➕ Add Product
-            </button>
-
-        </form>
-
-
-        <hr style="
-            margin:45px 0;
-            border:none;
-            border-top:1px solid #ddd;
-        ">
-
-
-        <!-- ================= EDIT BOX ================= -->
-
-        <div id="editBox">
-
-            <h2>
-                ✏️ Edit Product
-            </h2>
-
-
-            <input
-                type="hidden"
-                id="editId"
-            >
-
-
-            <label>
-                Product Name
-            </label>
-
-            <input
-                type="text"
-                id="editName"
-            >
-
-
-            <label>
-                Price
-            </label>
-
-            <input
-                type="number"
-                id="editPrice"
-                min="0"
-            >
-
-
-            <label>
-                Category
-            </label>
-
-            <select id="editCategory">
-
-                <option value="sofa">
-                    Sofa
-                </option>
-
-                <option value="chair">
-                    Chair
-                </option>
-
-                <option value="table">
-                    Table
-                </option>
-
-                <option value="bed">
-                    Bed
-                </option>
-
-            </select>
-
-
-            <label>
-                Description
-            </label>
-
-            <textarea
-                id="editDescription"
-                rows="5"
-            ></textarea>
-
-
-            <label>
-                Stock
-            </label>
-
-            <input
-                type="number"
-                id="editStock"
-                min="0"
-            >
-
-
-            <h3 style="margin-top:30px;">
-                🖼️ Product Photos
-            </h3>
-
-            <div id="editPhotoContainer"></div>
-
-
-            <button
-                type="button"
-                class="add-photo-btn"
-                onclick="addNewEditPhoto()"
-            >
-                ➕ Add New Photo
-            </button>
-
-
-            <br>
-
-
-            <button
-                type="button"
-                class="save-edit-btn"
-                id="saveEditButton"
-                onclick="saveEditedProduct()"
-            >
-                💾 Save Changes
-            </button>
-
-
-            <button
-                type="button"
-                class="cancel-edit-btn"
-                onclick="cancelEdit()"
-            >
-                ✖ Cancel
-            </button>
-
+        <div class="logo">
+            SUPREME CRAFT <span>INDIA</span>
         </div>
 
+        <nav>
+            <a href="index.html">
+                View Website
+            </a>
+        </nav>
 
-        <!-- ================= PRODUCTS ================= -->
+    </header>
 
-        <h2 style="margin-top:45px;">
-            Products
-        </h2>
 
-        <div id="adminProducts">
+    <!-- ================= ADMIN ================= -->
+
+    <section class="admin-panel">
+
+        <div class="admin-box">
+
+            <p class="small-title">
+                SUPREME CRAFT INDIA
+            </p>
+
+            <h1>
+                Admin Panel
+            </h1>
 
             <p>
-                Loading products...
+                Add and manage your furniture products.
             </p>
+
+
+            <!-- STATUS -->
+
+            <div id="adminStatus"></div>
+
+
+            <!-- ================= ADD PRODUCT ================= -->
+
+            <h2>
+                Add New Product
+            </h2>
+
+            <form id="productForm">
+
+                <label for="productName">
+                    Product Name
+                </label>
+
+                <input
+                    type="text"
+                    id="productName"
+                    placeholder="Example: Royal Wooden Sofa"
+                    maxlength="150"
+                    required
+                >
+
+
+                <label for="productPrice">
+                    Price
+                </label>
+
+                <input
+                    type="number"
+                    id="productPrice"
+                    placeholder="Example: 24999"
+                    min="0"
+                    step="1"
+                    required
+                >
+
+
+                <label for="productCategory">
+                    Category
+                </label>
+
+                <select id="productCategory" required>
+
+                    <option value="">
+                        Select Category
+                    </option>
+
+                    <option value="sofa">
+                        Sofa
+                    </option>
+
+                    <option value="chair">
+                        Chair
+                    </option>
+
+                    <option value="table">
+                        Table
+                    </option>
+
+                    <option value="bed">
+                        Bed
+                    </option>
+
+                </select>
+
+
+                <label for="productImages">
+                    Product Photos
+                </label>
+
+                <input
+                    type="file"
+                    id="productImages"
+                    accept="image/*"
+                    multiple
+                    required
+                >
+
+                <p style="font-size:14px;color:#777;">
+                    Maximum 10 photos.
+                </p>
+
+                <div id="imagePreviews"></div>
+
+
+                <label for="productDescription">
+                    Description
+                </label>
+
+                <textarea
+                    id="productDescription"
+                    rows="5"
+                    maxlength="3000"
+                    placeholder="Product description"
+                    required
+                ></textarea>
+
+
+                <label for="productStock">
+                    Stock
+                </label>
+
+                <input
+                    type="number"
+                    id="productStock"
+                    placeholder="Example: 10"
+                    min="0"
+                    step="1"
+                    required
+                >
+
+
+                <button
+                    type="submit"
+                    id="addProductButton"
+                    class="main-admin-btn"
+                >
+                    ➕ Add Product
+                </button>
+
+            </form>
+
+
+            <hr style="
+                margin:45px 0;
+                border:none;
+                border-top:1px solid #ddd;
+            ">
+
+
+            <!-- ================= EDIT BOX ================= -->
+
+            <div id="editBox">
+
+                <h2>
+                    ✏️ Edit Product
+                </h2>
+
+                <input
+                    type="hidden"
+                    id="editId"
+                >
+
+
+                <label for="editName">
+                    Product Name
+                </label>
+
+                <input
+                    type="text"
+                    id="editName"
+                    maxlength="150"
+                >
+
+
+                <label for="editPrice">
+                    Price
+                </label>
+
+                <input
+                    type="number"
+                    id="editPrice"
+                    min="0"
+                    step="1"
+                >
+
+
+                <label for="editCategory">
+                    Category
+                </label>
+
+                <select id="editCategory">
+
+                    <option value="sofa">
+                        Sofa
+                    </option>
+
+                    <option value="chair">
+                        Chair
+                    </option>
+
+                    <option value="table">
+                        Table
+                    </option>
+
+                    <option value="bed">
+                        Bed
+                    </option>
+
+                </select>
+
+
+                <label for="editDescription">
+                    Description
+                </label>
+
+                <textarea
+                    id="editDescription"
+                    rows="5"
+                    maxlength="3000"
+                ></textarea>
+
+
+                <label for="editStock">
+                    Stock
+                </label>
+
+                <input
+                    type="number"
+                    id="editStock"
+                    min="0"
+                    step="1"
+                >
+
+
+                <h3 style="margin-top:30px;">
+                    🖼️ Product Photos
+                </h3>
+
+                <div id="editPhotoContainer"></div>
+
+
+                <button
+                    type="button"
+                    class="add-photo-btn"
+                    id="addEditPhotoButton"
+                >
+                    ➕ Add New Photo
+                </button>
+
+
+                <br>
+
+
+                <button
+                    type="button"
+                    class="save-edit-btn"
+                    id="saveEditButton"
+                >
+                    💾 Save Changes
+                </button>
+
+
+                <button
+                    type="button"
+                    class="cancel-edit-btn"
+                    id="cancelEditButton"
+                >
+                    ✖ Cancel
+                </button>
+
+            </div>
+
+
+            <!-- ================= PRODUCTS ================= -->
+
+            <h2 style="margin-top:45px;">
+                Products
+            </h2>
+
+            <div id="adminProducts">
+
+                <p>
+                    Loading products...
+                </p>
+
+            </div>
 
         </div>
 
-    </div>
-
-</section>
+    </section>
 
 
-<!-- ================= SCRIPT ================= -->
+    <!-- ================= SCRIPT ================= -->
 
-<script type="module">
+    <script type="module">
 
-import {
-    db
-} from "./firebase.js";
+        import {
+            db,
+            collection,
+            addDoc,
+            getDocs,
+            updateDoc,
+            deleteDoc,
+            doc
+        } from "./firebase.js";
 
-import {
-    collection,
-    addDoc,
-    getDocs,
-    updateDoc,
-    deleteDoc,
-    doc,
-    serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
-// ========================================
-// FIRESTORE COLLECTION
-// ========================================
-
-const productsCollection =
-    collection(db, "products");
+        import {
+            serverTimestamp
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-// ========================================
-// DOM
-// ========================================
+        /* ========================================
+           FIRESTORE
+        ======================================== */
 
-const productForm =
-    document.getElementById("productForm");
-
-const imageInput =
-    document.getElementById("productImages");
-
-const imagePreviews =
-    document.getElementById("imagePreviews");
-
-const adminProducts =
-    document.getElementById("adminProducts");
-
-const statusBox =
-    document.getElementById("adminStatus");
-
-const addProductButton =
-    document.getElementById("addProductButton");
+        const productsCollection =
+            collection(db, "products");
 
 
-// ========================================
-// STATUS MESSAGE
-// ========================================
+        /* ========================================
+           DOM
+        ======================================== */
 
-function showStatus(message, type = "loading") {
+        const productForm =
+            document.getElementById("productForm");
 
-    statusBox.textContent =
-        message;
+        const imageInput =
+            document.getElementById("productImages");
 
-    statusBox.className =
-        type;
+        const imagePreviews =
+            document.getElementById("imagePreviews");
 
-}
+        const adminProducts =
+            document.getElementById("adminProducts");
 
+        const statusBox =
+            document.getElementById("adminStatus");
 
-function hideStatus() {
+        const addProductButton =
+            document.getElementById("addProductButton");
 
-    statusBox.textContent =
-        "";
+        const editBox =
+            document.getElementById("editBox");
 
-    statusBox.className =
-        "";
+        const editPhotoContainer =
+            document.getElementById("editPhotoContainer");
 
-}
+        const saveEditButton =
+            document.getElementById("saveEditButton");
 
+        const cancelEditButton =
+            document.getElementById("cancelEditButton");
 
-// ========================================
-// IMAGE FILE -> BASE64
-// ========================================
-
-function fileToBase64(file) {
-
-    return new Promise(
-        (resolve, reject) => {
-
-            const reader =
-                new FileReader();
-
-            reader.onload =
-                () => resolve(
-                    reader.result
-                );
-
-            reader.onerror =
-                () => reject(
-                    new Error(
-                        "Image read failed."
-                    )
-                );
-
-            reader.readAsDataURL(file);
-
-        }
-    );
-
-}
+        const addEditPhotoButton =
+            document.getElementById("addEditPhotoButton");
 
 
-// ========================================
-// IMAGE PREVIEW
-// ========================================
+        /* ========================================
+           EDIT STATE
+        ======================================== */
 
-imageInput.addEventListener(
-    "change",
-    async function() {
-
-        imagePreviews.innerHTML = "";
-
-        const files =
-            Array.from(this.files || []);
+        let editImages = [];
 
 
-        if (files.length > 10) {
+        /* ========================================
+           STATUS
+        ======================================== */
 
-            alert(
-                "Maximum 10 photos allowed."
-            );
+        function showStatus(message, type = "loading") {
 
-            this.value = "";
+            statusBox.textContent = message;
 
-            return;
+            statusBox.className = type;
         }
 
 
-        files.forEach(
-            (file, index) => {
+        function hideStatus() {
+
+            statusBox.textContent = "";
+
+            statusBox.className = "";
+        }
+
+
+        /* ========================================
+           ESCAPE HTML
+        ======================================== */
+
+        function escapeHTML(value) {
+
+            return String(value ?? "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+
+        /* ========================================
+           FILE -> BASE64
+        ======================================== */
+
+        function fileToBase64(file) {
+
+            return new Promise((resolve, reject) => {
+
+                if (!file) {
+                    reject(
+                        new Error("File missing.")
+                    );
+                    return;
+                }
 
                 const reader =
                     new FileReader();
 
-                reader.onload =
-                    event => {
+                reader.onload = () => {
 
-                        const div =
-                            document.createElement(
-                                "div"
-                            );
+                    resolve(
+                        reader.result
+                    );
 
-                        div.className =
-                            "preview-item";
+                };
 
-                        div.innerHTML = `
-                            <span class="preview-number">
-                                ${index + 1}
-                            </span>
+                reader.onerror = () => {
 
-                            <img
-                                src="${event.target.result}"
-                                alt="Preview ${index + 1}"
-                            >
-                        `;
+                    reject(
+                        new Error(
+                            "Image read failed."
+                        )
+                    );
 
-                        imagePreviews.appendChild(
-                            div
-                        );
-
-                    };
+                };
 
                 reader.readAsDataURL(file);
+
+            });
+        }
+
+
+        /* ========================================
+           IMAGE VALIDATION
+        ======================================== */
+
+        function validateImageFile(file) {
+
+            if (!file.type.startsWith("image/")) {
+
+                throw new Error(
+                    `${file.name} is not an image.`
+                );
+            }
+
+            /*
+             * Base64 Firestore storage can become very large.
+             * Keep individual images reasonably sized.
+             */
+
+            const maxSize =
+                2 * 1024 * 1024;
+
+            if (file.size > maxSize) {
+
+                throw new Error(
+                    `${file.name} 2MB se chhoti honi chahiye.`
+                );
+            }
+        }
+
+
+        /* ========================================
+           IMAGE PREVIEW
+        ======================================== */
+
+        imageInput.addEventListener(
+            "change",
+            function () {
+
+                imagePreviews.innerHTML = "";
+
+                const files =
+                    Array.from(
+                        this.files || []
+                    );
+
+
+                if (
+                    files.length < 1 ||
+                    files.length > 10
+                ) {
+
+                    alert(
+                        "Please select 1 to 10 photos."
+                    );
+
+                    this.value = "";
+
+                    return;
+                }
+
+
+                try {
+
+                    files.forEach(
+                        (file, index) => {
+
+                            validateImageFile(file);
+
+                            const reader =
+                                new FileReader();
+
+                            reader.onload =
+                                event => {
+
+                                    const div =
+                                        document.createElement(
+                                            "div"
+                                        );
+
+                                    div.className =
+                                        "preview-item";
+
+                                    const number =
+                                        document.createElement(
+                                            "span"
+                                        );
+
+                                    number.className =
+                                        "preview-number";
+
+                                    number.textContent =
+                                        index + 1;
+
+                                    const img =
+                                        document.createElement(
+                                            "img"
+                                        );
+
+                                    img.src =
+                                        event.target.result;
+
+                                    img.alt =
+                                        `Preview ${index + 1}`;
+
+                                    div.appendChild(
+                                        number
+                                    );
+
+                                    div.appendChild(
+                                        img
+                                    );
+
+                                    imagePreviews.appendChild(
+                                        div
+                                    );
+
+                                };
+
+                            reader.readAsDataURL(file);
+
+                        }
+                    );
+
+                } catch (error) {
+
+                    alert(error.message);
+
+                    this.value = "";
+
+                    imagePreviews.innerHTML = "";
+                }
 
             }
         );
 
-    }
-);
 
+        /* ========================================
+           ADD PRODUCT
+        ======================================== */
 
-// ========================================
-// ADD PRODUCT
-// ========================================
+        productForm.addEventListener(
+            "submit",
+            async function (event) {
 
-productForm.addEventListener(
-    "submit",
-    async function(event) {
-
-        event.preventDefault();
-
-
-        const files =
-            Array.from(
-                imageInput.files || []
-            );
-
-
-        if (
-            files.length < 1 ||
-            files.length > 10
-        ) {
-
-            alert(
-                "Please select 1 to 10 photos."
-            );
-
-            return;
-        }
-
-
-        try {
-
-            addProductButton.disabled =
-                true;
-
-            showStatus(
-                "Adding product to Firestore...",
-                "loading"
-            );
-
-
-            const images = [];
-
-            for (const file of files) {
-
-                const image =
-                    await fileToBase64(file);
-
-                images.push(image);
-
-            }
-
-
-            const productData = {
-
-                name:
-                    document
-                    .getElementById(
-                        "productName"
-                    )
-                    .value
-                    .trim(),
-
-                price:
-                    Number(
-                        document
-                        .getElementById(
-                            "productPrice"
-                        )
-                        .value
-                    ),
-
-                category:
-                    document
-                    .getElementById(
-                        "productCategory"
-                    )
-                    .value,
-
-                images:
-                    images,
-
-                image:
-                    images[0],
-
-                description:
-                    document
-                    .getElementById(
-                        "productDescription"
-                    )
-                    .value
-                    .trim(),
-
-                stock:
-                    Number(
-                        document
-                        .getElementById(
-                            "productStock"
-                        )
-                        .value
-                    ),
-
-                createdAt:
-                    serverTimestamp(),
-
-                updatedAt:
-                    serverTimestamp()
-
-            };
-
-
-            await addDoc(
-                productsCollection,
-                productData
-            );
-
-
-            productForm.reset();
-
-            imagePreviews.innerHTML =
-                "";
-
-            showStatus(
-                "✅ Product added successfully!",
-                "success"
-            );
-
-
-            await loadProducts();
-
-
-        } catch (error) {
-
-            console.error(
-                "Add Product Error:",
-                error
-            );
-
-            showStatus(
-                "❌ Product add nahi hua. Console me error check karo.",
-                "error"
-            );
-
-        } finally {
-
-            addProductButton.disabled =
-                false;
-
-        }
-
-    }
-);
-
-
-// ========================================
-// LOAD PRODUCTS
-// ========================================
-
-async function loadProducts() {
-
-    adminProducts.innerHTML = `
-        <p>Loading products...</p>
-    `;
-
-
-    try {
-
-        const snapshot =
-            await getDocs(
-                productsCollection
-            );
-
-
-        if (snapshot.empty) {
-
-            adminProducts.innerHTML = `
-                <p>
-                    No products added yet.
-                </p>
-            `;
-
-            return;
-        }
-
-
-        adminProducts.innerHTML =
-            "";
-
-
-        snapshot.forEach(
-            docSnapshot => {
-
-                const product =
-                    docSnapshot.data();
-
-                const id =
-                    docSnapshot.id;
-
-
-                const images =
-                    Array.isArray(
-                        product.images
-                    )
-                    ? product.images
-                    : product.image
-                        ? [product.image]
-                        : [];
-
-
-                const mainImage =
-                    images[0] || "";
+                event.preventDefault();
 
 
                 const name =
-                    escapeHTML(
-                        product.name ||
-                        "Premium Furniture"
-                    );
-
-
-                const category =
-                    escapeHTML(
-                        product.category ||
-                        "sofa"
-                    );
+                    document
+                    .getElementById("productName")
+                    .value
+                    .trim();
 
 
                 const price =
                     Number(
-                        product.price || 0
+                        document
+                        .getElementById("productPrice")
+                        .value
                     );
+
+
+                const category =
+                    document
+                    .getElementById("productCategory")
+                    .value;
+
+
+                const description =
+                    document
+                    .getElementById("productDescription")
+                    .value
+                    .trim();
 
 
                 const stock =
                     Number(
-                        product.stock || 0
+                        document
+                        .getElementById("productStock")
+                        .value
                     );
 
 
-                const item =
-                    document.createElement(
-                        "div"
-                    );
-
-                item.className =
-                    "admin-product";
-
-
-                item.innerHTML = `
-
-                    <img
-                        class="admin-product-main-image"
-                        src="${mainImage}"
-                        alt="${name}"
-                    >
-
-                    <div class="admin-product-info">
-
-                        <strong>
-                            ${name}
-                        </strong>
-
-                        <br>
-
-                        ₹${price.toLocaleString("en-IN")}
-
-                        <br>
-
-                        <small>
-                            ${category.toUpperCase()}
-                            •
-                            ${images.length} photo(s)
-                            •
-                            Stock: ${stock}
-                        </small>
-
-                    </div>
-
-                    <div class="admin-buttons">
-
-                        <button
-                            class="edit-btn"
-                            data-id="${id}"
-                        >
-                            ✏️ Edit
-                        </button>
-
-                        <button
-                            class="delete-btn"
-                            data-id="${id}"
-                        >
-                            🗑️ Delete
-                        </button>
-
-                    </div>
-
-                `;
-
-
-                const editButton =
-                    item.querySelector(
-                        ".edit-btn"
+                const files =
+                    Array.from(
+                        imageInput.files || []
                     );
 
 
-                const deleteButton =
-                    item.querySelector(
-                        ".delete-btn"
+                /* Validation */
+
+                if (!name) {
+
+                    alert(
+                        "Product name enter karo."
+                    );
+
+                    return;
+                }
+
+
+                if (
+                    !Number.isFinite(price) ||
+                    price < 0
+                ) {
+
+                    alert(
+                        "Valid price enter karo."
+                    );
+
+                    return;
+                }
+
+
+                if (!category) {
+
+                    alert(
+                        "Category select karo."
+                    );
+
+                    return;
+                }
+
+
+                if (!description) {
+
+                    alert(
+                        "Description enter karo."
+                    );
+
+                    return;
+                }
+
+
+                if (
+                    !Number.isInteger(stock) ||
+                    stock < 0
+                ) {
+
+                    alert(
+                        "Valid stock enter karo."
+                    );
+
+                    return;
+                }
+
+
+                if (
+                    files.length < 1 ||
+                    files.length > 10
+                ) {
+
+                    alert(
+                        "Please select 1 to 10 photos."
+                    );
+
+                    return;
+                }
+
+
+                try {
+
+                    addProductButton.disabled =
+                        true;
+
+
+                    showStatus(
+                        "Adding product to Firestore...",
+                        "loading"
                     );
 
 
-                editButton.addEventListener(
-                    "click",
-                    () => {
+                    const images = [];
 
-                        editProduct(
-                            id,
-                            product
+
+                    for (
+                        const file of files
+                    ) {
+
+                        validateImageFile(file);
+
+                        const image =
+                            await fileToBase64(
+                                file
+                            );
+
+                        images.push(
+                            image
                         );
 
                     }
-                );
 
 
-                deleteButton.addEventListener(
-                    "click",
-                    () => {
+                    const productData = {
 
-                        deleteProduct(
-                            id
-                        );
+                        name: name,
 
-                    }
-                );
+                        price: price,
+
+                        category: category,
+
+                        images: images,
+
+                        image: images[0],
+
+                        description: description,
+
+                        stock: stock,
+
+                        createdAt:
+                            serverTimestamp(),
+
+                        updatedAt:
+                            serverTimestamp()
+
+                    };
 
 
-                adminProducts.appendChild(
-                    item
-                );
+                    await addDoc(
+                        productsCollection,
+                        productData
+                    );
+
+
+                    productForm.reset();
+
+                    imagePreviews.innerHTML =
+                        "";
+
+
+                    showStatus(
+                        "✅ Product added successfully!",
+                        "success"
+                    );
+
+
+                    await loadProducts();
+
+                } catch (error) {
+
+                    console.error(
+                        "Add Product Error:",
+                        error
+                    );
+
+
+                    showStatus(
+                        "❌ Product add nahi hua: " +
+                        error.message,
+                        "error"
+                    );
+
+                } finally {
+
+                    addProductButton.disabled =
+                        false;
+
+                }
 
             }
         );
 
 
-    } catch (error) {
+        /* ========================================
+           LOAD PRODUCTS
+        ======================================== */
 
-        console.error(
-            "Load Products Error:",
-            error
-        );
+        async function loadProducts() {
 
-        adminProducts.innerHTML = `
-            <p style="color:#b00000;">
-                ❌ Products load nahi ho rahe.
-            </p>
-        `;
-
-    }
-
-}
-
-
-// ========================================
-// ESCAPE HTML
-// ========================================
-
-function escapeHTML(text) {
-
-    return String(text)
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-        .replace(
-            /</g,
-            "&lt;"
-        )
-        .replace(
-            />/g,
-            "&gt;"
-        )
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-
-}
-
-
-// ========================================
-// EDIT PRODUCT
-// ========================================
-
-function editProduct(id, product) {
-
-    let images =
-        Array.isArray(product.images)
-        ? [...product.images]
-        : product.image
-            ? [product.image]
-            : [];
-
-
-    document
-    .getElementById("editId")
-    .value =
-        id;
-
-
-    document
-    .getElementById("editName")
-    .value =
-        product.name || "";
-
-
-    document
-    .getElementById("editPrice")
-    .value =
-        Number(product.price || 0);
-
-
-    document
-    .getElementById("editCategory")
-    .value =
-        product.category || "sofa";
-
-
-    document
-    .getElementById("editDescription")
-    .value =
-        product.description || "";
-
-
-    document
-    .getElementById("editStock")
-    .value =
-        Number(product.stock || 0);
-
-
-    window.editImages =
-        images;
-
-
-    renderEditPhotos();
-
-
-    const editBox =
-        document.getElementById(
-            "editBox"
-        );
-
-
-    editBox.style.display =
-        "block";
-
-
-    editBox.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-    });
-
-}
-
-
-// ========================================
-// RENDER EDIT PHOTOS
-// ========================================
-
-function renderEditPhotos() {
-
-    const container =
-        document.getElementById(
-            "editPhotoContainer"
-        );
-
-
-    container.innerHTML =
-        "";
-
-
-    const images =
-        window.editImages || [];
-
-
-    images.forEach(
-        (image, index) => {
-
-            const div =
-                document.createElement(
-                    "div"
-                );
-
-            div.className =
-                "edit-photo";
-
-
-            div.innerHTML = `
-
-                <strong>
-                    Photo ${index + 1}
-                </strong>
-
-                <img
-                    src="${image}"
-                    alt="Product Photo ${index + 1}"
-                >
-
-                <button
-                    type="button"
-                    class="change-photo-btn"
-                    data-index="${index}"
-                >
-                    🖼️ Change Photo
-                </button>
-
-                <button
-                    type="button"
-                    class="remove-photo-btn"
-                    data-index="${index}"
-                >
-                    🗑️ Remove Photo
-                </button>
-
+            adminProducts.innerHTML = `
+                <p>Loading products...</p>
             `;
 
 
-            div
-            .querySelector(
-                ".change-photo-btn"
-            )
-            .addEventListener(
-                "click",
-                () => {
+            try {
 
-                    changePhoto(index);
+                const snapshot =
+                    await getDocs(
+                        productsCollection
+                    );
+
+
+                if (snapshot.empty) {
+
+                    adminProducts.innerHTML = `
+                        <div class="admin-empty">
+                            No products added yet.
+                        </div>
+                    `;
+
+                    return;
+                }
+
+
+                adminProducts.innerHTML = "";
+
+
+                snapshot.forEach(
+                    docSnapshot => {
+
+                        const product =
+                            docSnapshot.data();
+
+                        const id =
+                            docSnapshot.id;
+
+
+                        let images =
+                            Array.isArray(
+                                product.images
+                            )
+                            ? product.images
+                            : [];
+
+
+                        if (
+                            images.length === 0 &&
+                            product.image
+                        ) {
+
+                            images = [
+                                product.image
+                            ];
+
+                        }
+
+
+                        const mainImage =
+                            images[0] || "";
+
+
+                        const name =
+                            product.name ||
+                            "Premium Furniture";
+
+
+                        const category =
+                            product.category ||
+                            "sofa";
+
+
+                        const price =
+                            Number(
+                                product.price || 0
+                            );
+
+
+                        const stock =
+                            Number(
+                                product.stock || 0
+                            );
+
+
+                        const item =
+                            document.createElement(
+                                "div"
+                            );
+
+                        item.className =
+                            "admin-product";
+
+
+                        /* Image */
+
+                        const img =
+                            document.createElement(
+                                "img"
+                            );
+
+                        img.className =
+                            "admin-product-main-image";
+
+                        img.src =
+                            mainImage;
+
+                        img.alt =
+                            name;
+
+                        img.onerror =
+                            function () {
+
+                                this.style.display =
+                                    "none";
+
+                            };
+
+
+                        /* Info */
+
+                        const info =
+                            document.createElement(
+                                "div"
+                            );
+
+                        info.className =
+                            "admin-product-info";
+
+
+                        const strong =
+                            document.createElement(
+                                "strong"
+                            );
+
+                        strong.textContent =
+                            name;
+
+
+                        const priceText =
+                            document.createElement(
+                                "div"
+                            );
+
+                        priceText.textContent =
+                            "₹" +
+                            price.toLocaleString(
+                                "en-IN"
+                            );
+
+
+                        const small =
+                            document.createElement(
+                                "small"
+                            );
+
+                        small.textContent =
+                            category.toUpperCase() +
+                            " • " +
+                            images.length +
+                            " photo(s) • Stock: " +
+                            stock;
+
+
+                        info.appendChild(
+                            strong
+                        );
+
+                        info.appendChild(
+                            document.createElement(
+                                "br"
+                            )
+                        );
+
+                        info.appendChild(
+                            priceText
+                        );
+
+                        info.appendChild(
+                            document.createElement(
+                                "br"
+                            )
+                        );
+
+                        info.appendChild(
+                            small
+                        );
+
+
+                        /* Buttons */
+
+                        const buttons =
+                            document.createElement(
+                                "div"
+                            );
+
+                        buttons.className =
+                            "admin-buttons";
+
+
+                        const editButton =
+                            document.createElement(
+                                "button"
+                            );
+
+                        editButton.type =
+                            "button";
+
+                        editButton.className =
+                            "edit-btn";
+
+                        editButton.textContent =
+                            "✏️ Edit";
+
+
+                        const deleteButton =
+                            document.createElement(
+                                "button"
+                            );
+
+                        deleteButton.type =
+                            "button";
+
+                        deleteButton.className =
+                            "delete-btn";
+
+                        deleteButton.textContent =
+                            "🗑️ Delete";
+
+
+                        editButton.addEventListener(
+                            "click",
+                            () => {
+
+                                editProduct(
+                                    id,
+                                    product
+                                );
+
+                            }
+                        );
+
+
+                        deleteButton.addEventListener(
+                            "click",
+                            () => {
+
+                                deleteProduct(
+                                    id
+                                );
+
+                            }
+                        );
+
+
+                        buttons.appendChild(
+                            editButton
+                        );
+
+                        buttons.appendChild(
+                            deleteButton
+                        );
+
+
+                        item.appendChild(
+                            img
+                        );
+
+                        item.appendChild(
+                            info
+                        );
+
+                        item.appendChild(
+                            buttons
+                        );
+
+
+                        adminProducts.appendChild(
+                            item
+                        );
+
+                    }
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Load Products Error:",
+                    error
+                );
+
+
+                adminProducts.innerHTML = `
+                    <div class="admin-empty">
+                        ❌ Products load nahi ho rahe.
+                    </div>
+                `;
+
+            }
+
+        }
+
+
+        /* ========================================
+           EDIT PRODUCT
+        ======================================== */
+
+        function editProduct(
+            id,
+            product
+        ) {
+
+            editImages =
+                Array.isArray(
+                    product.images
+                )
+                ? [...product.images]
+                : product.image
+                    ? [product.image]
+                    : [];
+
+
+            document
+                .getElementById("editId")
+                .value =
+                id;
+
+
+            document
+                .getElementById("editName")
+                .value =
+                product.name || "";
+
+
+            document
+                .getElementById("editPrice")
+                .value =
+                Number(
+                    product.price || 0
+                );
+
+
+            document
+                .getElementById("editCategory")
+                .value =
+                product.category || "sofa";
+
+
+            document
+                .getElementById("editDescription")
+                .value =
+                product.description || "";
+
+
+            document
+                .getElementById("editStock")
+                .value =
+                Number(
+                    product.stock || 0
+                );
+
+
+            renderEditPhotos();
+
+
+            editBox.style.display =
+                "block";
+
+
+            editBox.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+        }
+
+
+        /* ========================================
+           RENDER EDIT PHOTOS
+        ======================================== */
+
+        function renderEditPhotos() {
+
+            editPhotoContainer.innerHTML =
+                "";
+
+
+            if (
+                editImages.length === 0
+            ) {
+
+                editPhotoContainer.innerHTML = `
+                    <p>
+                        No photos available.
+                    </p>
+                `;
+
+                return;
+            }
+
+
+            editImages.forEach(
+                (image, index) => {
+
+                    const div =
+                        document.createElement(
+                            "div"
+                        );
+
+                    div.className =
+                        "edit-photo";
+
+
+                    const title =
+                        document.createElement(
+                            "strong"
+                        );
+
+                    title.textContent =
+                        `Photo ${index + 1}`;
+
+
+                    const img =
+                        document.createElement(
+                            "img"
+                        );
+
+                    img.src =
+                        image;
+
+                    img.alt =
+                        `Product Photo ${index + 1}`;
+
+
+                    img.onerror =
+                        function () {
+
+                            this.alt =
+                                "Image unavailable";
+
+                        };
+
+
+                    const changeButton =
+                        document.createElement(
+                            "button"
+                        );
+
+                    changeButton.type =
+                        "button";
+
+                    changeButton.className =
+                        "change-photo-btn";
+
+                    changeButton.textContent =
+                        "🖼️ Change Photo";
+
+
+                    const removeButton =
+                        document.createElement(
+                            "button"
+                        );
+
+                    removeButton.type =
+                        "button";
+
+                    removeButton.className =
+                        "remove-photo-btn";
+
+                    removeButton.textContent =
+                        "🗑️ Remove Photo";
+
+
+                    changeButton.addEventListener(
+                        "click",
+                        () => {
+
+                            changePhoto(
+                                index
+                            );
+
+                        }
+                    );
+
+
+                    removeButton.addEventListener(
+                        "click",
+                        () => {
+
+                            removePhoto(
+                                index
+                            );
+
+                        }
+                    );
+
+
+                    div.appendChild(
+                        title
+                    );
+
+                    div.appendChild(
+                        img
+                    );
+
+                    div.appendChild(
+                        changeButton
+                    );
+
+                    div.appendChild(
+                        removeButton
+                    );
+
+
+                    editPhotoContainer.appendChild(
+                        div
+                    );
 
                 }
-            );
-
-
-            div
-            .querySelector(
-                ".remove-photo-btn"
-            )
-            .addEventListener(
-                "click",
-                () => {
-
-                    removePhoto(index);
-
-                }
-            );
-
-
-            container.appendChild(
-                div
             );
 
         }
-    );
 
-}
 
+        /* ========================================
+           CHANGE PHOTO
+        ======================================== */
 
-// ========================================
-// CHANGE PHOTO
-// ========================================
+        function changePhoto(index) {
 
-function changePhoto(index) {
-
-    const input =
-        document.createElement(
-            "input"
-        );
-
-
-    input.type =
-        "file";
-
-    input.accept =
-        "image/*";
-
-
-    input.onchange =
-        async function() {
-
-            const file =
-                input.files &&
-                input.files[0];
-
-
-            if (!file) {
-                return;
-            }
-
-
-            try {
-
-                const image =
-                    await fileToBase64(
-                        file
-                    );
-
-
-                window.editImages[index] =
-                    image;
-
-
-                renderEditPhotos();
-
-
-            } catch (error) {
-
-                console.error(error);
-
-                alert(
-                    "Photo change nahi ho payi."
-                );
-
-            }
-
-        };
-
-
-    input.click();
-
-}
-
-
-// ========================================
-// REMOVE PHOTO
-// ========================================
-
-function removePhoto(index) {
-
-    const images =
-        window.editImages || [];
-
-
-    if (images.length <= 1) {
-
-        alert(
-            "Kam se kam 1 photo zaroor honi chahiye."
-        );
-
-        return;
-    }
-
-
-    const confirmed =
-        confirm(
-            `Photo ${index + 1} remove karni hai?`
-        );
-
-
-    if (!confirmed) {
-        return;
-    }
-
-
-    images.splice(
-        index,
-        1
-    );
-
-
-    window.editImages =
-        images;
-
-
-    renderEditPhotos();
-
-}
-
-
-// ========================================
-// ADD NEW EDIT PHOTO
-// ========================================
-
-function addNewEditPhoto() {
-
-    const images =
-        window.editImages || [];
-
-
-    if (images.length >= 10) {
-
-        alert(
-            "Maximum 10 photos allowed."
-        );
-
-        return;
-    }
-
-
-    const input =
-        document.createElement(
-            "input"
-        );
-
-
-    input.type =
-        "file";
-
-    input.accept =
-        "image/*";
-
-
-    input.onchange =
-        async function() {
-
-            const file =
-                input.files &&
-                input.files[0];
-
-
-            if (!file) {
-                return;
-            }
-
-
-            try {
-
-                const image =
-                    await fileToBase64(
-                        file
-                    );
-
-
-                images.push(
-                    image
+            const input =
+                document.createElement(
+                    "input"
                 );
 
 
-                window.editImages =
-                    images;
+            input.type =
+                "file";
+
+            input.accept =
+                "image/*";
 
 
-                renderEditPhotos();
+            input.addEventListener(
+                "change",
+                async function () {
+
+                    const file =
+                        input.files &&
+                        input.files[0];
 
 
-            } catch (error) {
-
-                console.error(error);
-
-                alert(
-                    "Photo add nahi ho payi."
-                );
-
-            }
-
-        };
+                    if (!file) {
+                        return;
+                    }
 
 
-    input.click();
+                    try {
 
-}
-
-
-// ========================================
-// SAVE EDITED PRODUCT
-// ========================================
-
-window.saveEditedProduct =
-async function() {
-
-    const id =
-        document
-        .getElementById(
-            "editId"
-        )
-        .value;
+                        validateImageFile(
+                            file
+                        );
 
 
-    if (!id) {
-
-        alert(
-            "Product ID missing."
-        );
-
-        return;
-    }
+                        const image =
+                            await fileToBase64(
+                                file
+                            );
 
 
-    const images =
-        window.editImages || [];
+                        editImages[index] =
+                            image;
 
 
-    if (images.length === 0) {
-
-        alert(
-            "Kam se kam 1 photo honi chahiye."
-        );
-
-        return;
-    }
+                        renderEditPhotos();
 
 
-    const saveButton =
-        document.getElementById(
-            "saveEditButton"
-        );
+                    } catch (error) {
+
+                        console.error(
+                            "Change Photo Error:",
+                            error
+                        );
 
 
-    try {
+                        alert(
+                            error.message ||
+                            "Photo change nahi ho payi."
+                        );
 
-        saveButton.disabled =
-            true;
+                    }
 
-
-        showStatus(
-            "Saving changes...",
-            "loading"
-        );
-
-
-        const productRef =
-            doc(
-                db,
-                "products",
-                id
+                }
             );
 
 
-        const updatedProduct = {
+            input.click();
 
-            name:
-                document
-                .getElementById(
-                    "editName"
-                )
-                .value
-                .trim(),
+        }
 
-            price:
-                Number(
+
+        /* ========================================
+           REMOVE PHOTO
+        ======================================== */
+
+        function removePhoto(index) {
+
+            if (
+                editImages.length <= 1
+            ) {
+
+                alert(
+                    "Kam se kam 1 photo zaroor honi chahiye."
+                );
+
+                return;
+            }
+
+
+            const confirmed =
+                confirm(
+                    `Photo ${index + 1} remove karni hai?`
+                );
+
+
+            if (!confirmed) {
+                return;
+            }
+
+
+            editImages.splice(
+                index,
+                1
+            );
+
+
+            renderEditPhotos();
+
+        }
+
+
+        /* ========================================
+           ADD NEW EDIT PHOTO
+        ======================================== */
+
+        addEditPhotoButton.addEventListener(
+            "click",
+            function () {
+
+                if (
+                    editImages.length >= 10
+                ) {
+
+                    alert(
+                        "Maximum 10 photos allowed."
+                    );
+
+                    return;
+                }
+
+
+                const input =
+                    document.createElement(
+                        "input"
+                    );
+
+
+                input.type =
+                    "file";
+
+                input.accept =
+                    "image/*";
+
+
+                input.addEventListener(
+                    "change",
+                    async function () {
+
+                        const file =
+                            input.files &&
+                            input.files[0];
+
+
+                        if (!file) {
+                            return;
+                        }
+
+
+                        try {
+
+                            validateImageFile(
+                                file
+                            );
+
+
+                            const image =
+                                await fileToBase64(
+                                    file
+                                );
+
+
+                            editImages.push(
+                                image
+                            );
+
+
+                            renderEditPhotos();
+
+
+                        } catch (error) {
+
+                            console.error(
+                                "Add Photo Error:",
+                                error
+                            );
+
+
+                            alert(
+                                error.message ||
+                                "Photo add nahi ho payi."
+                            );
+
+                        }
+
+                    }
+                );
+
+
+                input.click();
+
+            }
+        );
+
+
+        /* ========================================
+           SAVE EDITED PRODUCT
+        ======================================== */
+
+        saveEditButton.addEventListener(
+            "click",
+            async function () {
+
+                const id =
                     document
-                    .getElementById(
-                        "editPrice"
-                    )
+                    .getElementById("editId")
                     .value
-                ),
+                    .trim();
 
-            category:
-                document
-                .getElementById(
-                    "editCategory"
-                )
-                .value,
 
-            description:
-                document
-                .getElementById(
-                    "editDescription"
-                )
-                .value
-                .trim(),
+                if (!id) {
 
-            stock:
-                Number(
+                    alert(
+                        "Product ID missing."
+                    );
+
+                    return;
+                }
+
+
+                if (
+                    editImages.length === 0
+                ) {
+
+                    alert(
+                        "Kam se kam 1 photo honi chahiye."
+                    );
+
+                    return;
+                }
+
+
+                const name =
                     document
-                    .getElementById(
-                        "editStock"
-                    )
+                    .getElementById("editName")
                     .value
-                ),
-
-            images:
-                images,
-
-            image:
-                images[0],
-
-            updatedAt:
-                serverTimestamp()
-
-        };
+                    .trim();
 
 
-        await updateDoc(
-            productRef,
-            updatedProduct
+                const price =
+                    Number(
+                        document
+                        .getElementById("editPrice")
+                        .value
+                    );
+
+
+                const category =
+                    document
+                    .getElementById("editCategory")
+                    .value;
+
+
+                const description =
+                    document
+                    .getElementById("editDescription")
+                    .value
+                    .trim();
+
+
+                const stock =
+                    Number(
+                        document
+                        .getElementById("editStock")
+                        .value
+                    );
+
+
+                /* Validation */
+
+                if (!name) {
+
+                    alert(
+                        "Product name enter karo."
+                    );
+
+                    return;
+                }
+
+
+                if (
+                    !Number.isFinite(price) ||
+                    price < 0
+                ) {
+
+                    alert(
+                        "Valid price enter karo."
+                    );
+
+                    return;
+                }
+
+
+                if (!category) {
+
+                    alert(
+                        "Category select karo."
+                    );
+
+                    return;
+                }
+
+
+                if (!description) {
+
+                    alert(
+                        "Description enter karo."
+                    );
+
+                    return;
+                }
+
+
+                if (
+                    !Number.isInteger(stock) ||
+                    stock < 0
+                ) {
+
+                    alert(
+                        "Valid stock enter karo."
+                    );
+
+                    return;
+                }
+
+
+                try {
+
+                    saveEditButton.disabled =
+                        true;
+
+
+                    showStatus(
+                        "Saving changes...",
+                        "loading"
+                    );
+
+
+                    const productRef =
+                        doc(
+                            db,
+                            "products",
+                            id
+                        );
+
+
+                    const updatedProduct = {
+
+                        name: name,
+
+                        price: price,
+
+                        category: category,
+
+                        description:
+                            description,
+
+                        stock: stock,
+
+                        images:
+                            [...editImages],
+
+                        image:
+                            editImages[0],
+
+                        updatedAt:
+                            serverTimestamp()
+
+                    };
+
+
+                    await updateDoc(
+                        productRef,
+                        updatedProduct
+                    );
+
+
+                    showStatus(
+                        "✅ Product updated successfully!",
+                        "success"
+                    );
+
+
+                    cancelEdit();
+
+
+                    await loadProducts();
+
+
+                } catch (error) {
+
+                    console.error(
+                        "Update Product Error:",
+                        error
+                    );
+
+
+                    showStatus(
+                        "❌ Product update nahi hua: " +
+                        error.message,
+                        "error"
+                    );
+
+                } finally {
+
+                    saveEditButton.disabled =
+                        false;
+
+                }
+
+            }
         );
 
 
-        showStatus(
-            "✅ Product updated successfully!",
-            "success"
+        /* ========================================
+           DELETE PRODUCT
+        ======================================== */
+
+        async function deleteProduct(id) {
+
+            if (!id) {
+
+                alert(
+                    "Product ID missing."
+                );
+
+                return;
+            }
+
+
+            const confirmed =
+                confirm(
+                    "Kya aap is product ko delete karna chahte hain?"
+                );
+
+
+            if (!confirmed) {
+                return;
+            }
+
+
+            try {
+
+                showStatus(
+                    "Deleting product...",
+                    "loading"
+                );
+
+
+                await deleteDoc(
+                    doc(
+                        db,
+                        "products",
+                        id
+                    )
+                );
+
+
+                showStatus(
+                    "✅ Product deleted successfully!",
+                    "success"
+                );
+
+
+                if (
+                    document
+                    .getElementById("editId")
+                    .value === id
+                ) {
+
+                    cancelEdit();
+
+                }
+
+
+                await loadProducts();
+
+
+            } catch (error) {
+
+                console.error(
+                    "Delete Product Error:",
+                    error
+                );
+
+
+                showStatus(
+                    "❌ Product delete nahi hua: " +
+                    error.message,
+                    "error"
+                );
+
+            }
+
+        }
+
+
+        /* ========================================
+           CANCEL EDIT
+        ======================================== */
+
+        function cancelEdit() {
+
+            editBox.style.display =
+                "none";
+
+
+            document
+                .getElementById("editId")
+                .value =
+                "";
+
+
+            editImages =
+                [];
+
+
+            editPhotoContainer.innerHTML =
+                "";
+
+        }
+
+
+        cancelEditButton.addEventListener(
+            "click",
+            cancelEdit
         );
 
 
-        cancelEdit();
+        /* ========================================
+           START
+        ======================================== */
 
+        loadProducts();
 
-        await loadProducts();
-
-
-    } catch (error) {
-
-        console.error(
-            "Update Product Error:",
-            error
-        );
-
-        showStatus(
-            "❌ Product update nahi hua.",
-            "error"
-        );
-
-    } finally {
-
-        saveButton.disabled =
-            false;
-
-    }
-
-};
-
-
-// ========================================
-// DELETE PRODUCT
-// ========================================
-
-async function deleteProduct(id) {
-
-    const confirmed =
-        confirm(
-            "Kya aap is product ko delete karna chahte hain?"
-        );
-
-
-    if (!confirmed) {
-        return;
-    }
-
-
-    try {
-
-        showStatus(
-            "Deleting product...",
-            "loading"
-        );
-
-
-        await deleteDoc(
-            doc(
-                db,
-                "products",
-                id
-            )
-        );
-
-
-        showStatus(
-            "✅ Product deleted successfully!",
-            "success"
-        );
-
-
-        await loadProducts();
-
-
-    } catch (error) {
-
-        console.error(
-            "Delete Product Error:",
-            error
-        );
-
-        showStatus(
-            "❌ Product delete nahi hua.",
-            "error"
-        );
-
-    }
-
-}
-
-
-// ========================================
-// CANCEL EDIT
-// ========================================
-
-window.cancelEdit =
-function() {
-
-    document
-    .getElementById(
-        "editBox"
-    )
-    .style.display =
-        "none";
-
-
-    document
-    .getElementById(
-        "editId"
-    )
-    .value =
-        "";
-
-
-    window.editImages =
-        [];
-
-};
-
-
-// ========================================
-// START
-// ========================================
-
-loadProducts();
-
-</script>
-
+    </script>
 
 </body>
+
 </html>
